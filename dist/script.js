@@ -27359,7 +27359,6 @@
   var jspdf_es_min_default = E;
 
   // src/script.js
-  console.log("page 5");
   console.log("Sept 24, 2024 - Stack Builder - Test 1");
   window.addEventListener("load", (event) => {
     const compClasses = [
