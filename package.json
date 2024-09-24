@@ -1,0 +1,20 @@
+{
+  "name": "stack-builder-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "serve",
+    "build": "esbuild src/script.js --bundle --outfile=dist/script.js --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "^0.23.0",
+    "serve": "^14.2.3"
+  },
+  "dependencies": {
+    "jspdf": "^2.5.1"
+  }
+}
