@@ -1,6 +1,7 @@
 import * as model from "./model.js";
 import stackButtonsView from "./stackButtonsView";
 import View from "./View";
+import { COMP_CLASSES } from "./config";
 
 const controlAdjustStack = function (arrayEl) {
   //   console.log(arrayEl.attributes.class.nodeValue);
@@ -13,7 +14,9 @@ const controlAdjustStack = function (arrayEl) {
   } else if (compVal === "minus") {
     stackButtonsView.removeComponent();
     model.setIds(stackButtonsView._allComps, stackButtonsView._allSideComps);
-  } else console.log("comp: ", compVal);
+  } else {
+    stackButtonsView.addCompImg(compVal);
+  }
 
   //   if (clickedComp) {
   //     compFlag = clickedComp.className.split(" ")[1];

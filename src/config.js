@@ -1,4 +1,4 @@
-export const compClasses = [
+export const COMP_CLASSES = [
   "washington",
   "annular",
   "double",
