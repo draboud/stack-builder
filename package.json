@@ -2,11 +2,11 @@
   "name": "stack-builder-1",
   "version": "1.0.0",
   "description": "",
-  "main": "src/script.js",
+  "main": "src/controller.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "serve",
-    "build": "esbuild src/script.js --bundle --outfile=dist/script.js --watch",
+    "build": "esbuild src/controller.js --bundle --outfile=dist/controller.js --watch",
     "build-by-file": "node builder.js"
   },
   "author": "",
