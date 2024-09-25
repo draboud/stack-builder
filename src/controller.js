@@ -1,50 +1,41 @@
 import * as model from "./model.js";
-import stackButtonsView from "./stackButtonsView";
+import stackView from "./stackView";
 import View from "./View";
 import { COMP_CLASSES } from "./config";
 
 const controlAdjustStack = function (arrayEl) {
-  //   console.log(arrayEl.attributes.class.nodeValue);
   const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
-  //   console.log(compVal);
 
+  //Adding component and setting ids
   if (compVal === "plus") {
-    stackButtonsView.addComponent();
-    model.setIds(stackButtonsView._allComps, stackButtonsView._allSideComps);
-  } else if (compVal === "minus") {
-    stackButtonsView.removeComponent();
-    model.setIds(stackButtonsView._allComps, stackButtonsView._allSideComps);
-  } else {
-    stackButtonsView.addCompImg(compVal);
+    stackView.addComponent();
+    stackView.setIds();
+    stackView.setIdsSides();
   }
 
-  //   if (clickedComp) {
-  //     compFlag = clickedComp.className.split(" ")[1];
-  //     addCompImg(compFlag);
-  //   }
-  //   if (clickedCrossComp) {
-  //     compFlag = clickedCrossComp.className.split(" ")[1];
-  //     addCrossCompImg(compFlag);
-  //   }
-  //   if (arrayEl.attributes.class.nodeValue === "comp_button_plus") {
-  //     //   addComponent();
-  //     console.log("plus!");
-  //   }
-  //   if (arrayEl.attributes.class.nodeValue === "comp_button_minus") {
-  //     //   addComponent();
-  //     console.log("minus!");
-  //   }
-  //   if (arrayEl.attributes.class.nodeValue.split(" ")[0] === "comp_button") {
-  //     //   addComponent();
-  //     console.log("comp!");
-  //   }
-  //   if (clickedMinus) {
-  //     removeComponent();
-  //   }
+  //Removing component and setting ids
+  else if (compVal === "minus") {
+    stackView.removeComponent();
+    stackView.setIds();
+    stackView.setIdsSides();
+
+    //Configuring component
+  } else {
+    stackView.addCompImg(compVal);
+    stackView.setIds();
+    stackView.setIdsSides();
+
+    if (compVal === "cross") {
+      stackView.assignSideClicks("left");
+      stackView.assignSideClicks("right");
+      stackView.setIdsSides();
+    }
+  }
+  stackView.assignHandOClicks();
 };
 
 const init = function () {
-  stackButtonsView.addHandlerAdjustBlocks(controlAdjustStack);
+  stackView.addHandlerAdjustBlocks(controlAdjustStack);
 };
 
 init();

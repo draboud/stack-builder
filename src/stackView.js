@@ -1,7 +1,9 @@
 import View from "./View";
 import { COMP_CLASSES } from "./config";
 
-class StackButtonsView extends View {
+//___________________________________________________________________
+
+class StackView extends View {
   addHandlerAdjustBlocks(handler) {
     //Select main comp type
     const compButtonsDiv = document.querySelector(".vert_buttons_div");
@@ -21,7 +23,7 @@ class StackButtonsView extends View {
       handler(...clickedArray.filter((el) => el != null));
     });
   }
-  //_________________________________________________________________________
+  ______;
   //Add stack comp
   addComponent() {
     const htmlComp = `
@@ -94,8 +96,10 @@ class StackButtonsView extends View {
           "active"
         );
 
-    // setIds();
-    // setIdsSides();
+    this._newLeftArray = [...this._compWrapper.querySelectorAll(".left_comp")];
+    this._newRightArray = [
+      ...this._compWrapper.querySelectorAll(".right_comp"),
+    ];
 
     // autoAdapt();
   };
@@ -104,13 +108,10 @@ class StackButtonsView extends View {
   //Add stack comp
   addCompImg = function (compFlag) {
     let compImg;
-    // let sideCompImg;
     this._activeComp = this._compWrapper.querySelector(".comp-div.active");
     const heightDiv = this._activeComp.querySelector(".height-div");
     const imageEl = this._activeComp.querySelector(".img");
     const optsDiv = this._activeComp.querySelector(".opts-div");
-    // const activeLeftComp = compWrapper.querySelector(".left_comp.active");
-    // const activeRightComp = compWrapper.querySelector(".right_comp.active");
 
     imageEl.parentNode.removeChild(imageEl); //just change src instead?
 
@@ -180,4 +181,4 @@ class StackButtonsView extends View {
   };
 }
 
-export default new StackButtonsView();
+export default new StackView();
