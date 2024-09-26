@@ -36,8 +36,15 @@ const controlAdjustStack = function (arrayEl) {
   heightsView.addCompHeight(compVal);
 };
 
+controlAdjustCross = function (sign) {
+  sign === "plus"
+    ? stackView.addSideComp(stackView._sideFlag)
+    : console.log("removing side comp");
+};
+
 const init = function () {
   stackView.addHandlerAdjustBlocks(controlAdjustStack);
+  stackView.addHandlerAdjustCross(controlAdjustCross);
 };
 
 init();

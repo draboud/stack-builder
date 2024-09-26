@@ -12,6 +12,7 @@ export default class View {
   _compFlag;
   _newLeftArray;
   _newRightArray;
+  _sideFlag;
 
   //________________________________________________________________________
   //ID main comps
@@ -129,7 +130,7 @@ export default class View {
         el.classList.remove("active");
       });
       clicked.classList.add("active");
-      const sideFlag = `${side}`;
+      this._sideFlag = `${side}`;
       //turn on cross comp buttons
       crossSplButton.classList.add("on");
       crossManButton.classList.add("on");

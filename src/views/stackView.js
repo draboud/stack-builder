@@ -23,7 +23,29 @@ class StackView extends View {
       handler(...clickedArray.filter((el) => el != null));
     });
   }
-  ______;
+  //_________________________________________________________________________
+  //Side plus and minus clicks
+  addHandlerAdjustCross(handler) {
+    const plusMinusWrapper = document.querySelector(".plus_minus_wrapper");
+    plusMinusWrapper.addEventListener("click", function (e) {
+      const clicked = e.target.closest(".side_effect");
+      if (!clicked) return;
+
+      clicked.classList.contains("plus") ? handler("plus") : handler("minus");
+
+      // if (clicked.classList.contains("plus")) {
+      //   e.stopPropagation();
+      //   // addSideComp(sideFlag);
+      //   handler("plus", "add");
+      // }
+      // if (clicked.classList.contains("minus")) {
+      //   e.stopPropagation();
+      //   // removeSideComp(sideFlag);
+      //   handler("minus", "remove");
+      // }
+    });
+  }
+  //_________________________________________________________________________
   //Add stack comp
   addComponent() {
     const htmlComp = `
@@ -171,6 +193,35 @@ class StackView extends View {
         .querySelector(".side_right_div")
         .classList.remove("hide");
     }
+  };
+
+  //_________________________________________________________________________
+  //Add cross side comp
+  addSideComp = function (flag) {
+    const htmlSide = `
+    <div class= "${flag}_comp active">
+      <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">
+      <div class="hyd_spacer hide"></div>
+    </div>`;
+
+    const targetActiveComp = this._compWrapper.querySelector(
+      ".comp-div.cross.active"
+    );
+    this._allSideComps = [
+      ...targetActiveComp.querySelectorAll(".left_comp"),
+      ...targetActiveComp.querySelectorAll(".right_comp"),
+    ];
+    this._allSideComps.forEach(function (el) {
+      el.classList.remove("active");
+    });
+    const sideSelect =
+      flag === "left"
+        ? targetActiveComp.firstElementChild
+        : targetActiveComp.lastElementChild;
+
+    const beforeOrAfter = flag === "left" ? "afterbegin" : "beforeend";
+    sideSelect.insertAdjacentHTML(beforeOrAfter, htmlSide);
+    // setIdsSides();
   };
 }
 
