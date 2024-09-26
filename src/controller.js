@@ -1,7 +1,8 @@
-import * as model from "./model.js";
-import stackView from "./stackView";
-import View from "./View";
 import { COMP_CLASSES } from "./config";
+import * as model from "./model.js";
+import View from "./views/View.js";
+import stackView from "./views/stackView.js";
+import heightsView from "./views/heightsView.js";
 
 const controlAdjustStack = function (arrayEl) {
   const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
@@ -32,6 +33,7 @@ const controlAdjustStack = function (arrayEl) {
     }
   }
   stackView.assignHandOClicks();
+  heightsView.addCompHeight(compVal);
 };
 
 const init = function () {

@@ -10,3 +10,11 @@ export const COMP_CLASSES = [
   "man",
   "hyd",
 ];
+export const COMP_HEIGHTS = {
+  wellhead: 27,
+  spool: 44,
+  cross: 49,
+  single: 72,
+  double: 112,
+  annular: 91,
+};

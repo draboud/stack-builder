@@ -12,8 +12,16 @@
     "man",
     "hyd"
   ];
+  var COMP_HEIGHTS = {
+    wellhead: 27,
+    spool: 44,
+    cross: 49,
+    single: 72,
+    double: 112,
+    annular: 91
+  };
 
-  // src/View.js
+  // src/views/View.js
   var crossSplButton = document.querySelector(".cross_comp_button.spl");
   var crossManButton = document.querySelector(".cross_comp_button.man");
   var crossHydButton = document.querySelector(".cross_comp_button.hyd");
@@ -132,7 +140,7 @@
     };
   };
 
-  // src/stackView.js
+  // src/views/stackView.js
   var StackView = class extends View {
     addHandlerAdjustBlocks(handler) {
       const compButtonsDiv = document.querySelector(".vert_buttons_div");
@@ -274,6 +282,17 @@
   };
   var stackView_default = new StackView();
 
+  // src/views/heightsView.js
+  var HeightsView = class extends View {
+    //_________________________________________________________________________
+    //Assign component heights
+    addCompHeight = function(compFlag) {
+      this._activeComp = document.querySelector(".comp-div.active");
+      this._activeComp.querySelector(".height-text").innerHTML = COMP_HEIGHTS[compFlag] + '"';
+    };
+  };
+  var heightsView_default = new HeightsView();
+
   // src/controller.js
   var controlAdjustStack = function(arrayEl) {
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
@@ -296,6 +315,7 @@
       }
     }
     stackView_default.assignHandOClicks();
+    heightsView_default.addCompHeight(compVal);
   };
   var init = function() {
     stackView_default.addHandlerAdjustBlocks(controlAdjustStack);

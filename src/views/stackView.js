@@ -1,5 +1,5 @@
 import View from "./View";
-import { COMP_CLASSES } from "./config";
+import { COMP_CLASSES } from "../config";
 
 //___________________________________________________________________
 
@@ -170,13 +170,6 @@ class StackView extends View {
       this._activeComp
         .querySelector(".side_right_div")
         .classList.remove("hide");
-
-      //   assignSideClicks("left");
-      //   assignSideClicks("right");
-      //   setIdsSides();
-      // }
-      // assignHandOClicks();
-      // addCompHeight(compFlag);
     }
   };
 }

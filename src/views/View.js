@@ -1,5 +1,3 @@
-import { COMP_CLASSES } from "./config.js";
-
 const crossSplButton = document.querySelector(".cross_comp_button.spl");
 const crossManButton = document.querySelector(".cross_comp_button.man");
 const crossHydButton = document.querySelector(".cross_comp_button.hyd");
