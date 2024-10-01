@@ -21,7 +21,7 @@
     annular: 91
   };
 
-  // src/views/View.js
+  // src/Views/View.js
   var sideActiveFlag;
   var View = class {
     _data;
@@ -112,7 +112,7 @@
     // };
   };
 
-  // src/views/stackView.js
+  // src/Views/stackView.js
   var StackView = class extends View {
     addHandlerAdjustBlocks(handler) {
       const compButtonsDiv = document.querySelector(".vert_buttons_div");

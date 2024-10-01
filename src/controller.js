@@ -1,7 +1,7 @@
 import { COMP_CLASSES } from "./config";
 import * as model from "./model.js";
-import View from "./views/View.js";
-import stackView from "./views/stackView.js";
+import View from "./Views/View.js";
+import stackView from "./Views/stackView.js";
 import heightsView from "./views/heightsView.js";
 import stackBtnsView from "./views/stackBtnsView.js";
 
