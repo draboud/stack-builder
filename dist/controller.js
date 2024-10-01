@@ -22,9 +22,7 @@
   };
 
   // src/views/View.js
-  var crossSplButton = document.querySelector(".cross_comp_button.spl");
-  var crossManButton = document.querySelector(".cross_comp_button.man");
-  var crossHydButton = document.querySelector(".cross_comp_button.hyd");
+  var sideActiveFlag;
   var View = class {
     _data;
     _compWrapper = document.querySelector(".comp-wrapper");
@@ -36,6 +34,9 @@
     _newLeftArray;
     _newRightArray;
     _sideFlag;
+    // _sideActiveFlag;
+    _heightDiv;
+    _optsDiv;
     //________________________________________________________________________
     //ID main comps
     setIds = function() {
@@ -44,7 +45,6 @@
         ...this._compWrapper.querySelectorAll(".left_comp"),
         ...this._compWrapper.querySelectorAll(".right_comp")
       ];
-      let sideActiveFlag;
       let compIdCounter = this._newCompArray.length;
       this._newCompArray.forEach(function(el, i) {
         el.id = "c-" + compIdCounter;
@@ -53,11 +53,6 @@
       this._allSideComps.forEach(function(el) {
         el.classList.contains("active") ? sideActiveFlag = true : sideActiveFlag = false;
       });
-      if (sideActiveFlag === false) {
-        document.querySelector(".cross_comp_button.spl").classList.remove("on");
-        document.querySelector(".cross_comp_button.man").classList.remove("on");
-        document.querySelector(".cross_comp_button.hyd").classList.remove("on");
-      }
     };
     //_________________________________________________________________________
     //ID cross comps
@@ -90,55 +85,31 @@
       });
     };
     //_________________________________________________________________________
-    //Assign height and options events
-    assignHandOClicks = function() {
-      const heightDiv = this._activeComp.querySelector(".height-div");
-      const optsDiv = this._activeComp.querySelector(".opts-div");
-      heightDiv.addEventListener("mouseenter", function(e) {
-        const hoverIn = e.target.closest(".height-div");
-        if (!hoverIn) return;
-        hoverIn.classList.add("highlight");
-      });
-      heightDiv.addEventListener("mouseout", function(e) {
-        const hoverOut = e.target.closest(".height-div");
-        if (!hoverOut) return;
-        hoverOut.classList.remove("highlight");
-      });
-      optsDiv.addEventListener("click", function(e) {
-        const clicked = e.target.closest(".opts-text");
-        if (!clicked) return;
-        clicked.classList.add("highlight");
-      });
-      optsDiv.addEventListener("click", function(e) {
-        const clicked = e.target.closest(".opts-text");
-        if (!clicked) return;
-        optionsModal.classList.remove("hide");
-      });
-    };
-    //_________________________________________________________________________
-    //Side component events for cross
-    assignSideClicks = function(side) {
-      const activeCrossDiv = this._compWrapper.querySelector(
-        ".comp-div.active.cross"
-      );
-      const sideDiv = activeCrossDiv.querySelector(`.side_${side}_div`);
-      sideDiv.addEventListener("click", (e) => {
-        const clicked = e.target.closest(`.${side}_comp`);
-        if (!clicked) return;
-        this._allSideComps = [
-          ...this._compWrapper.querySelectorAll(".left_comp"),
-          ...this._compWrapper.querySelectorAll(".right_comp")
-        ];
-        this._allSideComps.forEach(function(el) {
-          el.classList.remove("active");
-        });
-        clicked.classList.add("active");
-        this._sideFlag = `${side}`;
-        crossSplButton.classList.add("on");
-        crossManButton.classList.add("on");
-        crossHydButton.classList.add("on");
-      });
-    };
+    // //Assign height and options events
+    // assignHandOClicks = function () {
+    //   const heightDiv = this._activeComp.querySelector(".height-div");
+    //   const optsDiv = this._activeComp.querySelector(".opts-div");
+    //   heightDiv.addEventListener("mouseenter", function (e) {
+    //     const hoverIn = e.target.closest(".height-div");
+    //     if (!hoverIn) return;
+    //     hoverIn.classList.add("highlight");
+    //   });
+    //   heightDiv.addEventListener("mouseout", function (e) {
+    //     const hoverOut = e.target.closest(".height-div");
+    //     if (!hoverOut) return;
+    //     hoverOut.classList.remove("highlight");
+    //   });
+    //   optsDiv.addEventListener("click", function (e) {
+    //     const clicked = e.target.closest(".opts-text");
+    //     if (!clicked) return;
+    //     clicked.classList.add("highlight");
+    //   });
+    //   optsDiv.addEventListener("click", function (e) {
+    //     const clicked = e.target.closest(".opts-text");
+    //     if (!clicked) return;
+    //     optionsModal.classList.remove("hide");
+    //   });
+    // };
   };
 
   // src/views/stackView.js
@@ -147,29 +118,59 @@
       const compButtonsDiv = document.querySelector(".vert_buttons_div");
       compButtonsDiv.addEventListener("click", function(e) {
         const clickedComp = e.target.closest(".comp_button");
-        const clickedCrossComp = e.target.closest(".cross_comp_button");
+        const clickedCompCross = e.target.closest(".comp_button_cr");
         const clickedAdd = e.target.closest(".comp_button_plus");
         const clickedMinus = e.target.closest(".comp_button_minus");
         const clickedArray = [
           clickedComp,
-          clickedCrossComp,
+          clickedCompCross,
           clickedAdd,
           clickedMinus
         ];
         handler(...clickedArray.filter((el) => el != null));
       });
     }
-    //_________________________________________________________________________
+    //______________________________________________________________________
     //Side plus and minus clicks
     addHandlerAdjustCross(handler) {
       const plusMinusWrapper = document.querySelector(".plus_minus_wrapper");
       plusMinusWrapper.addEventListener("click", function(e) {
         const clicked = e.target.closest(".side_effect");
         if (!clicked) return;
+        e.stopPropagation();
         clicked.classList.contains("plus") ? handler("plus") : handler("minus");
       });
     }
-    //_________________________________________________________________________
+    //_____________________________________________________________________
+    //Height and Option clicks
+    addHandlerHandO(handler) {
+      this._heightDiv = document.querySelector(".comp-div.active").querySelector(".height-div");
+      this._optsDiv = document.querySelector(".comp-div.active").querySelector(".opts-div");
+      this._heightDiv.addEventListener("click", function(e) {
+        const clicked = e.target.closest(".height-div");
+        if (!clicked) return;
+        clicked.classList.toggle("highlight");
+      });
+      this._optsDiv.addEventListener("click", function(e) {
+        const clicked = e.target.closest(".opts-div");
+        if (!clicked) return;
+        clicked.classList.toggle("highlight");
+      });
+    }
+    //_____________________________________________________________________
+    //Clicks for stack components
+    addHandlerCompSelect(handler) {
+      this._compWrapper.addEventListener("click", function(e) {
+        const clicked = e.target.closest(".comp-div");
+        if (!clicked) return;
+        if (!clicked.querySelector(".left_comp.active") && !clicked.querySelector(".right_comp.active")) {
+          const sideActive = false;
+          handler(clicked, sideActive);
+        }
+        handler(clicked);
+      });
+    }
+    //_____________________________________________________________________
     //Add stack comp
     addComponent() {
       const htmlComp = `
@@ -214,7 +215,7 @@
         el.classList.remove("active");
       });
     }
-    //_________________________________________________________________________
+    //_______________________________________________________________________
     //Delete stack comp
     removeComponent = function() {
       this._activeComp = this._compWrapper.querySelector(".comp-div.active");
@@ -241,7 +242,7 @@
         ...this._compWrapper.querySelectorAll(".right_comp")
       ];
     };
-    //_________________________________________________________________________
+    //_______________________________________________________________________
     //Add stack comp
     addCompImg = function(compFlag) {
       let compImg;
@@ -290,7 +291,7 @@
         this._activeComp.querySelector(".side_right_div").classList.remove("hide");
       }
     };
-    //_________________________________________________________________________
+    //_______________________________________________________________________
     //Add cross side comp
     addSideComp = function(flag) {
       const htmlSide = `
@@ -312,6 +313,26 @@
       const beforeOrAfter = flag === "left" ? "afterbegin" : "beforeend";
       sideSelect.insertAdjacentHTML(beforeOrAfter, htmlSide);
     };
+    //_______________________________________________________________________
+    //Remove cross side comp
+    removeSideComp = function(flag) {
+      const activeSideComp = this._compWrapper.querySelector(
+        `.${flag}_comp.active`
+      );
+      if (!activeSideComp) return;
+      if (activeSideComp.id.slice(-2) === "-1") {
+        activeSideComp.querySelector(".hyd_spacer").classList.add("hide");
+        activeSideComp.querySelector(".img_side").src = "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png";
+        return;
+      }
+      activeSideComp.parentNode.removeChild(activeSideComp);
+      const targetActiveSideComp = this._compWrapper.querySelector(".comp-div.active").querySelector(`.${flag}_comp`);
+      flag === "left" ? targetActiveSideComp.parentNode.firstElementChild.classList.add(
+        "active"
+      ) : targetActiveSideComp.parentNode.lastElementChild.classList.add(
+        "active"
+      );
+    };
   };
   var stackView_default = new StackView();
 
@@ -326,36 +347,92 @@
   };
   var heightsView_default = new HeightsView();
 
+  // src/views/stackBtnsView.js
+  var [compSpl, compMan, compHyd] = Array.from([
+    ...document.querySelectorAll(".comp_button.cr")
+  ]);
+  var StackBtnsView = class extends View {
+    //_____________________________________________________________________
+    //Turn on/off cross buttons
+    toggleCrossBtns() {
+      compSpl.classList.toggle("on");
+      compMan.classList.toggle("on");
+      compHyd.classList.toggle("on");
+    }
+    //_____________________________________________________________________
+    //Side component events for cross
+    assignSideClicks = function(side) {
+      const activeCrossDiv = this._compWrapper.querySelector(
+        ".comp-div.active.cross"
+      );
+      const sideDiv = activeCrossDiv.querySelector(`.side_${side}_div`);
+      sideDiv.addEventListener("click", (e) => {
+        const clicked = e.target.closest(`.${side}_comp`);
+        if (!clicked) return;
+        this._allSideComps = [
+          ...this._compWrapper.querySelectorAll(".left_comp"),
+          ...this._compWrapper.querySelectorAll(".right_comp")
+        ];
+        this._allSideComps.forEach(function(el) {
+          el.classList.remove("active");
+        });
+        clicked.classList.add("active");
+        this._sideFlag = `${side}`;
+        this.toggleCrossBtns;
+      });
+    };
+  };
+  var stackBtnsView_default = new StackBtnsView();
+
   // src/controller.js
   var controlAdjustStack = function(arrayEl) {
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
     if (compVal === "plus") {
       stackView_default.addComponent();
-      stackView_default.setIds();
-      stackView_default.setIdsSides();
     } else if (compVal === "minus") {
       stackView_default.removeComponent();
-      stackView_default.setIds();
-      stackView_default.setIdsSides();
+    } else if (compVal === "cr") {
+      console.log("new cross btn");
     } else {
       stackView_default.addCompImg(compVal);
-      stackView_default.setIds();
-      stackView_default.setIdsSides();
       if (compVal === "cross") {
-        stackView_default.assignSideClicks("left");
-        stackView_default.assignSideClicks("right");
-        stackView_default.setIdsSides();
+        stackBtnsView_default.assignSideClicks("left");
+        stackBtnsView_default.assignSideClicks("right");
       }
     }
-    stackView_default.assignHandOClicks();
+    stackView_default.setIds();
+    if (stackView_default._sideActiveFlag === false) {
+      stackBtnsView_default.toggleCrossBtns();
+    }
+    stackView_default.setIdsSides();
+    stackView_default.addHandlerHandO();
     heightsView_default.addCompHeight(compVal);
   };
   controlAdjustCross = function(sign) {
-    sign === "plus" ? stackView_default.addSideComp(stackView_default._sideFlag) : console.log("removing side comp");
+    sign === "plus" ? stackView_default.addSideComp(stackView_default._sideFlag) : stackView_default.removeSideComp(stackView_default._sideFlag);
+    stackView_default.setIdsSides();
+  };
+  controlCompSelect = function(clicked, sideActive = true) {
+    stackView_default._allCompDivs = stackView_default._compWrapper.querySelectorAll(".comp-div");
+    stackView_default._activeSideComp = [
+      ...stackView_default._compWrapper.querySelectorAll(".left_comp.active"),
+      ...stackView_default._compWrapper.querySelectorAll(".right_comp.active")
+    ];
+    stackView_default._allCompDivs.forEach(function(el) {
+      el.classList.remove("active");
+    });
+    clicked.classList.add("active");
+    if (sideActive) {
+      stackView_default._activeSideComp.forEach(function(el) {
+        el.classList.remove("active");
+        stackBtnsView_default.toggleCrossBtns();
+      });
+    }
   };
   var init = function() {
     stackView_default.addHandlerAdjustBlocks(controlAdjustStack);
     stackView_default.addHandlerAdjustCross(controlAdjustCross);
+    stackView_default.addHandlerCompSelect(controlCompSelect);
   };
   init();
 })();

@@ -1,6 +1,5 @@
 import jsPDF from "jspdf";
-console.log("Sept 24, 2024 - Stack Builder - Test 3");
-console.log("test!");
+console.log("Sept 26, 2024 - Stack Builder");
 
 // const myNum = 55;
 // console.log("myNum: ", toString(myNum));
@@ -30,9 +29,9 @@ window.addEventListener("load", (event) => {
   const pdfButton = document.querySelector(".pdf_button");
   const adapterHeight = "70px";
 
-  const crossSplButton = document.querySelector(".cross_comp_button.spl");
-  const crossManButton = document.querySelector(".cross_comp_button.man");
-  const crossHydButton = document.querySelector(".cross_comp_button.hyd");
+  // const crossSplButton = document.querySelector(".cross_comp_button.spl");
+  // const crossManButton = document.querySelector(".cross_comp_button.man");
+  // const crossHydButton = document.querySelector(".cross_comp_button.hyd");
   //___________________________________________________________________________
   const form = document.querySelector(".form");
   let jobTitle = "";
@@ -49,7 +48,7 @@ window.addEventListener("load", (event) => {
     jobTitle += jobTitleInput;
     notes += notesInput;
   });
-  //___________________________________________________________________________
+  //_________________________________________________________________________
 
   let allComps = [...compWrapper.children];
   let compFlag = "";
@@ -499,11 +498,11 @@ window.addEventListener("load", (event) => {
         ? (sideActiveFlag = true)
         : (sideActiveFlag = false);
     });
-    if (sideActiveFlag === false) {
-      document.querySelector(".cross_comp_button.spl").classList.remove("on");
-      document.querySelector(".cross_comp_button.man").classList.remove("on");
-      document.querySelector(".cross_comp_button.hyd").classList.remove("on");
-    }
+    //   if (sideActiveFlag === false) {
+    //     document.querySelector(".cross_comp_button.spl").classList.remove("on");
+    //     document.querySelector(".cross_comp_button.man").classList.remove("on");
+    //     document.querySelector(".cross_comp_button.hyd").classList.remove("on");
+    //   }
   };
   //_________________________________________________________________________
   //ID cross comps

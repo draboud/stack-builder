@@ -27359,7 +27359,7 @@
   var jspdf_es_min_default = E;
 
   // src/script.js
-  console.log("Sept 24, 2024 - Stack Builder - Test 1");
+  console.log("Sept 26, 2024 - Stack Builder");
   window.addEventListener("load", (event) => {
     const compClasses = [
       "washington",
@@ -27383,9 +27383,6 @@
     const viewButton = document.querySelector(".view_button");
     const pdfButton = document.querySelector(".pdf_button");
     const adapterHeight = "70px";
-    const crossSplButton = document.querySelector(".cross_comp_button.spl");
-    const crossManButton = document.querySelector(".cross_comp_button.man");
-    const crossHydButton = document.querySelector(".cross_comp_button.hyd");
     const form = document.querySelector(".form");
     let jobTitle = "";
     let notes = "";
@@ -27730,11 +27727,6 @@
       allSideComps.forEach(function(el) {
         el.classList.contains("active") ? sideActiveFlag = true : sideActiveFlag = false;
       });
-      if (sideActiveFlag === false) {
-        document.querySelector(".cross_comp_button.spl").classList.remove("on");
-        document.querySelector(".cross_comp_button.man").classList.remove("on");
-        document.querySelector(".cross_comp_button.hyd").classList.remove("on");
-      }
     };
     const setIdsSides = function() {
       const newLeftArray = [...compWrapper.querySelectorAll(".left_comp")];

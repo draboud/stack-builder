@@ -1,6 +1,15 @@
-const crossSplButton = document.querySelector(".cross_comp_button.spl");
-const crossManButton = document.querySelector(".cross_comp_button.man");
-const crossHydButton = document.querySelector(".cross_comp_button.hyd");
+// const crossSplButton = (document
+//   .querySelector(".comp_button.cr")
+//   .querySelector(".comp_text").innerHTML = "spl");
+// const crossManButton = document.querySelector(".cross_comp_button");
+// const crossHydButton = document.querySelector(".cross_comp_button.hyd");
+// const [compSpl, compMan, compHyd] = Array.from([
+//   ...document.querySelectorAll(".comp_button.cr"),
+
+// import stackBtnsView from "./stackBtnsView";
+
+// ]);
+let sideActiveFlag;
 
 export default class View {
   _data;
@@ -13,6 +22,9 @@ export default class View {
   _newLeftArray;
   _newRightArray;
   _sideFlag;
+  // _sideActiveFlag;
+  _heightDiv;
+  _optsDiv;
 
   //________________________________________________________________________
   //ID main comps
@@ -22,7 +34,6 @@ export default class View {
       ...this._compWrapper.querySelectorAll(".left_comp"),
       ...this._compWrapper.querySelectorAll(".right_comp"),
     ];
-    let sideActiveFlag;
     let compIdCounter = this._newCompArray.length;
     this._newCompArray.forEach(function (el, i) {
       el.id = "c-" + compIdCounter;
@@ -34,11 +45,9 @@ export default class View {
         ? (sideActiveFlag = true)
         : (sideActiveFlag = false);
     });
-    if (sideActiveFlag === false) {
-      document.querySelector(".cross_comp_button.spl").classList.remove("on");
-      document.querySelector(".cross_comp_button.man").classList.remove("on");
-      document.querySelector(".cross_comp_button.hyd").classList.remove("on");
-    }
+    // if (this._sideActiveFlag === false) {
+    //   stackBtnsView.toggleCrosBtns();
+    // }
   };
 
   //_________________________________________________________________________
@@ -82,59 +91,32 @@ export default class View {
     });
   };
   //_________________________________________________________________________
-  //Assign height and options events
-  assignHandOClicks = function () {
-    const heightDiv = this._activeComp.querySelector(".height-div");
-    const optsDiv = this._activeComp.querySelector(".opts-div");
+  // //Assign height and options events
+  // assignHandOClicks = function () {
+  //   const heightDiv = this._activeComp.querySelector(".height-div");
+  //   const optsDiv = this._activeComp.querySelector(".opts-div");
 
-    heightDiv.addEventListener("mouseenter", function (e) {
-      const hoverIn = e.target.closest(".height-div");
-      if (!hoverIn) return;
-      hoverIn.classList.add("highlight");
-    });
-    heightDiv.addEventListener("mouseout", function (e) {
-      const hoverOut = e.target.closest(".height-div");
-      if (!hoverOut) return;
-      hoverOut.classList.remove("highlight");
-    });
+  //   heightDiv.addEventListener("mouseenter", function (e) {
+  //     const hoverIn = e.target.closest(".height-div");
+  //     if (!hoverIn) return;
+  //     hoverIn.classList.add("highlight");
+  //   });
+  //   heightDiv.addEventListener("mouseout", function (e) {
+  //     const hoverOut = e.target.closest(".height-div");
+  //     if (!hoverOut) return;
+  //     hoverOut.classList.remove("highlight");
+  //   });
 
-    optsDiv.addEventListener("click", function (e) {
-      const clicked = e.target.closest(".opts-text");
-      if (!clicked) return;
-      clicked.classList.add("highlight");
-    });
+  //   optsDiv.addEventListener("click", function (e) {
+  //     const clicked = e.target.closest(".opts-text");
+  //     if (!clicked) return;
+  //     clicked.classList.add("highlight");
+  //   });
 
-    optsDiv.addEventListener("click", function (e) {
-      const clicked = e.target.closest(".opts-text");
-      if (!clicked) return;
-      optionsModal.classList.remove("hide");
-    });
-  };
-  //_________________________________________________________________________
-  //Side component events for cross
-  assignSideClicks = function (side) {
-    const activeCrossDiv = this._compWrapper.querySelector(
-      ".comp-div.active.cross"
-    );
-    const sideDiv = activeCrossDiv.querySelector(`.side_${side}_div`);
-
-    sideDiv.addEventListener("click", (e) => {
-      const clicked = e.target.closest(`.${side}_comp`);
-      if (!clicked) return;
-
-      this._allSideComps = [
-        ...this._compWrapper.querySelectorAll(".left_comp"),
-        ...this._compWrapper.querySelectorAll(".right_comp"),
-      ];
-      this._allSideComps.forEach(function (el) {
-        el.classList.remove("active");
-      });
-      clicked.classList.add("active");
-      this._sideFlag = `${side}`;
-      //turn on cross comp buttons
-      crossSplButton.classList.add("on");
-      crossManButton.classList.add("on");
-      crossHydButton.classList.add("on");
-    });
-  };
+  //   optsDiv.addEventListener("click", function (e) {
+  //     const clicked = e.target.closest(".opts-text");
+  //     if (!clicked) return;
+  //     optionsModal.classList.remove("hide");
+  //   });
+  // };
 }
