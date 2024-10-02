@@ -1,5 +1,5 @@
 import { COMP_HEIGHTS } from "../config.js";
-import View from "./View.js";
+import View from "./View";
 
 class HeightsView extends View {
   //_________________________________________________________________________

@@ -1,67 +1,64 @@
-import { COMP_CLASSES } from "./config";
+import { COMP_CLASSES, COMP_IMG } from "./config";
 import * as model from "./model.js";
 import View from "./Views/View.js";
-import stackView from "./Views/stackView.js";
+import stackView from "./views/stackView.js";
 import heightsView from "./views/heightsView.js";
 import stackBtnsView from "./views/stackBtnsView.js";
+import { setIds, setIdsSides } from "./helpers.js";
 
-const controlAdjustStack = function (arrayEl) {
+console.log("CONTROLLER - Oct 2, 2024");
+// console.log(COMP_IMG.annular);
+
+const controlStackBtns = function (arrayEl) {
   const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
 
   //Adding component and setting ids
   if (compVal === "plus") {
-    stackView.addComponent();
+    stackView.addComp();
   }
 
   //Removing component and setting ids
   else if (compVal === "minus") {
-    stackView.removeComponent();
+    stackView.delComp();
   } else if (compVal === "cr") {
     console.log("new cross btn");
   }
   //Configuring component
   else {
-    stackView.addCompImg(compVal);
-
-    if (compVal === "cross") {
-      stackBtnsView.assignSideClicks("left");
-      stackBtnsView.assignSideClicks("right");
-    }
+    stackView.configureComp(compVal);
   }
-  stackView.setIds();
+  setIds();
   if (stackView._sideActiveFlag === false) {
-    stackBtnsView.toggleCrossBtns();
+    stackBtnsView.toggleCrossBtns("remove");
   }
-
-  stackView.setIdsSides();
+  setIdsSides();
   stackView.addHandlerHandO();
   heightsView.addCompHeight(compVal);
 };
 
-controlAdjustCross = function (sign) {
+controlCrossPlusMinus = function (sign) {
   sign === "plus"
     ? stackView.addSideComp(stackView._sideFlag)
     : stackView.removeSideComp(stackView._sideFlag);
-  stackView.setIdsSides();
+  setIdsSides();
 };
 
-controlCompSelect = function (clicked, sideActive = true) {
+controlCompClick = function (clicked) {
   stackView._allCompDivs = stackView._compWrapper.querySelectorAll(".comp-div");
   stackView._activeSideComp = [
     ...stackView._compWrapper.querySelectorAll(".left_comp.active"),
     ...stackView._compWrapper.querySelectorAll(".right_comp.active"),
   ];
-  stackView._allCompDivs.forEach(function (el) {
-    el.classList.remove("active");
-  });
+  stackView._allCompDivs.forEach((el) => el.classList.remove("active"));
+  if (
+    !clicked.querySelector(".left_comp.active") &&
+    !clicked.querySelector(".right_comp.active")
+  ) {
+    stackView._activeSideComp.forEach((el) => el.classList.remove("active"));
+    stackBtnsView.toggleCrossBtns("remove");
+  } else stackBtnsView.toggleCrossBtns("add");
   clicked.classList.add("active");
-  if (sideActive) {
-    stackView._activeSideComp.forEach(function (el) {
-      el.classList.remove("active");
-      //turn on cross comp buttons
-      stackBtnsView.toggleCrossBtns();
-    });
-  }
+  // if (sideActive) stackBtnsView.toggleCrossBtns("add");
 };
 
 // controlHandO = function (HeightorOpt) {
@@ -74,9 +71,9 @@ controlCompSelect = function (clicked, sideActive = true) {
 // };
 
 const init = function () {
-  stackView.addHandlerAdjustBlocks(controlAdjustStack);
-  stackView.addHandlerAdjustCross(controlAdjustCross);
-  stackView.addHandlerCompSelect(controlCompSelect);
+  stackBtnsView.addHandlerStackBtns(controlStackBtns);
+  stackBtnsView.addHandlerCrossPlusMinus(controlCrossPlusMinus);
+  stackView.addHandlerCompClick(controlCompClick);
   //   stackView.addHandlerHandO(controlHandO);
 };
 

@@ -27359,7 +27359,7 @@
   var jspdf_es_min_default = E;
 
   // src/script.js
-  console.log("Sept 26, 2024 - Stack Builder");
+  console.log("Oct 2, 2024 - Stack Builder");
   window.addEventListener("load", (event) => {
     const compClasses = [
       "washington",
@@ -27383,6 +27383,9 @@
     const viewButton = document.querySelector(".view_button");
     const pdfButton = document.querySelector(".pdf_button");
     const adapterHeight = "70px";
+    const crossSplButton = document.querySelector(".cross_comp_button.spl");
+    const crossManButton = document.querySelector(".cross_comp_button.man");
+    const crossHydButton = document.querySelector(".cross_comp_button.hyd");
     const form = document.querySelector(".form");
     let jobTitle = "";
     let notes = "";
@@ -27582,14 +27585,7 @@
         console.log("you cannot remove this one!");
         return;
       }
-      if (activeElement.classList.contains("cross")) {
-        activeSideComp.forEach(function(el) {
-          el.classList.remove("active");
-        });
-      }
-      compWrapper.firstElementChild.classList.contains("comp-div") ? compWrapper.firstElementChild.classList.add("active") : compWrapper.firstElementChild.nextElementSibling.classList.add(
-        "active"
-      );
+      compWrapper.firstElementChild.classList.add("active");
       setIds();
       setIdsSides();
       autoAdapt();

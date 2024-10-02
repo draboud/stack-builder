@@ -1,5 +1,5 @@
 import jsPDF from "jspdf";
-console.log("Sept 26, 2024 - Stack Builder");
+console.log("Oct 2, 2024 - Stack Builder");
 
 // const myNum = 55;
 // console.log("myNum: ", toString(myNum));
@@ -29,9 +29,9 @@ window.addEventListener("load", (event) => {
   const pdfButton = document.querySelector(".pdf_button");
   const adapterHeight = "70px";
 
-  // const crossSplButton = document.querySelector(".cross_comp_button.spl");
-  // const crossManButton = document.querySelector(".cross_comp_button.man");
-  // const crossHydButton = document.querySelector(".cross_comp_button.hyd");
+  const crossSplButton = document.querySelector(".cross_comp_button.spl");
+  const crossManButton = document.querySelector(".cross_comp_button.man");
+  const crossHydButton = document.querySelector(".cross_comp_button.hyd");
   //___________________________________________________________________________
   const form = document.querySelector(".form");
   let jobTitle = "";
@@ -289,16 +289,18 @@ window.addEventListener("load", (event) => {
       console.log("you cannot remove this one!");
       return;
     }
-    if (activeElement.classList.contains("cross")) {
-      activeSideComp.forEach(function (el) {
-        el.classList.remove("active");
-      });
-    }
-    compWrapper.firstElementChild.classList.contains("comp-div")
-      ? compWrapper.firstElementChild.classList.add("active")
-      : compWrapper.firstElementChild.nextElementSibling.classList.add(
-          "active"
-        );
+    // if (activeElement.classList.contains("cross")) {
+    //   activeSideComp.forEach(function (el) {
+    //     el.classList.remove("active");
+    //   });
+    // // }
+    // compWrapper.firstElementChild.classList.contains("comp-div")
+    //   ? compWrapper.firstElementChild.classList.add("active")
+    //   : compWrapper.firstElementChild.nextElementSibling.classList.add(
+    //       "active"
+    //     );
+
+    compWrapper.firstElementChild.classList.add("active");
 
     setIds();
     setIdsSides();

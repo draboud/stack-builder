@@ -6,41 +6,44 @@ const [compSpl, compMan, compHyd] = Array.from([
 ]);
 
 class StackBtnsView extends View {
-  //_____________________________________________________________________
-  //Turn on/off cross buttons
-  toggleCrossBtns() {
-    compSpl.classList.toggle("on");
-    compMan.classList.toggle("on");
-    compHyd.classList.toggle("on");
+  addHandlerStackBtns(handler) {
+    //Select main comp type
+    const compButtonsDiv = document.querySelector(".vert_buttons_div");
+    compButtonsDiv.addEventListener("click", function (e) {
+      const clickedComp = e.target.closest(".comp_button");
+      const clickedCompCross = e.target.closest(".comp_button_cr");
+      const clickedAdd = e.target.closest(".comp_button_plus");
+      const clickedMinus = e.target.closest(".comp_button_minus");
+
+      const clickedArray = [
+        clickedComp,
+        clickedCompCross,
+        clickedAdd,
+        clickedMinus,
+      ];
+
+      handler(...clickedArray.filter((el) => el != null));
+    });
+  }
+  //______________________________________________________________________
+  //Side plus and minus clicks
+  addHandlerCrossPlusMinus(handler) {
+    const plusMinusWrapper = document.querySelector(".plus_minus_wrapper");
+    plusMinusWrapper.addEventListener("click", function (e) {
+      const clicked = e.target.closest(".side_effect");
+      if (!clicked) return;
+      e.stopPropagation();
+
+      clicked.classList.contains("plus") ? handler("plus") : handler("minus");
+    });
   }
   //_____________________________________________________________________
-  //Side component events for cross
-  assignSideClicks = function (side) {
-    const activeCrossDiv = this._compWrapper.querySelector(
-      ".comp-div.active.cross"
-    );
-    const sideDiv = activeCrossDiv.querySelector(`.side_${side}_div`);
-
-    sideDiv.addEventListener("click", (e) => {
-      const clicked = e.target.closest(`.${side}_comp`);
-      if (!clicked) return;
-
-      this._allSideComps = [
-        ...this._compWrapper.querySelectorAll(".left_comp"),
-        ...this._compWrapper.querySelectorAll(".right_comp"),
-      ];
-      this._allSideComps.forEach(function (el) {
-        el.classList.remove("active");
-      });
-      clicked.classList.add("active");
-      this._sideFlag = `${side}`;
-      //   //turn on cross comp buttons
-      //   compSpl.classList.add("on");
-      //   compMan.classList.add("on");
-      //   compHyd.classList.add("on");
-      this.toggleCrossBtns;
-    });
-  };
+  //Turn on/off cross buttons
+  toggleCrossBtns(addOrRemove) {
+    addOrRemove === "add"
+      ? [compSpl, compMan, compHyd].forEach((el) => el.classList.add("on"))
+      : [compSpl, compMan, compHyd].forEach((el) => el.classList.remove("on"));
+  }
 }
 
 export default new StackBtnsView();
