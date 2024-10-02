@@ -3,7 +3,7 @@ import * as model from "./model.js";
 import View from "./Views/View.js";
 import stackView from "./views/stackView.js";
 import heightsView from "./views/heightsView.js";
-import stackBtnsView from "./views/stackBtnsView.js";
+import stackBtnsView from "./Views/stackBtnsView.js";
 import { setIds, setIdsSides } from "./helpers.js";
 
 console.log("CONTROLLER - Oct 2, 2024");

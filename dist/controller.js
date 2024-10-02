@@ -102,7 +102,7 @@
     // };
   };
 
-  // src/views/stackBtnsView.js
+  // src/Views/stackBtnsView.js
   var [compSpl, compMan, compHyd] = Array.from([
     ...document.querySelectorAll(".comp_button.cr")
   ]);
