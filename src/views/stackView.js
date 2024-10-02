@@ -96,9 +96,7 @@ class StackView extends View {
       return;
     }
     if (this._activeComp.classList.contains("cross")) {
-      this._activeSideComp.forEach(function (el) {
-        el.classList.remove("active");
-      });
+      this._activeSideComp?.classList.remove("active");
     }
     this._compWrapper.firstElementChild.classList.contains("comp-div")
       ? this._compWrapper.firstElementChild.classList.add("active")

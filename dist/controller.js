@@ -216,9 +216,7 @@
         return;
       }
       if (this._activeComp.classList.contains("cross")) {
-        this._activeSideComp.forEach(function(el) {
-          el.classList.remove("active");
-        });
+        this._activeSideComp?.classList.remove("active");
       }
       this._compWrapper.firstElementChild.classList.contains("comp-div") ? this._compWrapper.firstElementChild.classList.add("active") : this._compWrapper.firstElementChild.nextElementSibling.classList.add(
         "active"
@@ -387,6 +385,7 @@
       console.log("new cross btn");
     } else {
       stackView_default.configureComp(compVal);
+      stackBtnsView_default.toggleCrossBtns("remove");
     }
     setIds();
     if (stackView_default._sideActiveFlag === false) {
@@ -401,14 +400,10 @@
     setIdsSides();
   };
   controlCompClick = function(clicked) {
-    stackView_default._allCompDivs = stackView_default._compWrapper.querySelectorAll(".comp-div");
-    stackView_default._activeSideComp = [
-      ...stackView_default._compWrapper.querySelectorAll(".left_comp.active"),
-      ...stackView_default._compWrapper.querySelectorAll(".right_comp.active")
-    ];
-    stackView_default._allCompDivs.forEach((el) => el.classList.remove("active"));
+    stackView_default._retarget();
+    stackView_default._allComps.forEach((el) => el.classList.remove("active"));
     if (!clicked.querySelector(".left_comp.active") && !clicked.querySelector(".right_comp.active")) {
-      stackView_default._activeSideComp.forEach((el) => el.classList.remove("active"));
+      stackView_default._activeSideComp?.classList.remove("active");
       stackBtnsView_default.toggleCrossBtns("remove");
     } else stackBtnsView_default.toggleCrossBtns("add");
     clicked.classList.add("active");

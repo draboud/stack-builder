@@ -26,6 +26,7 @@ const controlStackBtns = function (arrayEl) {
   //Configuring component
   else {
     stackView.configureComp(compVal);
+    stackBtnsView.toggleCrossBtns("remove");
   }
   setIds();
   if (stackView._sideActiveFlag === false) {
@@ -44,17 +45,19 @@ controlCrossPlusMinus = function (sign) {
 };
 
 controlCompClick = function (clicked) {
-  stackView._allCompDivs = stackView._compWrapper.querySelectorAll(".comp-div");
-  stackView._activeSideComp = [
-    ...stackView._compWrapper.querySelectorAll(".left_comp.active"),
-    ...stackView._compWrapper.querySelectorAll(".right_comp.active"),
-  ];
-  stackView._allCompDivs.forEach((el) => el.classList.remove("active"));
+  // stackView._allCompDivs = stackView._compWrapper.querySelectorAll(".comp-div");
+  // stackView._activeSideComp = [
+  //   ...stackView._compWrapper.querySelectorAll(".left_comp.active"),
+  //   ...stackView._compWrapper.querySelectorAll(".right_comp.active"),
+  // ];
+  stackView._retarget();
+  stackView._allComps.forEach((el) => el.classList.remove("active"));
   if (
     !clicked.querySelector(".left_comp.active") &&
     !clicked.querySelector(".right_comp.active")
   ) {
-    stackView._activeSideComp.forEach((el) => el.classList.remove("active"));
+    // stackView._activeSideComp.forEach((el) => el.classList.remove("active"));
+    stackView._activeSideComp?.classList.remove("active");
     stackBtnsView.toggleCrossBtns("remove");
   } else stackBtnsView.toggleCrossBtns("add");
   clicked.classList.add("active");
