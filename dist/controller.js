@@ -95,7 +95,7 @@
 
   // src/Views/stackBtnsView.js
   var [compSpl, compMan, compHyd] = Array.from([
-    ...document.querySelectorAll(".comp_button.cr")
+    ...document.querySelectorAll(".comp_button_cross")
   ]);
   var StackBtnsView = class extends View {
     _addHandlerStackBtns(handler) {
@@ -178,22 +178,16 @@
     });
   };
   var cleanCross = function() {
-    stackView_default._retarget("left");
-    const lastLeft = stackView_default._currentSideComps.at(0);
-    stackView_default._currentSideComps.forEach((el) => el.classList.remove("active"));
-    lastLeft.classList.add("active");
-    stackView_default._currentSideComps.forEach(function(el) {
-      stackView_default._delSideComp("left");
+    stackBtnsView_default.toggleCrossBtns("remove");
+    ["left", "right"].forEach(function(el) {
+      stackView_default._retarget(el);
+      stackView_default._currentSideComps.forEach((el2) => el2.classList.remove("active"));
+      stackView_default._currentSideComps.at(el === "left" ? 0 : -1).classList.add("active");
+      stackView_default._currentSideComps.forEach(function(el2) {
+        stackView_default._delSideComp(el);
+      });
+      stackView_default._currentSideComps.forEach((el2) => el2.classList.remove("active"));
     });
-    stackView_default._currentSideComps.forEach((el) => el.classList.remove("active"));
-    stackView_default._retarget("right");
-    const lastRight = stackView_default._currentSideComps.at(-1);
-    stackView_default._currentSideComps.forEach((el) => el.classList.remove("active"));
-    lastRight.classList.add("active");
-    stackView_default._currentSideComps.forEach(function(el) {
-      stackView_default._delSideComp("right");
-    });
-    stackView_default._currentSideComps.forEach((el) => el.classList.remove("active"));
   };
 
   // src/views/stackView.js
@@ -379,7 +373,6 @@
     //Add component to active side of active cross in stack
     _configCrossComp = function(compFlag) {
       this._retarget();
-      console.log("compFlag: ", compFlag);
       let sideCompImg;
       if (compFlag === "spl") {
         sideCompImg = COMP_IMG.spl;
@@ -430,7 +423,6 @@
       case "man":
       case "hyd":
         if (stackView_default._activeSideComp) {
-          console.log("active side!");
           stackView_default._configCrossComp(compVal);
         }
         break;

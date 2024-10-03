@@ -2,7 +2,7 @@ import View from "./View";
 import { COMP_CLASSES } from "../config";
 
 const [compSpl, compMan, compHyd] = Array.from([
-  ...document.querySelectorAll(".comp_button.cr"),
+  ...document.querySelectorAll(".comp_button_cross"),
 ]);
 
 class StackBtnsView extends View {

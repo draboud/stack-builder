@@ -23,7 +23,6 @@ const controlStackBtns = function (arrayEl) {
     case "man":
     case "hyd":
       if (stackView._activeSideComp) {
-        console.log("active side!");
         stackView._configCrossComp(compVal);
       }
       break;

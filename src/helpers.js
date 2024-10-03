@@ -1,4 +1,5 @@
 import stackView from "./views/stackView";
+import stackBtnsView from "./Views/stackBtnsView";
 import View from "./Views/View";
 
 //________________________________________________________________________
@@ -63,23 +64,17 @@ export const setIdsSides = function () {
 //_________________________________________________________________________
 //Remove extra cross side components and 'active'
 export const cleanCross = function () {
-  stackView._retarget("left");
-  const lastLeft = stackView._currentSideComps.at(0);
+  stackBtnsView.toggleCrossBtns("remove");
 
-  stackView._currentSideComps.forEach((el) => el.classList.remove("active"));
-  lastLeft.classList.add("active");
-  stackView._currentSideComps.forEach(function (el) {
-    stackView._delSideComp("left");
+  ["left", "right"].forEach(function (el) {
+    stackView._retarget(el);
+    stackView._currentSideComps.forEach((el) => el.classList.remove("active"));
+    stackView._currentSideComps
+      .at(el === "left" ? 0 : -1)
+      .classList.add("active");
+    stackView._currentSideComps.forEach(function (el2) {
+      stackView._delSideComp(el);
+    });
+    stackView._currentSideComps.forEach((el) => el.classList.remove("active"));
   });
-  stackView._currentSideComps.forEach((el) => el.classList.remove("active"));
-
-  stackView._retarget("right");
-  const lastRight = stackView._currentSideComps.at(-1);
-
-  stackView._currentSideComps.forEach((el) => el.classList.remove("active"));
-  lastRight.classList.add("active");
-  stackView._currentSideComps.forEach(function (el) {
-    stackView._delSideComp("right");
-  });
-  stackView._currentSideComps.forEach((el) => el.classList.remove("active"));
 };

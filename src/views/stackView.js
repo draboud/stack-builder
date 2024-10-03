@@ -111,7 +111,10 @@ class StackView extends View {
   _configComp = function (compFlag) {
     let compImg;
     this._retarget();
+
+    //if this active block was previously a cross, clear all added sides
     if (this._activeComp.classList.contains("cross")) cleanCross();
+
     const heightDiv = this._activeComp.querySelector(".height-div");
     const imageEl = this._activeComp.querySelector(".img");
     const optsDiv = this._activeComp.querySelector(".opts-div");
@@ -180,7 +183,6 @@ class StackView extends View {
       clicked.classList.add("active");
       this._allComps.forEach((el) => el.classList.remove("active"));
       clicked.closest(".comp-div").classList.add("active");
-
       this._sideFlag = side;
       stackBtnsView.toggleCrossBtns("add");
     });
@@ -245,11 +247,7 @@ class StackView extends View {
   //Add component to active side of active cross in stack
   _configCrossComp = function (compFlag) {
     this._retarget();
-    console.log("compFlag: ", compFlag);
-    // const allSideComps = [
-    //   ...compWrapper.querySelectorAll(".left_comp"),
-    //   ...compWrapper.querySelectorAll(".right_comp"),
-    // ];
+
     let sideCompImg;
 
     if (compFlag === "spl") {
