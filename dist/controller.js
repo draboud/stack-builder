@@ -18,7 +18,9 @@
     single: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a600e30348edb10ea25_single-lines-s-p-500.png",
     cross: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a6185c880cf2c85a7c3_cross-lines-s-p-500.png",
     spool: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a60ad38b5aab5702ba1_spool-lines-s-p-500.png",
-    wellhead: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b434b3ef1b19da5b4282b7_wellhead-lines-s-p-500.png"
+    wellhead: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b434b3ef1b19da5b4282b7_wellhead-lines-s-p-500.png",
+    side: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png",
+    blank: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s-p-500.png"
   };
   var COMP_HEIGHTS = {
     wellhead: 27,
@@ -35,7 +37,7 @@
     _compWrapper = document.querySelector(".comp-wrapper");
     _allComps;
     _allSideComps;
-    _activeComp;
+    _activeComp = document.querySelector(".comp-div.active");
     _activeSideComp;
     _compFlag;
     _newLeftArray;
@@ -44,27 +46,8 @@
     // _sideActiveFlag;
     _heightDiv;
     _optsDiv;
-    // _retarget(allComps, compActive, allSideComps, sideCompActive) {
-    //   if (allComps) {
-    //     this._allComps = document.querySelectorAll(".comp-div");
-    //   }
-    //   if (compActive) {
-    //     this._activeComp = document.querySelector(".comp-div.active");
-    //   }
-    //   if (allSideComps) {
-    //     this._allSideComps = [
-    //       ...document.querySelectorAll(".left_comp"),
-    //       ...document.querySelectorAll(".right_comp"),
-    //     ];
-    //   }
-    //   if (sideCompActive) {
-    //     this._activeSideComp = this._allSideComps.find((el) =>
-    //       el.classList.contains("active")
-    //     );
-    //   }
-    // }
     _retarget() {
-      this._allComps = document.querySelectorAll(".comp-div");
+      this._allComps = [...this._compWrapper.children];
       this._activeComp = document.querySelector(".comp-div.active");
       this._allSideComps = [
         ...document.querySelectorAll(".left_comp"),
@@ -176,14 +159,14 @@
     <div id="new" class="comp-div">
       <div class="side_left_div hide">
         <div class="left_comp">
-          <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">
+          <img class="img_side" src=${COMP_IMG.side}>
           <div class="hyd_spacer hide"></div>
         </div>
       </div>
       <div class="height-div hide">
         <div class="height-text">height</div>
       </div>
-      <img class="img" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s-p-500.png">
+      <img class="img" src=${COMP_IMG.blank}>
       <div class="opts-div hide">
         <div class="opts-text">options</div>
         <div class="opts-spacer"></div>
@@ -191,13 +174,12 @@
       </div>
       <div class="side_right_div hide">
         <div class="right_comp">
-          <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">
+          <img class="img_side" src=${COMP_IMG.side}>
           <div class="hyd_spacer hide"></div>
         </div>
       </div>`;
-      this._retarget();
       this._activeComp.insertAdjacentHTML("beforebegin", htmlComp);
-      this._allComps = [...this._compWrapper.children];
+      this._retarget();
       this._allComps.forEach(function(el) {
         el.classList.remove("active");
         if (el.id === "new") el.classList.add("active");
@@ -265,16 +247,20 @@
     //_____________________________________________________________________
     //Side component events for cross
     _assignSideClicks = function(side) {
+      this._retarget();
       const sideDiv = this._compWrapper.querySelector(".comp-div.active.cross").querySelector(`.side_${side}_div`);
       sideDiv.addEventListener("click", (e) => {
         const clicked = e.target.closest(`.${side}_comp`);
         if (!clicked) return;
-        this._retarget();
+        e.stopPropagation();
         this._allSideComps.forEach(function(el) {
           el.classList.remove("active");
         });
         clicked.classList.add("active");
+        this._allComps.forEach((el) => el.classList.remove("active"));
+        clicked.closest(".comp-div").classList.add("active");
         this._sideFlag = `${side}`;
+        stackBtnsView_default.toggleCrossBtns("add");
       });
     };
     //_______________________________________________________________________
@@ -374,23 +360,25 @@
   };
 
   // src/controller.js
-  console.log("CONTROLLER - Oct 2, 2024");
+  console.log("CONTROLLER - Oct 3, 2024");
   var controlStackBtns = function(arrayEl) {
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
     if (compVal === "plus") {
       stackView_default.addComp();
-    } else if (compVal === "minus") {
-      stackView_default.delComp();
-    } else if (compVal === "cr") {
-      console.log("new cross btn");
-    } else {
-      stackView_default.configureComp(compVal);
-      stackBtnsView_default.toggleCrossBtns("remove");
     }
-    setIds();
+    if (compVal === "minus") {
+      stackView_default.delComp();
+    }
+    if (compVal === "cr") {
+      console.log("new cross btn");
+    }
+    if (compVal != "plus" && compVal != "minus" && compVal != "cr") {
+      stackView_default.configureComp(compVal);
+    }
     if (stackView_default._sideActiveFlag === false) {
       stackBtnsView_default.toggleCrossBtns("remove");
     }
+    setIds();
     setIdsSides();
     stackView_default.addHandlerHandO();
     heightsView_default.addCompHeight(compVal);
@@ -402,10 +390,8 @@
   controlCompClick = function(clicked) {
     stackView_default._retarget();
     stackView_default._allComps.forEach((el) => el.classList.remove("active"));
-    if (!clicked.querySelector(".left_comp.active") && !clicked.querySelector(".right_comp.active")) {
-      stackView_default._activeSideComp?.classList.remove("active");
-      stackBtnsView_default.toggleCrossBtns("remove");
-    } else stackBtnsView_default.toggleCrossBtns("add");
+    stackView_default._activeSideComp?.classList.remove("active");
+    stackBtnsView_default.toggleCrossBtns("remove");
     clicked.classList.add("active");
   };
   var init = function() {

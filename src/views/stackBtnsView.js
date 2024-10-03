@@ -21,7 +21,6 @@ class StackBtnsView extends View {
         clickedAdd,
         clickedMinus,
       ];
-
       handler(...clickedArray.filter((el) => el != null));
     });
   }

@@ -1,19 +1,5 @@
 import View from "./Views/View";
 
-// export const retarget = function (tarActC, tarActSC, remActC, rem) {
-//   const helpAllComps = document.querySelectorAll(".comp-div");
-//   const helpCompActive = document.querySelector(".comp-div.active");
-
-//   const helpAllSideComps = [
-//     ...document.querySelectorAll(".left_comp"),
-//     ...document.querySelectorAll(".right_comp"),
-//   ];
-//   const helpAllSideCompsActive = [
-//     ...document.querySelectorAll(".left_comp.active"),
-//     ...document.querySelectorAll(".right_comp.active"),
-//   ];
-// };
-
 //________________________________________________________________________
 //ID main comps
 export const setIds = function () {

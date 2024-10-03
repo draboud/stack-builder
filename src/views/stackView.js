@@ -52,14 +52,14 @@ class StackView extends View {
     <div id="new" class="comp-div">
       <div class="side_left_div hide">
         <div class="left_comp">
-          <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">
+          <img class="img_side" src=${COMP_IMG.side}>
           <div class="hyd_spacer hide"></div>
         </div>
       </div>
       <div class="height-div hide">
         <div class="height-text">height</div>
       </div>
-      <img class="img" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s-p-500.png">
+      <img class="img" src=${COMP_IMG.blank}>
       <div class="opts-div hide">
         <div class="opts-text">options</div>
         <div class="opts-spacer"></div>
@@ -67,16 +67,13 @@ class StackView extends View {
       </div>
       <div class="side_right_div hide">
         <div class="right_comp">
-          <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">
+          <img class="img_side" src=${COMP_IMG.side}>
           <div class="hyd_spacer hide"></div>
         </div>
       </div>`; //new comp template
 
-    this._retarget();
-
     this._activeComp.insertAdjacentHTML("beforebegin", htmlComp);
-
-    this._allComps = [...this._compWrapper.children];
+    this._retarget();
     this._allComps.forEach(function (el) {
       el.classList.remove("active");
       if (el.id === "new") el.classList.add("active");
@@ -165,6 +162,7 @@ class StackView extends View {
   //_____________________________________________________________________
   //Side component events for cross
   _assignSideClicks = function (side) {
+    this._retarget();
     const sideDiv = this._compWrapper
       .querySelector(".comp-div.active.cross")
       .querySelector(`.side_${side}_div`);
@@ -172,13 +170,17 @@ class StackView extends View {
     sideDiv.addEventListener("click", (e) => {
       const clicked = e.target.closest(`.${side}_comp`);
       if (!clicked) return;
+      e.stopPropagation();
 
-      this._retarget();
       this._allSideComps.forEach(function (el) {
         el.classList.remove("active");
       });
       clicked.classList.add("active");
+      this._allComps.forEach((el) => el.classList.remove("active"));
+      clicked.closest(".comp-div").classList.add("active");
+
       this._sideFlag = `${side}`;
+      stackBtnsView.toggleCrossBtns("add");
     });
   };
   //_______________________________________________________________________

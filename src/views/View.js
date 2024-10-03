@@ -15,7 +15,7 @@ export default class View {
   _compWrapper = document.querySelector(".comp-wrapper");
   _allComps;
   _allSideComps;
-  _activeComp;
+  _activeComp = document.querySelector(".comp-div.active");
   _activeSideComp;
   _compFlag;
   _newLeftArray;
@@ -25,27 +25,9 @@ export default class View {
   _heightDiv;
   _optsDiv;
 
-  // _retarget(allComps, compActive, allSideComps, sideCompActive) {
-  //   if (allComps) {
-  //     this._allComps = document.querySelectorAll(".comp-div");
-  //   }
-  //   if (compActive) {
-  //     this._activeComp = document.querySelector(".comp-div.active");
-  //   }
-  //   if (allSideComps) {
-  //     this._allSideComps = [
-  //       ...document.querySelectorAll(".left_comp"),
-  //       ...document.querySelectorAll(".right_comp"),
-  //     ];
-  //   }
-  //   if (sideCompActive) {
-  //     this._activeSideComp = this._allSideComps.find((el) =>
-  //       el.classList.contains("active")
-  //     );
-  //   }
-  // }
   _retarget() {
-    this._allComps = document.querySelectorAll(".comp-div");
+    // this._allComps = document.querySelectorAll(".comp-div");
+    this._allComps = [...this._compWrapper.children];
     this._activeComp = document.querySelector(".comp-div.active");
     this._allSideComps = [
       ...document.querySelectorAll(".left_comp"),
