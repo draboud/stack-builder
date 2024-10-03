@@ -7,53 +7,55 @@ import stackBtnsView from "./Views/stackBtnsView.js";
 import { setIds, setIdsSides } from "./helpers.js";
 
 console.log("CONTROLLER - Oct 3, 2024");
-// console.log(COMP_IMG.annular);
 
 const controlStackBtns = function (arrayEl) {
+  stackView._retarget();
   const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
-  // debugger;
-  //Adding component and setting ids
-  if (compVal === "plus") {
-    stackView.addComp();
-  }
-  //Removing component and setting ids
-  if (compVal === "minus") {
-    stackView.delComp();
-  }
-  if (compVal === "cr") {
-    console.log("new cross btn");
+
+  switch (compVal) {
+    case "plus":
+      stackView._addComp();
+      break;
+    case "minus":
+      stackView._delComp();
+      break;
+    case "spl":
+    case "man":
+    case "hyd":
+      if (stackView._activeSideComp) {
+        console.log("active side!");
+        stackView._configCrossComp(compVal);
+      }
+      break;
+    default:
+      stackView._configComp(compVal);
   }
 
-  //Configuring component
-  if (compVal != "plus" && compVal != "minus" && compVal != "cr") {
-    stackView.configureComp(compVal);
-  }
   if (stackView._sideActiveFlag === false) {
     stackBtnsView.toggleCrossBtns("remove");
   }
   setIds();
   setIdsSides();
-  stackView.addHandlerHandO();
-  heightsView.addCompHeight(compVal);
+  stackView._addHandlerHandO();
+  heightsView._addCompHeight(compVal);
 };
 
 controlCrossPlusMinus = function (sign) {
-  sign === "plus"
-    ? stackView.addSideComp(stackView._sideFlag)
-    : stackView.removeSideComp(stackView._sideFlag);
-  setIdsSides();
+  stackView._retarget();
+  if (stackView._activeSideComp) {
+    sign === "plus"
+      ? stackView._addSideComp(stackView._sideFlag)
+      : stackView._delSideComp(stackView._sideFlag);
+    setIdsSides();
+  }
 };
 
 controlCompClick = function (clicked) {
   stackView._retarget();
   stackView._allComps.forEach((el) => el.classList.remove("active"));
-  // if (
-  //   !clicked.querySelector(".left_comp.active") &&
-  //   !clicked.querySelector(".right_comp.active")
-  // ) {
+
   stackView._activeSideComp?.classList.remove("active");
   stackBtnsView.toggleCrossBtns("remove");
-  // } else stackBtnsView.toggleCrossBtns("add");
   clicked.classList.add("active");
 };
 
@@ -67,9 +69,9 @@ controlCompClick = function (clicked) {
 // };
 
 const init = function () {
-  stackBtnsView.addHandlerStackBtns(controlStackBtns);
-  stackBtnsView.addHandlerCrossPlusMinus(controlCrossPlusMinus);
-  stackView.addHandlerCompClick(controlCompClick);
+  stackBtnsView._addHandlerStackBtns(controlStackBtns);
+  stackBtnsView._addHandlerCrossPlusMinus(controlCrossPlusMinus);
+  stackView._addHandlerCompClick(controlCompClick);
   //   stackView.addHandlerHandO(controlHandO);
 };
 

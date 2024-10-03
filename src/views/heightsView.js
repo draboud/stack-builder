@@ -4,7 +4,7 @@ import View from "./View";
 class HeightsView extends View {
   //_________________________________________________________________________
   //Assign component heights
-  addCompHeight = function (compFlag) {
+  _addCompHeight = function (compFlag) {
     this._activeComp = document.querySelector(".comp-div.active");
     this._activeComp.querySelector(".height-text").innerHTML =
       COMP_HEIGHTS[compFlag] + '"';

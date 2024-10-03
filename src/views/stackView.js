@@ -1,6 +1,7 @@
 import View from "./View";
 import { COMP_CLASSES, COMP_IMG } from "../config";
 import stackBtnsView from "./stackBtnsView";
+import { cleanCross } from "../helpers";
 
 let sideActiveFlag;
 
@@ -9,7 +10,7 @@ let sideActiveFlag;
 class StackView extends View {
   //_____________________________________________________________________
   //Height and Option clicks
-  addHandlerHandO(handler) {
+  _addHandlerHandO(handler) {
     //Assign height and options events
     this._heightDiv = document
       .querySelector(".comp-div.active")
@@ -34,7 +35,7 @@ class StackView extends View {
   }
   //_____________________________________________________________________
   //Clicks for stack components
-  addHandlerCompClick(handler) {
+  _addHandlerCompClick(handler) {
     //Main comps clicks
 
     this._compWrapper.addEventListener("click", function (e) {
@@ -47,7 +48,7 @@ class StackView extends View {
 
   //_____________________________________________________________________
   //Add stack comp
-  addComp() {
+  _addComp() {
     const htmlComp = `
     <div id="new" class="comp-div">
       <div class="side_left_div hide">
@@ -72,6 +73,7 @@ class StackView extends View {
         </div>
       </div>`; //new comp template
 
+    this._retarget();
     this._activeComp.insertAdjacentHTML("beforebegin", htmlComp);
     this._retarget();
     this._allComps.forEach(function (el) {
@@ -84,7 +86,7 @@ class StackView extends View {
   }
   //_______________________________________________________________________
   //Delete stack comp
-  delComp = function () {
+  _delComp = function () {
     this._retarget();
     if (this._activeComp.id !== "c-1") {
       this._activeComp.parentNode.removeChild(this._activeComp);
@@ -106,11 +108,13 @@ class StackView extends View {
 
   //_______________________________________________________________________
   //Add stack comp
-  configureComp = function (compFlag) {
+  _configComp = function (compFlag) {
     let compImg;
     this._retarget();
+    if (this._activeComp.classList.contains("cross")) cleanCross();
     const heightDiv = this._activeComp.querySelector(".height-div");
     const imageEl = this._activeComp.querySelector(".img");
+    const optsDiv = this._activeComp.querySelector(".opts-div");
 
     imageEl.parentNode.removeChild(imageEl); //just change src instead?
 
@@ -120,7 +124,8 @@ class StackView extends View {
     heightDiv.insertAdjacentHTML("afterend", htmlImg);
     imageEl.classList.remove("hide");
 
-    // if (!activeDiv) return;
+    optsDiv.querySelector(".opts-text.second").classList.add("hide");
+    optsDiv.querySelector(".opts-spacer").classList.add("hide");
 
     this._activeComp.querySelector(".side_left_div").classList.add("hide");
     this._activeComp.querySelector(".side_right_div").classList.add("hide");
@@ -142,10 +147,7 @@ class StackView extends View {
     if (compFlag != "double" && compFlag != "cross") return;
     const optsDiv = this._activeComp.querySelector(".opts-div");
 
-    if (compFlag !== "double") {
-      optsDiv.querySelector(".opts-text.second").classList.add("hide");
-      optsDiv.querySelector(".opts-spacer").classList.add("hide");
-    } else {
+    if (compFlag === "double") {
       optsDiv.querySelector(".opts-text.hide")?.classList.remove("hide");
       optsDiv.querySelector(".opts-spacer.hide")?.classList.remove("hide");
     }
@@ -162,7 +164,6 @@ class StackView extends View {
   //_____________________________________________________________________
   //Side component events for cross
   _assignSideClicks = function (side) {
-    this._retarget();
     const sideDiv = this._compWrapper
       .querySelector(".comp-div.active.cross")
       .querySelector(`.side_${side}_div`);
@@ -172,6 +173,7 @@ class StackView extends View {
       if (!clicked) return;
       e.stopPropagation();
 
+      this._retarget();
       this._allSideComps.forEach(function (el) {
         el.classList.remove("active");
       });
@@ -179,13 +181,13 @@ class StackView extends View {
       this._allComps.forEach((el) => el.classList.remove("active"));
       clicked.closest(".comp-div").classList.add("active");
 
-      this._sideFlag = `${side}`;
+      this._sideFlag = side;
       stackBtnsView.toggleCrossBtns("add");
     });
   };
   //_______________________________________________________________________
   //Add cross side comp
-  addSideComp = function (flag) {
+  _addSideComp = function (flag) {
     const htmlSide = `
     <div class= "${flag}_comp active">
       <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">
@@ -212,7 +214,7 @@ class StackView extends View {
 
   //_______________________________________________________________________
   //Remove cross side comp
-  removeSideComp = function (flag) {
+  _delSideComp = function (flag) {
     const activeSideComp = this._compWrapper.querySelector(
       `.${flag}_comp.active`
     );
@@ -238,6 +240,38 @@ class StackView extends View {
         );
 
     // setIdsSides();
+  };
+  //_________________________________________________________________________
+  //Add component to active side of active cross in stack
+  _configCrossComp = function (compFlag) {
+    this._retarget();
+    console.log("compFlag: ", compFlag);
+    // const allSideComps = [
+    //   ...compWrapper.querySelectorAll(".left_comp"),
+    //   ...compWrapper.querySelectorAll(".right_comp"),
+    // ];
+    let sideCompImg;
+
+    if (compFlag === "spl") {
+      sideCompImg = COMP_IMG.spl;
+    }
+    if (compFlag === "man") {
+      sideCompImg = COMP_IMG.man;
+    }
+    if (compFlag === "hyd") {
+      sideCompImg = COMP_IMG.hyd;
+    }
+
+    this._allSideComps.forEach(function (el) {
+      if (el.classList.contains("active")) {
+        el.querySelector(".hyd_spacer").classList.add("hide");
+        el.querySelector(".img_side").src = sideCompImg;
+
+        if (compFlag === "hyd") {
+          el.querySelector(".hyd_spacer").classList.remove("hide");
+        }
+      }
+    });
   };
 }
 

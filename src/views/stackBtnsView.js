@@ -6,14 +6,17 @@ const [compSpl, compMan, compHyd] = Array.from([
 ]);
 
 class StackBtnsView extends View {
-  addHandlerStackBtns(handler) {
+  _addHandlerStackBtns(handler) {
     //Select main comp type
     const compButtonsDiv = document.querySelector(".vert_buttons_div");
     compButtonsDiv.addEventListener("click", function (e) {
       const clickedComp = e.target.closest(".comp_button");
-      const clickedCompCross = e.target.closest(".comp_button_cr");
+      const clickedCompCross = e.target.closest(".comp_button_cross");
       const clickedAdd = e.target.closest(".comp_button_plus");
       const clickedMinus = e.target.closest(".comp_button_minus");
+
+      if (!clickedComp && !clickedCompCross && !clickedAdd && !clickedMinus)
+        return;
 
       const clickedArray = [
         clickedComp,
@@ -26,7 +29,7 @@ class StackBtnsView extends View {
   }
   //______________________________________________________________________
   //Side plus and minus clicks
-  addHandlerCrossPlusMinus(handler) {
+  _addHandlerCrossPlusMinus(handler) {
     const plusMinusWrapper = document.querySelector(".plus_minus_wrapper");
     plusMinusWrapper.addEventListener("click", function (e) {
       const clicked = e.target.closest(".side_effect");

@@ -1,3 +1,4 @@
+import stackView from "./views/stackView";
 import View from "./Views/View";
 
 //________________________________________________________________________
@@ -58,4 +59,27 @@ export const setIdsSides = function () {
     indexCountRight += 1;
     rightCompIdsCounter -= 1; //unnecessary
   });
+};
+//_________________________________________________________________________
+//Remove extra cross side components and 'active'
+export const cleanCross = function () {
+  stackView._retarget("left");
+  const lastLeft = stackView._currentSideComps.at(0);
+
+  stackView._currentSideComps.forEach((el) => el.classList.remove("active"));
+  lastLeft.classList.add("active");
+  stackView._currentSideComps.forEach(function (el) {
+    stackView._delSideComp("left");
+  });
+  stackView._currentSideComps.forEach((el) => el.classList.remove("active"));
+
+  stackView._retarget("right");
+  const lastRight = stackView._currentSideComps.at(-1);
+
+  stackView._currentSideComps.forEach((el) => el.classList.remove("active"));
+  lastRight.classList.add("active");
+  stackView._currentSideComps.forEach(function (el) {
+    stackView._delSideComp("right");
+  });
+  stackView._currentSideComps.forEach((el) => el.classList.remove("active"));
 };
