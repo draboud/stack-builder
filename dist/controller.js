@@ -12,8 +12,10 @@
     _newLeftArray;
     _newRightArray;
     _sideFlag;
-    _heightDiv;
-    _optsDiv;
+    _activeHeightDiv;
+    _allHeightDivs;
+    _activeOptsDiv;
+    _allOptsDivs;
     _retarget(side) {
       this._allComps = [...document.querySelectorAll(".comp-div")];
       this._activeComp = document.querySelector(".comp-div.active");
@@ -29,6 +31,10 @@
       ];
       this._leftArray = [...document.querySelectorAll(".left_comp")];
       this._rightArray = [...document.querySelectorAll(".right_comp")];
+      this._activeHeightDiv = document.querySelector(".comp-div.active").querySelector(".height-div");
+      this._allHeightDivs = document.querySelectorAll(".height-div");
+      this._activeOptsDiv = document.querySelector(".comp-div.active").querySelector(".opts-div");
+      this._allOptsDivs = [...document.querySelectorAll(".opts-div")];
     }
   };
 
@@ -126,23 +132,6 @@
 
   // src/Views/stackView.js
   var StackView = class extends View {
-    //____________________________________________________________________
-    //Height and Option clicks
-    _addHandlerHandO(handler) {
-      this._heightDiv = document.querySelector(".comp-div.active").querySelector(".height-div");
-      this._optsDiv = document.querySelector(".comp-div.active").querySelector(".opts-div");
-      this._heightDiv.addEventListener("click", function(e) {
-        const clicked = e.target.closest(".height-div");
-        if (!clicked) return;
-        clicked.classList.toggle("highlight");
-      });
-      this._optsDiv.addEventListener("click", function(e) {
-        const clicked = e.target.closest(".opts-div");
-        if (!clicked) return;
-        clicked.classList.toggle("highlight");
-      });
-    }
-    //____________________________________________________________________
     //Clicks for stack components
     _addHandlerCompClick(handler) {
       this._compWrapper.addEventListener("click", function(e) {
@@ -193,7 +182,7 @@
       const imageEl = this._activeComp.querySelector(".img");
       const optsDiv = this._activeComp.querySelector(".opts-div");
       imageEl.parentNode.removeChild(imageEl);
-      compImg = COMP_IMG2[compFlag];
+      compImg = COMP_IMG[compFlag];
       const htmlImg = `<img class= img src=${compImg}>`;
       heightDiv.insertAdjacentHTML("afterend", htmlImg);
       imageEl.classList.remove("hide");
@@ -267,7 +256,7 @@
       if (!activeSideComp) return;
       if (activeSideComp.id.slice(-2) === "-1") {
         activeSideComp.querySelector(".hyd_spacer").classList.add("hide");
-        activeSideComp.querySelector(".img_side").src = COMP_IMG2.side;
+        activeSideComp.querySelector(".img_side").src = COMP_IMG.side;
         return;
       }
       activeSideComp.parentNode.removeChild(activeSideComp);
@@ -284,13 +273,13 @@
       this._retarget();
       let sideCompImg;
       if (compFlag === "spl") {
-        sideCompImg = COMP_IMG2.spl;
+        sideCompImg = COMP_IMG.spl;
       }
       if (compFlag === "man") {
-        sideCompImg = COMP_IMG2.man;
+        sideCompImg = COMP_IMG.man;
       }
       if (compFlag === "hyd") {
-        sideCompImg = COMP_IMG2.hyd;
+        sideCompImg = COMP_IMG.hyd;
       }
       this._allSideComps.forEach(function(el) {
         if (el.classList.contains("active")) {
@@ -318,7 +307,7 @@
     "man",
     "hyd"
   ];
-  var COMP_IMG2 = {
+  var COMP_IMG = {
     blank: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s-p-500.png",
     annular: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43c4b43469a2e8adef108_annular-lines-s-p-500.png",
     double: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a607b6e620e8d095cd8_double-lines-s-p-500.png",
@@ -345,14 +334,14 @@
     <div id="new" class="comp-div">
       <div class="side_left_div hide">
         <div class="left_comp">
-          <img class="img_side" src=${COMP_IMG2.side}>
+          <img class="img_side" src=${COMP_IMG.side}>
           <div class="hyd_spacer hide"></div>
         </div>
       </div>
       <div class="height-div hide">
         <div class="height-text">height</div>
       </div>
-      <img class="img" src=${COMP_IMG2.blank}>
+      <img class="img" src=${COMP_IMG.blank}>
       <div class="opts-div hide">
         <div class="opts-text">options</div>
         <div class="opts-spacer"></div>
@@ -360,7 +349,7 @@
       </div>
       <div class="side_right_div hide">
         <div class="right_comp">
-          <img class="img_side" src=${COMP_IMG2.side}>
+          <img class="img_side" src=${COMP_IMG.side}>
           <div class="hyd_spacer hide"></div>
         </div>
     </div>`;
@@ -376,15 +365,26 @@
 
   // src/views/heightsView.js
   var HeightsView = class extends View {
+    //Height clicks assigned to height text
+    _addHandlerHeight(handler) {
+      this._retarget();
+      this._allHeightDivs.forEach(
+        (el) => addEventListener("click", function(e) {
+          const clicked = e.target.closest(".height-div");
+          if (!clicked) return;
+          handler();
+        })
+      );
+    }
     //_________________________________________________________________________
     //Assign component heights
-    _addCompHeight = function(compVal) {
+    _addCompHeight(compVal) {
       if (compVal != "spl" && compVal != "man" && compVal != "hyd") {
         this._retarget();
         this._activeComp = document.querySelector(".comp-div.active");
         this._activeComp.querySelector(".height-text").innerHTML = COMP_HEIGHTS[compVal] + '"';
       }
-    };
+    }
     //_________________________________________________________________________
     // //Assign height and options events
     // assignHandOClicks = function () {
@@ -414,8 +414,36 @@
   };
   var heightsView_default = new HeightsView();
 
+  // src/views/optionsView.js
+  var OptionsView = class extends View {
+    _optsModal = document.querySelector(".options_modal");
+    _secondOptsFlag;
+    //Option clicks assigned to height text
+    _addHandlerOptions(handler) {
+      this._retarget();
+      this._allOptsDivs.forEach(
+        (el) => addEventListener("click", function(e) {
+          const clicked = e.target.closest(".opts-text");
+          if (!clicked) return;
+          handler(clicked);
+        })
+      );
+    }
+    //_________________________________________________________________________
+    _addHandlerOptsModal(handler) {
+      this._optsModal;
+      addEventListener("click", function(e) {
+        const clicked = e.target.closest(".modal_div_text");
+        if (!clicked) return;
+        handler(clicked);
+      });
+    }
+    //_________________________________________________________________________
+  };
+  var optionsView_default = new OptionsView();
+
   // src/controller.js
-  console.log("CONTROLLER - Oct 3, 2024");
+  console.log("CONTROLLER - Oct 4, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
@@ -441,7 +469,6 @@
     }
     setIds();
     setIdsSides();
-    stackView_default._addHandlerHandO();
     heightsView_default._addCompHeight(compVal);
   };
   controlCrossPlusMinus = function(sign) {
@@ -456,12 +483,33 @@
     stackView_default._allComps.forEach((el) => el.classList.remove("active"));
     stackView_default._activeSideComp?.classList.remove("active");
     stackBtnsView_default.toggleCrossBtns("remove");
+    heightsView_default._allHeightDivs.forEach((el) => el.classList.remove("highlight"));
     clicked.classList.add("active");
+  };
+  controlHeight = function() {
+    heightsView_default._retarget();
+    heightsView_default._allHeightDivs.forEach((el) => el.classList.remove("highlight"));
+    heightsView_default._activeHeightDiv.classList.add("highlight");
+  };
+  controlOptions = function(clicked) {
+    optionsView_default._retarget();
+    if (clicked.classList.contains("second")) optionsView_default._secondOptsFlag = true;
+    optionsView_default._optsModal.classList.remove("hide");
+  };
+  controlOptsModal = function(clicked) {
+    optionsView_default._activeOptsDiv.querySelector(
+      optionsView_default._secondOptsFlag ? ".opts-text.second" : ".opts-text"
+    ).innerHTML = clicked.innerHTML;
+    optionsView_default._optsModal.classList.add("hide");
+    optionsView_default._secondOptsFlag = false;
   };
   var init = function() {
     stackBtnsView_default._addHandlerStackBtns(controlStackBtns);
     stackBtnsView_default._addHandlerCrossPlusMinus(controlCrossPlusMinus);
     stackView_default._addHandlerCompClick(controlCompClick);
+    heightsView_default._addHandlerHeight(controlHeight);
+    optionsView_default._addHandlerOptions(controlOptions);
+    optionsView_default._addHandlerOptsModal(controlOptsModal);
   };
   init();
 })();

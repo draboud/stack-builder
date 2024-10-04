@@ -52,7 +52,7 @@ export const setIdsSides = function () {
   currentRightArray.forEach(function (el) {
     el.id = `${activeCompId}-right-${indexCountRight}`;
     indexCountRight += 1;
-    rightCompIdsCounter -= 1; //unnecessary
+    rightCompIdsCounter -= 1; //unnecessary?
   });
 };
 //_________________________________________________________________________
@@ -71,40 +71,4 @@ export const cleanCross = function () {
     });
     stackView._currentSideComps.forEach((el) => el.classList.remove("active"));
   });
-};
-//_________________________________________________________________________
-//Send indicator into function for either 'compBlock','compSideBlock'
-export const generateMarkup = function (compType) {
-  if (compType === "compBlock") {
-    return `
-    <div id="new" class="comp-div">
-      <div class="side_left_div hide">
-        <div class="left_comp">
-          <img class="img_side" src=${COMP_IMG.side}>
-          <div class="hyd_spacer hide"></div>
-        </div>
-      </div>
-      <div class="height-div hide">
-        <div class="height-text">height</div>
-      </div>
-      <img class="img" src=${COMP_IMG.blank}>
-      <div class="opts-div hide">
-        <div class="opts-text">options</div>
-        <div class="opts-spacer"></div>
-        <div class="opts-text second">options</div>
-      </div>
-      <div class="side_right_div hide">
-        <div class="right_comp">
-          <img class="img_side" src=${COMP_IMG.side}>
-          <div class="hyd_spacer hide"></div>
-        </div>
-    </div>`;
-  }
-  if (compType === "compSideBlock") {
-    return `
-    <div class= "${stackView._sideFlag}_comp active">
-      <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">
-      <div class="hyd_spacer hide"></div>
-    </div>`;
-  }
 };

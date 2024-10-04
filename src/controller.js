@@ -5,9 +5,10 @@ import stackView from "./Views/stackView.js";
 import heightsView from "./views/heightsView.js";
 import stackBtnsView from "./Views/stackBtnsView.js";
 import { setIds, setIdsSides } from "./helpers.js";
+import optionsView from "./views/optionsView.js";
 
-console.log("CONTROLLER - Oct 3, 2024");
-
+console.log("CONTROLLER - Oct 4, 2024");
+//____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
   stackView._retarget();
   const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
@@ -35,10 +36,11 @@ const controlStackBtns = function (arrayEl) {
   }
   setIds();
   setIdsSides();
-  stackView._addHandlerHandO();
+  // stackView._addHandlerHandO();
+
   heightsView._addCompHeight(compVal);
 };
-
+//____________________________________________________________________
 controlCrossPlusMinus = function (sign) {
   stackView._retarget();
   if (stackView._activeSideComp) {
@@ -48,30 +50,43 @@ controlCrossPlusMinus = function (sign) {
     setIdsSides();
   }
 };
-
+//____________________________________________________________________
 controlCompClick = function (clicked) {
   stackView._retarget();
   stackView._allComps.forEach((el) => el.classList.remove("active"));
-
   stackView._activeSideComp?.classList.remove("active");
   stackBtnsView.toggleCrossBtns("remove");
+  heightsView._allHeightDivs.forEach((el) => el.classList.remove("highlight"));
   clicked.classList.add("active");
 };
-
-// controlHandO = function (HeightorOpt) {
-//   HeightorOpt === "height"
-//     ? stackView._heightDiv.classList.toggle("highlight")
-//     : stackView._optsDiv.classList.toggle("highlight");
-
-//   // stackView._heightDiv.cl
-//   //   console.log(highlight);
-// };
-
+//____________________________________________________________________
+controlHeight = function () {
+  heightsView._retarget();
+  heightsView._allHeightDivs.forEach((el) => el.classList.remove("highlight"));
+  heightsView._activeHeightDiv.classList.add("highlight");
+};
+//____________________________________________________________________
+controlOptions = function (clicked) {
+  optionsView._retarget();
+  if (clicked.classList.contains("second")) optionsView._secondOptsFlag = true;
+  optionsView._optsModal.classList.remove("hide");
+};
+//____________________________________________________________________
+controlOptsModal = function (clicked) {
+  optionsView._activeOptsDiv.querySelector(
+    optionsView._secondOptsFlag ? ".opts-text.second" : ".opts-text"
+  ).innerHTML = clicked.innerHTML;
+  optionsView._optsModal.classList.add("hide");
+  optionsView._secondOptsFlag = false;
+};
+//_________________________________________________________________________
 const init = function () {
   stackBtnsView._addHandlerStackBtns(controlStackBtns);
   stackBtnsView._addHandlerCrossPlusMinus(controlCrossPlusMinus);
   stackView._addHandlerCompClick(controlCompClick);
-  //   stackView.addHandlerHandO(controlHandO);
+  heightsView._addHandlerHeight(controlHeight);
+  optionsView._addHandlerOptions(controlOptions);
+  optionsView._addHandlerOptsModal(controlOptsModal);
 };
 
 init();

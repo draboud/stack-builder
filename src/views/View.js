@@ -9,8 +9,10 @@ export default class View {
   _newLeftArray;
   _newRightArray;
   _sideFlag;
-  _heightDiv;
-  _optsDiv;
+  _activeHeightDiv;
+  _allHeightDivs;
+  _activeOptsDiv;
+  _allOptsDivs;
 
   _retarget(side) {
     this._allComps = [...document.querySelectorAll(".comp-div")];
@@ -27,5 +29,13 @@ export default class View {
     ];
     this._leftArray = [...document.querySelectorAll(".left_comp")];
     this._rightArray = [...document.querySelectorAll(".right_comp")];
+    this._activeHeightDiv = document
+      .querySelector(".comp-div.active")
+      .querySelector(".height-div");
+    this._allHeightDivs = document.querySelectorAll(".height-div");
+    this._activeOptsDiv = document
+      .querySelector(".comp-div.active")
+      .querySelector(".opts-div");
+    this._allOptsDivs = [...document.querySelectorAll(".opts-div")];
   }
 }

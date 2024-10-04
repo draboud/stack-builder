@@ -5,33 +5,7 @@ import { cleanCross } from "../helpers";
 
 let sideActiveFlag;
 
-//____________________________________________________________________
-// let heightDiv;
 class StackView extends View {
-  //____________________________________________________________________
-  //Height and Option clicks
-  _addHandlerHandO(handler) {
-    //Assign height and options events
-    this._heightDiv = document
-      .querySelector(".comp-div.active")
-      .querySelector(".height-div");
-    this._optsDiv = document
-      .querySelector(".comp-div.active")
-      .querySelector(".opts-div");
-    this._heightDiv.addEventListener("click", function (e) {
-      const clicked = e.target.closest(".height-div");
-      if (!clicked) return;
-      clicked.classList.toggle("highlight");
-      // handler("height");
-    });
-    this._optsDiv.addEventListener("click", function (e) {
-      const clicked = e.target.closest(".opts-div");
-      if (!clicked) return;
-      clicked.classList.toggle("highlight");
-      // handler("opt");
-    });
-  }
-  //____________________________________________________________________
   //Clicks for stack components
   _addHandlerCompClick(handler) {
     //Main comps clicks
