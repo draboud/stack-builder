@@ -42,6 +42,44 @@ export const COMP_IMG = {
   hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf611491cc6deb154360_Cross%20-%20Hydraulic.png",
 };
 
+// export const HTML_MARKUPS = {
+//   stackComp: `
+//     <div id="new" class="comp-div">
+//       <div class="side_left_div hide">
+//         <div class="left_comp">
+//           <img class="img_side" src=${COMP_IMG.side}>
+//           <div class="hyd_spacer hide"></div>
+//         </div>
+//       </div>
+//       <div class="height-div hide">
+//         <div class="height-text">height</div>
+//       </div>
+//       <img class="img" src=${COMP_IMG.blank}>
+//       <div class="opts-div hide">
+//         <div class="opts-text">options</div>
+//         <div class="opts-spacer"></div>
+//         <div class="opts-text second">options</div>
+//       </div>
+//       <div class="side_right_div hide">
+//         <div class="right_comp">
+//           <img class="img_side" src=${COMP_IMG.side}>
+//           <div class="hyd_spacer hide"></div>
+//         </div>
+//     </div>`,
+
+//   sideComp: `
+//   <div class= "${stackView._sideFlag}_comp active">
+//     <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">
+//     <div class="hyd_spacer hide"></div>
+//   </div>`,
+
+//   // const htmlSide = `
+//   // <div class= "${flag}_comp active">
+//   //   <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">
+//   //   <div class="hyd_spacer hide"></div>
+//   // </div>`;
+// };
+
 export const COMP_HEIGHTS = {
   wellhead: 27,
   spool: 44,
