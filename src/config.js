@@ -52,7 +52,7 @@ export const COMP_HEIGHTS = {
   annular: 91,
 };
 //_________________________________________________________________________
-//Send indicator into function for either 'compBlock','compSideBlock'
+//Send indicator into function for either 'compBlock', 'compSideBlock', 'adaptor'
 export const GENERATE_MARKUP = function (compType) {
   if (compType === "compBlock") {
     return `

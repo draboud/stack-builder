@@ -16,6 +16,8 @@
     _allHeightDivs;
     _activeOptsDiv;
     _allOptsDivs;
+    _allOptsText;
+    _allAdaptors;
     _retarget(side) {
       this._allComps = [...document.querySelectorAll(".comp-div")];
       this._activeComp = document.querySelector(".comp-div.active");
@@ -35,6 +37,8 @@
       this._allHeightDivs = document.querySelectorAll(".height-div");
       this._activeOptsDiv = document.querySelector(".comp-div.active").querySelector(".opts-div");
       this._allOptsDivs = [...document.querySelectorAll(".opts-div")];
+      this._allOptsText = [...document.querySelectorAll(".opts-text")];
+      this._allAdaptors = [...document.querySelectorAll(".adapter_block")];
     }
   };
 
@@ -130,6 +134,59 @@
     });
   };
 
+  // src/views/heightsView.js
+  var HeightsView = class extends View {
+    //Height clicks assigned to height text
+    _addHandlerHeight(handler) {
+      this._retarget();
+      this._allHeightDivs.forEach(
+        (el) => addEventListener("click", function(e) {
+          const clicked = e.target.closest(".height-div");
+          if (!clicked) return;
+          handler();
+        })
+      );
+    }
+    //_________________________________________________________________________
+    //Assign component heights
+    _addCompHeight(compVal) {
+      if (compVal != "spl" && compVal != "man" && compVal != "hyd") {
+        this._retarget();
+        this._activeComp = document.querySelector(".comp-div.active");
+        this._activeComp.querySelector(".height-text").innerHTML = COMP_HEIGHTS[compVal] + '"';
+      }
+    }
+  };
+  var heightsView_default = new HeightsView();
+
+  // src/views/optionsView.js
+  var OptionsView = class extends View {
+    _optsModal = document.querySelector(".options_modal");
+    _secondOptsFlag;
+    //Option clicks assigned to height text
+    _addHandlerOptions(handler) {
+      this._retarget();
+      this._allOptsDivs.forEach(
+        (el) => addEventListener("click", function(e) {
+          const clicked = e.target.closest(".opts-text");
+          if (!clicked) return;
+          handler(clicked);
+        })
+      );
+    }
+    //_________________________________________________________________________
+    _addHandlerOptsModal(handler) {
+      this._optsModal;
+      addEventListener("click", function(e) {
+        const clicked = e.target.closest(".modal_div_text");
+        if (!clicked) return;
+        handler(clicked);
+      });
+    }
+    //_________________________________________________________________________
+  };
+  var optionsView_default = new OptionsView();
+
   // src/Views/stackView.js
   var StackView = class extends View {
     //Clicks for stack components
@@ -175,8 +232,12 @@
     //____________________________________________________________________
     //Add stack comp
     _configComp = function(compFlag) {
-      let compImg;
       this._retarget();
+      let compImg;
+      heightsView_default._activeHeightDiv.classList.remove("highlight");
+      [".opts-text", ".opts-text.second"].forEach(
+        (el) => optionsView_default._activeOptsDiv.querySelector(el).innerHTML = "options"
+      );
       if (this._activeComp.classList.contains("cross")) cleanCross();
       const heightDiv = this._activeComp.querySelector(".height-div");
       const imageEl = this._activeComp.querySelector(".img");
@@ -363,84 +424,48 @@
     }
   };
 
-  // src/views/heightsView.js
-  var HeightsView = class extends View {
-    //Height clicks assigned to height text
-    _addHandlerHeight(handler) {
-      this._retarget();
-      this._allHeightDivs.forEach(
-        (el) => addEventListener("click", function(e) {
-          const clicked = e.target.closest(".height-div");
-          if (!clicked) return;
-          handler();
-        })
-      );
-    }
-    //_________________________________________________________________________
-    //Assign component heights
-    _addCompHeight(compVal) {
-      if (compVal != "spl" && compVal != "man" && compVal != "hyd") {
-        this._retarget();
-        this._activeComp = document.querySelector(".comp-div.active");
-        this._activeComp.querySelector(".height-text").innerHTML = COMP_HEIGHTS[compVal] + '"';
-      }
-    }
-    //_________________________________________________________________________
-    // //Assign height and options events
-    // assignHandOClicks = function () {
-    //   const heightDiv = this._activeComp.querySelector(".height-div");
-    //   const optsDiv = this._activeComp.querySelector(".opts-div");
-    //   heightDiv.addEventListener("mouseenter", function (e) {
-    //     const hoverIn = e.target.closest(".height-div");
-    //     if (!hoverIn) return;
-    //     hoverIn.classList.add("highlight");
-    //   });
-    //   heightDiv.addEventListener("mouseout", function (e) {
-    //     const hoverOut = e.target.closest(".height-div");
-    //     if (!hoverOut) return;
-    //     hoverOut.classList.remove("highlight");
-    //   });
-    //   optsDiv.addEventListener("click", function (e) {
-    //     const clicked = e.target.closest(".opts-text");
-    //     if (!clicked) return;
-    //     clicked.classList.add("highlight");
-    //   });
-    //   optsDiv.addEventListener("click", function (e) {
-    //     const clicked = e.target.closest(".opts-text");
-    //     if (!clicked) return;
-    //     optionsModal.classList.remove("hide");
-    //   });
-    // };
-  };
-  var heightsView_default = new HeightsView();
-
-  // src/views/optionsView.js
-  var OptionsView = class extends View {
-    _optsModal = document.querySelector(".options_modal");
-    _secondOptsFlag;
-    //Option clicks assigned to height text
-    _addHandlerOptions(handler) {
-      this._retarget();
-      this._allOptsDivs.forEach(
-        (el) => addEventListener("click", function(e) {
-          const clicked = e.target.closest(".opts-text");
-          if (!clicked) return;
-          handler(clicked);
-        })
-      );
-    }
-    //_________________________________________________________________________
-    _addHandlerOptsModal(handler) {
-      this._optsModal;
-      addEventListener("click", function(e) {
-        const clicked = e.target.closest(".modal_div_text");
+  // src/views/adaptorsView.js
+  var ctrlBtns = document.querySelector(".control_buttons_div");
+  var AdaptorsView = class extends View {
+    //Add handler to adapt button
+    _addHandlerAdapt = function(handler) {
+      ctrlBtns.addEventListener("click", function(e) {
+        const clicked = e.target.closest(".adapt_button");
         if (!clicked) return;
-        handler(clicked);
+        handler();
       });
-    }
+    };
     //_________________________________________________________________________
+    //Add adaptors to stack
+    _autoAdapt = function() {
+      this._retarget();
+      let newLengthArray = [];
+      let extArray = [];
+      this._allAdaptors.forEach(function(el) {
+        el.remove();
+      });
+      this._allOptsText.forEach(function(el) {
+        let intArray = "";
+        if (el.classList.contains("hide") || el.classList.contains("second")) {
+          return;
+        }
+        newLengthArray.push(el);
+        intArray += el.innerHTML;
+        extArray.push(intArray);
+      });
+      for (let i = 0; i < newLengthArray.length - 1; i++) {
+        if (extArray[i] !== extArray[i + 1]) {
+          const adapterHtml = `
+          <div class= "adapter_block">
+            <div class= "option_letter top">${extArray[i]}</div>
+            <div class=option_letter bottom">${extArray[i + 1]}</div>
+          </div>`;
+          this._allComps[i].insertAdjacentHTML("afterend", adapterHtml);
+        }
+      }
+    };
   };
-  var optionsView_default = new OptionsView();
+  var adaptorsView_default = new AdaptorsView();
 
   // src/controller.js
   console.log("CONTROLLER - Oct 4, 2024");
@@ -503,6 +528,9 @@
     optionsView_default._optsModal.classList.add("hide");
     optionsView_default._secondOptsFlag = false;
   };
+  controlAdapt = function() {
+    adaptorsView_default._autoAdapt();
+  };
   var init = function() {
     stackBtnsView_default._addHandlerStackBtns(controlStackBtns);
     stackBtnsView_default._addHandlerCrossPlusMinus(controlCrossPlusMinus);
@@ -510,6 +538,7 @@
     heightsView_default._addHandlerHeight(controlHeight);
     optionsView_default._addHandlerOptions(controlOptions);
     optionsView_default._addHandlerOptsModal(controlOptsModal);
+    adaptorsView_default._addHandlerAdapt(controlAdapt);
   };
   init();
 })();

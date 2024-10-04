@@ -2,6 +2,8 @@ import View from "./View";
 import { COMP_CLASSES, COMP_IMG, GENERATE_MARKUP } from "../config";
 import stackBtnsView from "./stackBtnsView";
 import { cleanCross } from "../helpers";
+import heightsView from "./heightsView";
+import optionsView from "./optionsView";
 
 let sideActiveFlag;
 
@@ -12,7 +14,6 @@ class StackView extends View {
     this._compWrapper.addEventListener("click", function (e) {
       const clicked = e.target.closest(".comp-div");
       if (!clicked) return;
-
       handler(clicked);
     });
   }
@@ -27,7 +28,6 @@ class StackView extends View {
       el.classList.remove("active");
       if (el.id === "new") el.classList.add("active");
     });
-
     this._activeSideComp?.classList.remove("active");
     stackBtnsView.toggleCrossBtns("remove");
   }
@@ -49,33 +49,32 @@ class StackView extends View {
       : this._compWrapper.firstElementChild.nextElementSibling.classList.add(
           "active"
         );
-
     stackBtnsView.toggleCrossBtns("remove");
   };
   //____________________________________________________________________
   //Add stack comp
   _configComp = function (compFlag) {
-    let compImg;
     this._retarget();
+    let compImg;
+
+    heightsView._activeHeightDiv.classList.remove("highlight"); //reset heights
+    [".opts-text", ".opts-text.second"].forEach(
+      (el) =>
+        (optionsView._activeOptsDiv.querySelector(el).innerHTML = "options")
+    ); //reset options
 
     //if this active block was previously a cross, clear all added sides
     if (this._activeComp.classList.contains("cross")) cleanCross();
-
     const heightDiv = this._activeComp.querySelector(".height-div");
     const imageEl = this._activeComp.querySelector(".img");
     const optsDiv = this._activeComp.querySelector(".opts-div");
-
     imageEl.parentNode.removeChild(imageEl); //just change src instead?
-
     compImg = COMP_IMG[compFlag];
-
     const htmlImg = `<img class= img src=${compImg}>`;
     heightDiv.insertAdjacentHTML("afterend", htmlImg);
     imageEl.classList.remove("hide");
-
     optsDiv.querySelector(".opts-text.second").classList.add("hide");
     optsDiv.querySelector(".opts-spacer").classList.add("hide");
-
     this._activeComp.querySelector(".side_left_div").classList.add("hide");
     this._activeComp.querySelector(".side_right_div").classList.add("hide");
     this._activeComp.querySelector(".height-div").classList.remove("hide");
@@ -87,18 +86,15 @@ class StackView extends View {
     });
     this._compSpecialCases(compFlag);
   };
-
   //____________________________________________________________________
   //Check for special cases: 'double' or 'cross' and apply treatments
   _compSpecialCases = function (compFlag) {
     if (compFlag != "double" && compFlag != "cross") return;
     const optsDiv = this._activeComp.querySelector(".opts-div");
-
     if (compFlag === "double") {
       optsDiv.querySelector(".opts-text.hide")?.classList.remove("hide");
       optsDiv.querySelector(".opts-spacer.hide")?.classList.remove("hide");
     }
-
     if (compFlag === "cross") {
       this._activeComp.querySelector(".side_left_div").classList.remove("hide");
       this._activeComp
@@ -113,12 +109,10 @@ class StackView extends View {
     const sideDiv = this._compWrapper
       .querySelector(".comp-div.active.cross")
       .querySelector(`.side_${side}_div`);
-
     sideDiv.addEventListener("click", (e) => {
       const clicked = e.target.closest(`.${side}_comp`);
       if (!clicked) return;
       e.stopPropagation();
-
       this._retarget();
       this._allSideComps.forEach(function (el) {
         el.classList.remove("active");
@@ -146,11 +140,9 @@ class StackView extends View {
       flag === "left"
         ? targetActiveComp.firstElementChild
         : targetActiveComp.lastElementChild;
-
     const beforeOrAfter = flag === "left" ? "afterbegin" : "beforeend";
     sideSelect.insertAdjacentHTML(beforeOrAfter, htmlSide);
   };
-
   //_______________________________________________________________________
   //Remove cross side comp
   _delSideComp = function (flag) {

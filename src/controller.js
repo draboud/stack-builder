@@ -6,13 +6,13 @@ import heightsView from "./views/heightsView.js";
 import stackBtnsView from "./Views/stackBtnsView.js";
 import { setIds, setIdsSides } from "./helpers.js";
 import optionsView from "./views/optionsView.js";
+import adaptorsView from "./views/adaptorsView.js";
 
 console.log("CONTROLLER - Oct 4, 2024");
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
   stackView._retarget();
   const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
-
   switch (compVal) {
     case "plus":
       stackView._addComp();
@@ -30,14 +30,11 @@ const controlStackBtns = function (arrayEl) {
     default:
       stackView._configComp(compVal);
   }
-
   if (stackView._sideActiveFlag === false) {
     stackBtnsView.toggleCrossBtns("remove");
   }
   setIds();
   setIdsSides();
-  // stackView._addHandlerHandO();
-
   heightsView._addCompHeight(compVal);
 };
 //____________________________________________________________________
@@ -79,7 +76,11 @@ controlOptsModal = function (clicked) {
   optionsView._optsModal.classList.add("hide");
   optionsView._secondOptsFlag = false;
 };
-//_________________________________________________________________________
+//____________________________________________________________________
+controlAdapt = function () {
+  adaptorsView._autoAdapt();
+};
+//____________________________________________________________________
 const init = function () {
   stackBtnsView._addHandlerStackBtns(controlStackBtns);
   stackBtnsView._addHandlerCrossPlusMinus(controlCrossPlusMinus);
@@ -87,6 +88,6 @@ const init = function () {
   heightsView._addHandlerHeight(controlHeight);
   optionsView._addHandlerOptions(controlOptions);
   optionsView._addHandlerOptsModal(controlOptsModal);
+  adaptorsView._addHandlerAdapt(controlAdapt);
 };
-
 init();

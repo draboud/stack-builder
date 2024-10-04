@@ -13,6 +13,8 @@ export default class View {
   _allHeightDivs;
   _activeOptsDiv;
   _allOptsDivs;
+  _allOptsText;
+  _allAdaptors;
 
   _retarget(side) {
     this._allComps = [...document.querySelectorAll(".comp-div")];
@@ -37,5 +39,8 @@ export default class View {
       .querySelector(".comp-div.active")
       .querySelector(".opts-div");
     this._allOptsDivs = [...document.querySelectorAll(".opts-div")];
+    this._allOptsText = [...document.querySelectorAll(".opts-text")];
+    this._allAdaptors = [...document.querySelectorAll(".adapter_block")];
+    // this._allAdaptors = document.querySelectorAll(".adapter_block");
   }
 }
