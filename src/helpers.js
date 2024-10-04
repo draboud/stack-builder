@@ -1,22 +1,17 @@
-import stackView from "./views/stackView";
+import stackView from "./Views/stackView";
 import stackBtnsView from "./Views/stackBtnsView";
-import View from "./Views/View";
 
 //________________________________________________________________________
 //ID main comps
 export const setIds = function () {
-  this._newCompArray = document.querySelectorAll(".comp-div");
-  this._allSideComps = [
-    ...document.querySelectorAll(".left_comp"),
-    ...document.querySelectorAll(".right_comp"),
-  ];
-  let compIdCounter = this._newCompArray.length;
-  this._newCompArray.forEach(function (el, i) {
+  stackView._retarget();
+  let compIdCounter = stackView._allComps.length;
+  stackView._allComps.forEach(function (el, i) {
     el.id = "c-" + compIdCounter;
     compIdCounter -= 1;
   });
   //if no active cross elements, turn off cross comp buttons
-  this._allSideComps.forEach(function (el) {
+  stackView._allSideComps.forEach(function (el) {
     el.classList.contains("active")
       ? (sideActiveFlag = true)
       : (sideActiveFlag = false);
@@ -26,11 +21,10 @@ export const setIds = function () {
 //_________________________________________________________________________
 //ID cross comps
 export const setIdsSides = function () {
-  this._newLeftArray = [...document.querySelectorAll(".left_comp")];
-  this._newRightArray = [...document.querySelectorAll(".right_comp")];
+  stackView._retarget();
   const activeCompId = document.querySelector(".comp-div.active").id;
-  let leftCompIdsCounter = this._newLeftArray.length;
-  let rightCompIdsCounter = this._newRightArray.length;
+  let leftCompIdsCounter = stackView._leftArray.length;
+  let rightCompIdsCounter = stackView._rightArray.length;
   let indexCountLeft = 1;
   let indexCountRight = 1;
   let indexCount = 1;

@@ -1,3 +1,5 @@
+import stackView from "./Views/stackView";
+
 export const COMP_CLASSES = [
   "washington",
   "annular",
@@ -12,6 +14,8 @@ export const COMP_CLASSES = [
 ];
 
 export const COMP_IMG = {
+  blank:
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s-p-500.png",
   annular:
     "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43c4b43469a2e8adef108_annular-lines-s-p-500.png",
 
@@ -32,53 +36,12 @@ export const COMP_IMG = {
 
   side: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png",
 
-  blank:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s-p-500.png",
-
   spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd0316fff7c3bffbb6c781_Cross%20-%20Spool.png",
 
   man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf61a2ceb56331d1bc3b_Cross%20-%20Manual.png",
 
   hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf611491cc6deb154360_Cross%20-%20Hydraulic.png",
 };
-
-// export const HTML_MARKUPS = {
-//   stackComp: `
-//     <div id="new" class="comp-div">
-//       <div class="side_left_div hide">
-//         <div class="left_comp">
-//           <img class="img_side" src=${COMP_IMG.side}>
-//           <div class="hyd_spacer hide"></div>
-//         </div>
-//       </div>
-//       <div class="height-div hide">
-//         <div class="height-text">height</div>
-//       </div>
-//       <img class="img" src=${COMP_IMG.blank}>
-//       <div class="opts-div hide">
-//         <div class="opts-text">options</div>
-//         <div class="opts-spacer"></div>
-//         <div class="opts-text second">options</div>
-//       </div>
-//       <div class="side_right_div hide">
-//         <div class="right_comp">
-//           <img class="img_side" src=${COMP_IMG.side}>
-//           <div class="hyd_spacer hide"></div>
-//         </div>
-//     </div>`,
-
-//   sideComp: `
-//   <div class= "${stackView._sideFlag}_comp active">
-//     <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">
-//     <div class="hyd_spacer hide"></div>
-//   </div>`,
-
-//   // const htmlSide = `
-//   // <div class= "${flag}_comp active">
-//   //   <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">
-//   //   <div class="hyd_spacer hide"></div>
-//   // </div>`;
-// };
 
 export const COMP_HEIGHTS = {
   wellhead: 27,
@@ -87,4 +50,40 @@ export const COMP_HEIGHTS = {
   single: 72,
   double: 112,
   annular: 91,
+};
+//_________________________________________________________________________
+//Send indicator into function for either 'compBlock','compSideBlock'
+export const GENERATE_MARKUP = function (compType) {
+  if (compType === "compBlock") {
+    return `
+    <div id="new" class="comp-div">
+      <div class="side_left_div hide">
+        <div class="left_comp">
+          <img class="img_side" src=${COMP_IMG.side}>
+          <div class="hyd_spacer hide"></div>
+        </div>
+      </div>
+      <div class="height-div hide">
+        <div class="height-text">height</div>
+      </div>
+      <img class="img" src=${COMP_IMG.blank}>
+      <div class="opts-div hide">
+        <div class="opts-text">options</div>
+        <div class="opts-spacer"></div>
+        <div class="opts-text second">options</div>
+      </div>
+      <div class="side_right_div hide">
+        <div class="right_comp">
+          <img class="img_side" src=${COMP_IMG.side}>
+          <div class="hyd_spacer hide"></div>
+        </div>
+    </div>`;
+  }
+  if (compType === "compSideBlock") {
+    return `
+    <div class= "${stackView._sideFlag}_comp active">
+      <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">
+      <div class="hyd_spacer hide"></div>
+    </div>`;
+  }
 };

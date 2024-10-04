@@ -1,7 +1,7 @@
 import View from "./View";
-import { COMP_CLASSES, COMP_IMG, HTML_MARKUPS } from "../config";
+import { COMP_CLASSES, COMP_IMG, GENERATE_MARKUP } from "../config";
 import stackBtnsView from "./stackBtnsView";
-import { cleanCross, generateMarkup } from "../helpers";
+import { cleanCross } from "../helpers";
 
 let sideActiveFlag;
 
@@ -45,7 +45,7 @@ class StackView extends View {
   //____________________________________________________________________
   //Add stack comp
   _addComp() {
-    const htmlComp = generateMarkup("compBlock");
+    const htmlComp = GENERATE_MARKUP("compBlock");
     this._retarget();
     this._activeComp.insertAdjacentHTML("beforebegin", htmlComp);
     this._retarget();
@@ -160,7 +160,7 @@ class StackView extends View {
   //Add cross side comp
   _addSideComp = function (flag) {
     this._sideFlag = flag;
-    const htmlSide = generateMarkup(compSideBlock);
+    const htmlSide = GENERATE_MARKUP("compSideBlock");
     const targetActiveComp = this._compWrapper.querySelector(
       ".comp-div.cross.active"
     );
@@ -186,7 +186,7 @@ class StackView extends View {
     if (!activeSideComp) return;
     if (activeSideComp.id.slice(-2) === "-1") {
       activeSideComp.querySelector(".hyd_spacer").classList.add("hide");
-      activeSideComp.querySelector(".img_side").src = COMP_IMG.blank;
+      activeSideComp.querySelector(".img_side").src = COMP_IMG.side;
       return;
     }
     activeSideComp.parentNode.removeChild(activeSideComp);
@@ -227,5 +227,4 @@ class StackView extends View {
     });
   };
 }
-
 export default new StackView();
