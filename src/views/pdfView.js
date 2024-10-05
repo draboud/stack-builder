@@ -2,7 +2,6 @@ import View from "./View";
 import notesView from "./notesView";
 import jsPDF from "jspdf";
 import { PDF_SETTINGS } from "../config";
-import adaptorsView from "./adaptorsView";
 
 class PDFView extends View {
   //_________________________________________________________________________

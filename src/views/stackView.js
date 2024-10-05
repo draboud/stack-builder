@@ -5,7 +5,6 @@ import { cleanCross } from "../helpers";
 import heightsView from "./heightsView";
 import optionsView from "./optionsView";
 
-// let sideActiveFlag;
 const viewBtn = document.querySelector(".view_button");
 
 class StackView extends View {

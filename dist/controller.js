@@ -19250,7 +19250,7 @@
     }
   });
 
-  // src/Views/View.js
+  // src/views/View.js
   var View = class {
     _data;
     _compWrapper = document.querySelector(".comp-wrapper");
@@ -19799,7 +19799,6 @@
 
   // src/views/notesView.js
   var form = document.querySelector(".form");
-  var ctrlBtns2 = document.querySelector(".control_buttons_div");
   var NotesView = class extends View {
     _jobTitle;
     _notes;

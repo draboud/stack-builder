@@ -1,7 +1,6 @@
 import View from "./View";
 
 const form = document.querySelector(".form");
-const ctrlBtns = document.querySelector(".control_buttons_div");
 
 class NotesView extends View {
   _jobTitle;
