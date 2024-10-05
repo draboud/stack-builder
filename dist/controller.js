@@ -19250,7 +19250,7 @@
     }
   });
 
-  // src/views/View.js
+  // src/Views/View.js
   var View = class {
     _data;
     _compWrapper = document.querySelector(".comp-wrapper");
@@ -27984,7 +27984,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("CONTROLLER - Oct 5, 2024");
+  console.log("MVC2 - Oct 5, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
