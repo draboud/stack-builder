@@ -87,3 +87,20 @@ export const GENERATE_MARKUP = function (compType) {
     </div>`;
   }
 };
+//_________________________________________________________________________
+// for scaleStack
+export const STACK_MAX = 620;
+export const STACK_MAX_FOR_OPTS = 1000;
+//_________________________________________________________________________
+//for pdf settings
+export const PDF_SETTINGS = {
+  xAxis: 15,
+  yAxis: 10,
+  scaleFactor: 0.35,
+  logoX: 337.8,
+  logoY: 120.7,
+  pageHeight: 841,
+  notesMaxWidth: "550",
+  logoImg:
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b41c3b6d1b3e37580ee90a_Team%20Snubbing%20International%20-%20Horizontal-p-500.png",
+};

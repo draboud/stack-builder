@@ -2,6 +2,7 @@ export default class View {
   _data;
   _compWrapper = document.querySelector(".comp-wrapper");
   _allComps;
+  _allCompImgs;
   _allSideComps;
   _currentSideComps; //all side comps of currently active cross (if applicable)
   _activeSideComp;
@@ -11,13 +12,17 @@ export default class View {
   _sideFlag;
   _activeHeightDiv;
   _allHeightDivs;
+  _allHeightText;
   _activeOptsDiv;
   _allOptsDivs;
   _allOptsText;
   _allAdaptors;
+  _allSpacers;
+  _allHydSpacers;
 
   _retarget(side) {
     this._allComps = [...document.querySelectorAll(".comp-div")];
+    this._allCompImgs = document.querySelectorAll(".img");
     this._activeComp = document.querySelector(".comp-div.active");
     this._allSideComps = [
       ...document.querySelectorAll(".left_comp"),
@@ -35,12 +40,15 @@ export default class View {
       .querySelector(".comp-div.active")
       .querySelector(".height-div");
     this._allHeightDivs = document.querySelectorAll(".height-div");
+    this._allHeightText = document.querySelectorAll(".height-text");
     this._activeOptsDiv = document
       .querySelector(".comp-div.active")
       .querySelector(".opts-div");
     this._allOptsDivs = [...document.querySelectorAll(".opts-div")];
     this._allOptsText = [...document.querySelectorAll(".opts-text")];
     this._allAdaptors = [...document.querySelectorAll(".adapter_block")];
+    this._allSpacers = document.querySelectorAll(".opts-spacer");
+    this._allHydSpacers = document.querySelectorAll(".hyd_spacer");
     // this._allAdaptors = document.querySelectorAll(".adapter_block");
   }
 }

@@ -5,7 +5,8 @@ import { cleanCross } from "../helpers";
 import heightsView from "./heightsView";
 import optionsView from "./optionsView";
 
-let sideActiveFlag;
+// let sideActiveFlag;
+const viewBtn = document.querySelector(".view_button");
 
 class StackView extends View {
   //Clicks for stack components
@@ -18,6 +19,7 @@ class StackView extends View {
     });
   }
   //____________________________________________________________________
+
   //Add stack comp
   _addComp() {
     const htmlComp = GENERATE_MARKUP("compBlock");

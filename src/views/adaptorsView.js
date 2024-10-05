@@ -1,8 +1,10 @@
 import View from "./View";
+import { STACK_MAX, STACK_MAX_FOR_OPTS } from "../config";
 
 const ctrlBtns = document.querySelector(".control_buttons_div");
 
 class AdaptorsView extends View {
+  _newHeight;
   //Add handler to adapt button
   _addHandlerAdapt = function (handler) {
     ctrlBtns.addEventListener("click", function (e) {
@@ -11,6 +13,21 @@ class AdaptorsView extends View {
       handler();
     });
   };
+  _addHandlerScaleStack = function (handler) {
+    ctrlBtns.addEventListener("click", function (e) {
+      const clicked = e.target.closest(".view_button");
+      if (!clicked) return;
+      handler();
+    });
+  };
+  _addHandlerPDF = function (handler) {
+    ctrlBtns.addEventListener("click", function (e) {
+      const clicked = e.target.closest(".pdf_button");
+      if (!clicked) return;
+      handler();
+    });
+  };
+
   //_________________________________________________________________________
   //Add adaptors to stack
   _autoAdapt = function () {
@@ -39,6 +56,71 @@ class AdaptorsView extends View {
         this._allComps[i].insertAdjacentHTML("afterend", adapterHtml);
       }
     }
+  };
+  //____________________________________________________________________
+  //Adjust height of stack after certain threshold value, in order to fit on a4 pdf
+  _scaleStack = function () {
+    // const allCompHeights = document.querySelectorAll(".height-text");//allHeightText
+    // const allCompDivs = document.querySelectorAll(".comp-div");//allComps
+    // const allCompImgs = document.querySelectorAll(".img");//allCompImgs
+    // const allSpacers = document.querySelectorAll(".opts-spacer");//allSpacers
+    // const allHydSpacers = document.querySelectorAll(".hyd_spacer");//allHydSpacers
+    this._retarget();
+    // const allSidesLeft = document.querySelectorAll(".left_comp"); //leftArray
+    // const allSidesRight = document.querySelectorAll(".right_comp"); //rightArray
+
+    let stackHeight = 0;
+    let newHeight;
+    // let newHeight;
+
+    this._allHeightText.forEach(function (el) {
+      stackHeight += parseFloat(el.innerHTML.slice(0, -1));
+    });
+
+    if (stackHeight > STACK_MAX) {
+      let factor = (stackHeight - STACK_MAX) / stackHeight;
+      let result = (100 - factor * 100) / 100;
+      newHeight = stackHeight * result;
+
+      this._allCompImgs.forEach(function (el) {
+        el.style.height = $(el).height() * result + "px";
+      });
+
+      this._allComps.forEach(function (el) {
+        el.style.width = $(el).width() * result + "px";
+      });
+
+      this._allSpacers.forEach(function (el) {
+        el.style.height = $(el).height() * result + "px";
+      });
+
+      this._allHydSpacers.forEach(function (el) {
+        el.style.height = $(el).height() * result + "px";
+      });
+      //______________________________________________________________________
+      this._leftArray.forEach(function (el) {
+        el.style.width = $(el).width() * result + "px";
+        // el.style.height = $(el).height() * result + "px";
+      });
+
+      this._rightArray.forEach(function (el) {
+        el.style.width = $(el).width() * result + "px";
+        // el.style.height = $(el).height() * result + "px";
+      });
+      //______________________________________________________________________
+
+      if (stackHeight > STACK_MAX_FOR_OPTS) {
+        this._allSpacers.forEach(function (el) {
+          el.style.height = "0px";
+        });
+      }
+    } else {
+      newHeight = stackHeight;
+    }
+    return newHeight;
+    // convertToPDF(newHeight);
+
+    // console.log("newHeight: ", newHeight);
   };
 }
 

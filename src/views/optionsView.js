@@ -4,7 +4,7 @@ class OptionsView extends View {
   _optsModal = document.querySelector(".options_modal");
   _secondOptsFlag;
 
-  //Option clicks assigned to height text
+  //Option clicks assigned to opts text
   _addHandlerOptions(handler) {
     this._retarget();
     this._allOptsDivs.forEach((el) =>

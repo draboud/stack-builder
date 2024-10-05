@@ -1,14 +1,16 @@
 import { COMP_CLASSES, COMP_IMG } from "./config";
 import * as model from "./model.js";
-import View from "./Views/View.js";
+import View from "./views/View.js";
 import stackView from "./Views/stackView.js";
 import heightsView from "./views/heightsView.js";
-import stackBtnsView from "./Views/stackBtnsView.js";
+import stackBtnsView from "./views/stackBtnsView.js";
 import { setIds, setIdsSides } from "./helpers.js";
 import optionsView from "./views/optionsView.js";
 import adaptorsView from "./views/adaptorsView.js";
+import notesView from "./views/notesView.js";
+import pdfView from "./views/pdfView.js";
 
-console.log("CONTROLLER - Oct 4, 2024");
+console.log("CONTROLLER - Oct 5, 2024");
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
   stackView._retarget();
@@ -81,6 +83,21 @@ controlAdapt = function () {
   adaptorsView._autoAdapt();
 };
 //____________________________________________________________________
+controlScaleStack = function () {
+  adaptorsView._newHeight = adaptorsView._scaleStack();
+};
+//____________________________________________________________________
+controlNotes = function (title, notes) {
+  notesView._jobTitle = title;
+  notesView._notes = notes;
+};
+//____________________________________________________________________
+controlPDF = function () {
+  adaptorsView._newHeight = adaptorsView._scaleStack();
+  pdfView._convertToPDF(adaptorsView._newHeight);
+};
+//____________________________________________________________________
+
 const init = function () {
   stackBtnsView._addHandlerStackBtns(controlStackBtns);
   stackBtnsView._addHandlerCrossPlusMinus(controlCrossPlusMinus);
@@ -89,5 +106,8 @@ const init = function () {
   optionsView._addHandlerOptions(controlOptions);
   optionsView._addHandlerOptsModal(controlOptsModal);
   adaptorsView._addHandlerAdapt(controlAdapt);
+  adaptorsView._addHandlerScaleStack(controlScaleStack);
+  adaptorsView._addHandlerPDF(controlPDF);
+  notesView._addHandlerNotes(controlNotes);
 };
 init();
