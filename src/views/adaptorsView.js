@@ -60,18 +60,10 @@ class AdaptorsView extends View {
   //____________________________________________________________________
   //Adjust height of stack after certain threshold value, in order to fit on a4 pdf
   _scaleStack = function () {
-    // const allCompHeights = document.querySelectorAll(".height-text");//allHeightText
-    // const allCompDivs = document.querySelectorAll(".comp-div");//allComps
-    // const allCompImgs = document.querySelectorAll(".img");//allCompImgs
-    // const allSpacers = document.querySelectorAll(".opts-spacer");//allSpacers
-    // const allHydSpacers = document.querySelectorAll(".hyd_spacer");//allHydSpacers
     this._retarget();
-    // const allSidesLeft = document.querySelectorAll(".left_comp"); //leftArray
-    // const allSidesRight = document.querySelectorAll(".right_comp"); //rightArray
 
     let stackHeight = 0;
     let newHeight;
-    // let newHeight;
 
     this._allHeightText.forEach(function (el) {
       stackHeight += parseFloat(el.innerHTML.slice(0, -1));
@@ -105,7 +97,6 @@ class AdaptorsView extends View {
 
       this._rightArray.forEach(function (el) {
         el.style.width = $(el).width() * result + "px";
-        // el.style.height = $(el).height() * result + "px";
       });
       //______________________________________________________________________
 
@@ -118,9 +109,6 @@ class AdaptorsView extends View {
       newHeight = stackHeight;
     }
     return newHeight;
-    // convertToPDF(newHeight);
-
-    // console.log("newHeight: ", newHeight);
   };
 }
 

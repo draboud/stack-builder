@@ -132,6 +132,7 @@ class StackView extends View {
     this._sideFlag = flag;
     const htmlSide = GENERATE_MARKUP("compSideBlock");
     const targetActiveComp = this._compWrapper.querySelector(
+      //***retarget()?
       ".comp-div.cross.active"
     );
     this._retarget();
@@ -149,6 +150,7 @@ class StackView extends View {
   //Remove cross side comp
   _delSideComp = function (flag) {
     const activeSideComp = this._compWrapper.querySelector(
+      //***retarget()?
       `.${flag}_comp.active`
     );
     if (!activeSideComp) return;
@@ -158,7 +160,7 @@ class StackView extends View {
       return;
     }
     activeSideComp.parentNode.removeChild(activeSideComp);
-    const targetActiveSideComp = this._compWrapper
+    const targetActiveSideComp = this._compWrapper //***retarget()?
       .querySelector(".comp-div.active")
       .querySelector(`.${flag}_comp`);
     flag === "left"

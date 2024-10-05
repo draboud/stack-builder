@@ -1,11 +1,8 @@
-import { COMP_CLASSES, COMP_IMG } from "./config";
-import * as model from "./model.js";
-import View from "./views/View.js";
 import stackView from "./Views/stackView.js";
-import heightsView from "./views/heightsView.js";
-import stackBtnsView from "./views/stackBtnsView.js";
+import heightsView from "./Views/heightsView.js";
+import stackBtnsView from "./Views/stackBtnsView.js";
 import { setIds, setIdsSides } from "./helpers.js";
-import optionsView from "./views/optionsView.js";
+import optionsView from "./Views/optionsView.js";
 import adaptorsView from "./views/adaptorsView.js";
 import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
@@ -92,6 +89,7 @@ controlNotes = function (title, notes) {
   notesView._notes = notes;
 };
 //____________________________________________________________________
+
 controlPDF = function () {
   adaptorsView._newHeight = adaptorsView._scaleStack();
   pdfView._convertToPDF(adaptorsView._newHeight);

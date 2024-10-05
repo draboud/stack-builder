@@ -6,7 +6,7 @@ const ctrlBtns = document.querySelector(".control_buttons_div");
 class NotesView extends View {
   _jobTitle;
   _notes;
-  _tester;
+  _testTitle;
   //___________________________________________________________________________
   _addHandlerNotes = function (handler) {
     form.addEventListener("submit", function (e) {
