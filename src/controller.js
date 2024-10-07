@@ -12,6 +12,7 @@ console.log("MVC2 - Oct 5, 2024");
 const controlStackBtns = function (arrayEl) {
   stackView._retarget();
   const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
+  stackView._compFlag = compVal;
   switch (compVal) {
     case "plus":
       stackView._addComp();
@@ -64,16 +65,29 @@ controlHeight = function () {
 //____________________________________________________________________
 controlOptions = function (clicked) {
   optionsView._retarget();
+  console.log("compFlag: ", stackView._compFlag);
   if (clicked.classList.contains("second")) optionsView._secondOptsFlag = true;
-  optionsView._optsModal.classList.remove("hide");
+  if (stackView._compFlag === "single" || stackView._compFlag === "double") {
+    optionsView._optsModalGates.classList.remove("hide");
+  } else {
+    optionsView._optsModal.classList.remove("hide");
+  }
 };
 //____________________________________________________________________
 controlOptsModal = function (clicked) {
-  optionsView._activeOptsDiv.querySelector(
-    optionsView._secondOptsFlag ? ".opts-text.second" : ".opts-text"
-  ).innerHTML = clicked.innerHTML;
-  optionsView._optsModal.classList.add("hide");
-  optionsView._secondOptsFlag = false;
+  optionsView._setOptsText(clicked);
+};
+//____________________________________________________________________
+controlOptsModalGates = function (clicked) {
+  optionsView._setOptsText(clicked);
+};
+//____________________________________________________________________
+controlModalBtn = function () {
+  optionsView._closeModal();
+};
+//____________________________________________________________________
+controlModalGatesBtn = function () {
+  optionsView._closeModalGates();
 };
 //____________________________________________________________________
 controlAdapt = function () {
@@ -102,7 +116,10 @@ const init = function () {
   stackView._addHandlerCompClick(controlCompClick);
   heightsView._addHandlerHeight(controlHeight);
   optionsView._addHandlerOptions(controlOptions);
+  optionsView._addHandlerModalBtn(controlModalBtn);
+  optionsView._addHandlerModalGatesBtn(controlModalGatesBtn);
   optionsView._addHandlerOptsModal(controlOptsModal);
+  optionsView._addHandlerOptsModalGates(controlOptsModalGates);
   adaptorsView._addHandlerAdapt(controlAdapt);
   adaptorsView._addHandlerScaleStack(controlScaleStack);
   adaptorsView._addHandlerPDF(controlPDF);

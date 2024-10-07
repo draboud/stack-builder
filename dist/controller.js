@@ -19273,6 +19273,12 @@
     _allAdaptors;
     _allSpacers;
     _allHydSpacers;
+    _allOptsModalText;
+    _allOptsModalGatesText;
+    _allBoreOptsText;
+    _allPressOptsText;
+    _allTypeOptsText;
+    _allRangeOptsText;
     _retarget(side) {
       this._allComps = [...document.querySelectorAll(".comp-div")];
       this._allCompImgs = document.querySelectorAll(".img");
@@ -19298,6 +19304,20 @@
       this._allAdaptors = [...document.querySelectorAll(".adapter_block")];
       this._allSpacers = document.querySelectorAll(".opts-spacer");
       this._allHydSpacers = document.querySelectorAll(".hyd_spacer");
+      this._allOptsModalText = [
+        ...document.querySelectorAll(".bore_opt_text"),
+        ...document.querySelectorAll(".press_opt_text")
+      ];
+      this._allOptsModalGatesText = [
+        ...document.querySelectorAll(".bore_opt_text"),
+        ...document.querySelectorAll(".type_opt_text"),
+        ...document.querySelectorAll(".range_opt_text"),
+        ...document.querySelectorAll(".press_opt_text")
+      ];
+      this._allBoreOptsText = [...document.querySelectorAll(".bore_opt_text")];
+      this._allPressOptsText = [...document.querySelectorAll(".press_opt_text")];
+      this._allTypeOptsText = [...document.querySelectorAll(".type_opt_text")];
+      this._allRangeOptsText = [...document.querySelectorAll(".range_opt_text")];
     }
   };
 
@@ -19502,6 +19522,7 @@
   // src/Views/optionsView.js
   var OptionsView = class extends View {
     _optsModal = document.querySelector(".options_modal");
+    _optsModalGates = document.querySelector(".options_modal.gates");
     _secondOptsFlag;
     //Option clicks assigned to opts text
     _addHandlerOptions(handler) {
@@ -19516,14 +19537,106 @@
     }
     //_________________________________________________________________________
     _addHandlerOptsModal(handler) {
-      this._optsModal;
-      addEventListener("click", function(e2) {
-        const clicked = e2.target.closest(".modal_div_text");
+      this._optsModal.addEventListener("click", function(e2) {
+        const clicked = e2.target.closest(".modal_div");
         if (!clicked) return;
         handler(clicked);
       });
     }
     //_________________________________________________________________________
+    _addHandlerOptsModalGates(handler) {
+      this._optsModalGates.addEventListener("click", function(e2) {
+        const clicked = e2.target.closest(".modal_div");
+        if (!clicked) return;
+        handler(clicked);
+      });
+    }
+    //_________________________________________________________________________
+    _addHandlerModalBtn(handler) {
+      this._optsModal.addEventListener("click", function(e2) {
+        const clicked = e2.target.closest(".modal_close_button");
+        if (!clicked) return;
+        handler();
+      });
+    }
+    //_________________________________________________________________________
+    _addHandlerModalGatesBtn(handler) {
+      this._optsModalGates.addEventListener("click", function(e2) {
+        const clicked = e2.target.closest(".modal_close_button");
+        if (!clicked) return;
+        handler();
+      });
+    }
+    //_________________________________________________________________________
+    _setOptsText(clicked) {
+      this._retarget();
+      const textChild = clicked.firstElementChild;
+      let optOutput = "";
+      textChild.classList.add("selected");
+      switch (stackView_default._compFlag) {
+        case "single":
+        case "double":
+          if (this._allBoreOptsText.find(
+            (el) => el.classList.contains("selected")
+          ) && this._allTypeOptsText.find(
+            (el) => el.classList.contains("selected")
+          ) && this._allRangeOptsText.find(
+            (el) => el.classList.contains("selected")
+          ) && this._allPressOptsText.find((el) => el.classList.contains("selected"))) {
+            optOutput += this._allBoreOptsText.find(
+              (el) => el.classList.contains("selected")
+            ).innerHTML + "__";
+            optOutput += this._activeComp.classList[1] + "__";
+            optOutput += this._allTypeOptsText.find(
+              (el) => el.classList.contains("selected")
+            ).innerHTML + "\n";
+            optOutput += this._allRangeOptsText.find(
+              (el) => el.classList.contains("selected")
+            ).innerHTML + "\n";
+            optOutput += this._allPressOptsText.find(
+              (el) => el.classList.contains("selected")
+            ).innerHTML;
+            this._allOptsModalGatesText.forEach(
+              (el) => el.classList.remove("selected")
+            );
+            this._activeOptsDiv.querySelector(
+              this._secondOptsFlag ? ".opts-text.second" : ".opts-text"
+            ).innerHTML = optOutput;
+            this._optsModalGates.classList.add("hide");
+            this._secondOptsFlag = false;
+          }
+          break;
+        default:
+          if (this._allBoreOptsText.find(
+            (el) => el.classList.contains("selected")
+          ) && this._allPressOptsText.find((el) => el.classList.contains("selected"))) {
+            optOutput += this._allBoreOptsText.find(
+              (el) => el.classList.contains("selected")
+            ).innerHTML + "__";
+            optOutput += this._activeComp.classList[1] + "__";
+            optOutput += this._allPressOptsText.find(
+              (el) => el.classList.contains("selected")
+            ).innerHTML;
+            console.log("compFlag: ", this._compFlag);
+            this._allOptsModalText.forEach(
+              (el) => el.classList.remove("selected")
+            );
+            this._activeOptsDiv.querySelector(
+              this._secondOptsFlag ? ".opts-text.second" : ".opts-text"
+            ).innerHTML = optOutput;
+            this._optsModal.classList.add("hide");
+            this._secondOptsFlag = false;
+          }
+      }
+    }
+    //_________________________________________________________________________
+    _closeModal() {
+      this._optsModal.classList.add("hide");
+    }
+    //_________________________________________________________________________
+    _closeModalGates() {
+      this._optsModalGates.classList.add("hide");
+    }
   };
   var optionsView_default = new OptionsView();
 
@@ -19576,9 +19689,6 @@
       this._retarget();
       let compImg;
       heightsView_default._activeHeightDiv.classList.remove("highlight");
-      [".opts-text", ".opts-text.second"].forEach(
-        (el) => optionsView_default._activeOptsDiv.querySelector(el).innerHTML = "options"
-      );
       if (this._activeComp.classList.contains("cross")) cleanCross();
       const heightDiv = this._activeComp.querySelector(".height-div");
       const imageEl = this._activeComp.querySelector(".img");
@@ -27988,6 +28098,7 @@
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
+    stackView_default._compFlag = compVal;
     switch (compVal) {
       case "plus":
         stackView_default._addComp();
@@ -28034,15 +28145,25 @@
   };
   controlOptions = function(clicked) {
     optionsView_default._retarget();
+    console.log("compFlag: ", stackView_default._compFlag);
     if (clicked.classList.contains("second")) optionsView_default._secondOptsFlag = true;
-    optionsView_default._optsModal.classList.remove("hide");
+    if (stackView_default._compFlag === "single" || stackView_default._compFlag === "double") {
+      optionsView_default._optsModalGates.classList.remove("hide");
+    } else {
+      optionsView_default._optsModal.classList.remove("hide");
+    }
   };
   controlOptsModal = function(clicked) {
-    optionsView_default._activeOptsDiv.querySelector(
-      optionsView_default._secondOptsFlag ? ".opts-text.second" : ".opts-text"
-    ).innerHTML = clicked.innerHTML;
-    optionsView_default._optsModal.classList.add("hide");
-    optionsView_default._secondOptsFlag = false;
+    optionsView_default._setOptsText(clicked);
+  };
+  controlOptsModalGates = function(clicked) {
+    optionsView_default._setOptsText(clicked);
+  };
+  controlModalBtn = function() {
+    optionsView_default._closeModal();
+  };
+  controlModalGatesBtn = function() {
+    optionsView_default._closeModalGates();
   };
   controlAdapt = function() {
     adaptorsView_default._autoAdapt();
@@ -28064,7 +28185,10 @@
     stackView_default._addHandlerCompClick(controlCompClick);
     heightsView_default._addHandlerHeight(controlHeight);
     optionsView_default._addHandlerOptions(controlOptions);
+    optionsView_default._addHandlerModalBtn(controlModalBtn);
+    optionsView_default._addHandlerModalGatesBtn(controlModalGatesBtn);
     optionsView_default._addHandlerOptsModal(controlOptsModal);
+    optionsView_default._addHandlerOptsModalGates(controlOptsModalGates);
     adaptorsView_default._addHandlerAdapt(controlAdapt);
     adaptorsView_default._addHandlerScaleStack(controlScaleStack);
     adaptorsView_default._addHandlerPDF(controlPDF);

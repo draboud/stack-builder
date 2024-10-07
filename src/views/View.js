@@ -19,6 +19,12 @@ export default class View {
   _allAdaptors;
   _allSpacers;
   _allHydSpacers;
+  _allOptsModalText;
+  _allOptsModalGatesText;
+  _allBoreOptsText;
+  _allPressOptsText;
+  _allTypeOptsText;
+  _allRangeOptsText;
 
   _retarget(side) {
     this._allComps = [...document.querySelectorAll(".comp-div")];
@@ -50,5 +56,19 @@ export default class View {
     this._allSpacers = document.querySelectorAll(".opts-spacer");
     this._allHydSpacers = document.querySelectorAll(".hyd_spacer");
     // this._allAdaptors = document.querySelectorAll(".adapter_block");
+    this._allOptsModalText = [
+      ...document.querySelectorAll(".bore_opt_text"),
+      ...document.querySelectorAll(".press_opt_text"),
+    ];
+    this._allOptsModalGatesText = [
+      ...document.querySelectorAll(".bore_opt_text"),
+      ...document.querySelectorAll(".type_opt_text"),
+      ...document.querySelectorAll(".range_opt_text"),
+      ...document.querySelectorAll(".press_opt_text"),
+    ];
+    this._allBoreOptsText = [...document.querySelectorAll(".bore_opt_text")];
+    this._allPressOptsText = [...document.querySelectorAll(".press_opt_text")];
+    this._allTypeOptsText = [...document.querySelectorAll(".type_opt_text")];
+    this._allRangeOptsText = [...document.querySelectorAll(".range_opt_text")];
   }
 }

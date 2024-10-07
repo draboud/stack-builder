@@ -59,11 +59,10 @@ class StackView extends View {
     let compImg;
 
     heightsView._activeHeightDiv.classList.remove("highlight"); //reset heights
-    [".opts-text", ".opts-text.second"].forEach(
-      (el) =>
-        (optionsView._activeOptsDiv.querySelector(el).innerHTML = "options")
-    ); //reset options
-
+    // [".opts-text", ".opts-text.second"].forEach(
+    //   (el) =>
+    //     (optionsView._activeOptsDiv.querySelector(el).innerHTML = "options")
+    // ); //reset options
     //if this active block was previously a cross, clear all added sides
     if (this._activeComp.classList.contains("cross")) cleanCross();
     const heightDiv = this._activeComp.querySelector(".height-div");
