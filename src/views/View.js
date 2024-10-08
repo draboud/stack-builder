@@ -20,7 +20,6 @@ export default class View {
   _allSpacers;
   _allHydSpacers;
   _allOptsModalText;
-  _allOptsModalGatesText;
   _allBoreOptsText;
   _allPressOptsText;
   _allTypeOptsText;
@@ -30,6 +29,7 @@ export default class View {
     this._allComps = [...document.querySelectorAll(".comp-div")];
     this._allCompImgs = document.querySelectorAll(".img");
     this._activeComp = document.querySelector(".comp-div.active");
+    this._compFlag = this._activeComp.classList[1];
     this._allSideComps = [
       ...document.querySelectorAll(".left_comp"),
       ...document.querySelectorAll(".right_comp"),
@@ -57,10 +57,6 @@ export default class View {
     this._allHydSpacers = document.querySelectorAll(".hyd_spacer");
     // this._allAdaptors = document.querySelectorAll(".adapter_block");
     this._allOptsModalText = [
-      ...document.querySelectorAll(".bore_opt_text"),
-      ...document.querySelectorAll(".press_opt_text"),
-    ];
-    this._allOptsModalGatesText = [
       ...document.querySelectorAll(".bore_opt_text"),
       ...document.querySelectorAll(".type_opt_text"),
       ...document.querySelectorAll(".range_opt_text"),

@@ -19250,7 +19250,7 @@
     }
   });
 
-  // src/Views/View.js
+  // src/views/View.js
   var View = class {
     _data;
     _compWrapper = document.querySelector(".comp-wrapper");
@@ -19274,7 +19274,6 @@
     _allSpacers;
     _allHydSpacers;
     _allOptsModalText;
-    _allOptsModalGatesText;
     _allBoreOptsText;
     _allPressOptsText;
     _allTypeOptsText;
@@ -19283,6 +19282,7 @@
       this._allComps = [...document.querySelectorAll(".comp-div")];
       this._allCompImgs = document.querySelectorAll(".img");
       this._activeComp = document.querySelector(".comp-div.active");
+      this._compFlag = this._activeComp.classList[1];
       this._allSideComps = [
         ...document.querySelectorAll(".left_comp"),
         ...document.querySelectorAll(".right_comp")
@@ -19305,10 +19305,6 @@
       this._allSpacers = document.querySelectorAll(".opts-spacer");
       this._allHydSpacers = document.querySelectorAll(".hyd_spacer");
       this._allOptsModalText = [
-        ...document.querySelectorAll(".bore_opt_text"),
-        ...document.querySelectorAll(".press_opt_text")
-      ];
-      this._allOptsModalGatesText = [
         ...document.querySelectorAll(".bore_opt_text"),
         ...document.querySelectorAll(".type_opt_text"),
         ...document.querySelectorAll(".range_opt_text"),
@@ -19402,7 +19398,7 @@
     logoImg: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b41c3b6d1b3e37580ee90a_Team%20Snubbing%20International%20-%20Horizontal-p-500.png"
   };
 
-  // src/Views/stackBtnsView.js
+  // src/views/stackBtnsView.js
   var [compSpl, compMan, compHyd] = Array.from([
     ...document.querySelectorAll(".comp_button_cross")
   ]);
@@ -19494,7 +19490,7 @@
     });
   };
 
-  // src/Views/heightsView.js
+  // src/views/heightsView.js
   var HeightsView = class extends View {
     //Height clicks assigned to height text
     _addHandlerHeight(handler) {
@@ -19519,10 +19515,11 @@
   };
   var heightsView_default = new HeightsView();
 
-  // src/Views/optionsView.js
+  // src/views/optionsView.js
   var OptionsView = class extends View {
     _optsModal = document.querySelector(".options_modal");
-    _optsModalGates = document.querySelector(".options_modal.gates");
+    _typeOpts = document.querySelector(".modal_column.type");
+    _rangeOpts = document.querySelector(".modal_column.range");
     _secondOptsFlag;
     //Option clicks assigned to opts text
     _addHandlerOptions(handler) {
@@ -19544,14 +19541,6 @@
       });
     }
     //_________________________________________________________________________
-    _addHandlerOptsModalGates(handler) {
-      this._optsModalGates.addEventListener("click", function(e2) {
-        const clicked = e2.target.closest(".modal_div");
-        if (!clicked) return;
-        handler(clicked);
-      });
-    }
-    //_________________________________________________________________________
     _addHandlerModalBtn(handler) {
       this._optsModal.addEventListener("click", function(e2) {
         const clicked = e2.target.closest(".modal_close_button");
@@ -19560,87 +19549,51 @@
       });
     }
     //_________________________________________________________________________
-    _addHandlerModalGatesBtn(handler) {
-      this._optsModalGates.addEventListener("click", function(e2) {
-        const clicked = e2.target.closest(".modal_close_button");
-        if (!clicked) return;
-        handler();
-      });
-    }
-    //_________________________________________________________________________
     _setOptsText(clicked) {
       this._retarget();
-      const textChild = clicked.firstElementChild;
       let optOutput = "";
-      textChild.classList.add("selected");
-      switch (stackView_default._compFlag) {
-        case "single":
-        case "double":
-          if (this._allBoreOptsText.find(
-            (el) => el.classList.contains("selected")
-          ) && this._allTypeOptsText.find(
-            (el) => el.classList.contains("selected")
-          ) && this._allRangeOptsText.find(
-            (el) => el.classList.contains("selected")
-          ) && this._allPressOptsText.find((el) => el.classList.contains("selected"))) {
-            optOutput += this._allBoreOptsText.find(
-              (el) => el.classList.contains("selected")
-            ).innerHTML + "__";
-            optOutput += this._activeComp.classList[1] + "__";
-            optOutput += this._allTypeOptsText.find(
-              (el) => el.classList.contains("selected")
-            ).innerHTML + "\n";
-            optOutput += this._allRangeOptsText.find(
-              (el) => el.classList.contains("selected")
-            ).innerHTML + "\n";
-            optOutput += this._allPressOptsText.find(
-              (el) => el.classList.contains("selected")
-            ).innerHTML;
-            this._allOptsModalGatesText.forEach(
-              (el) => el.classList.remove("selected")
-            );
-            this._activeOptsDiv.querySelector(
-              this._secondOptsFlag ? ".opts-text.second" : ".opts-text"
-            ).innerHTML = optOutput;
-            this._optsModalGates.classList.add("hide");
-            this._secondOptsFlag = false;
-          }
-          break;
-        default:
-          if (this._allBoreOptsText.find(
-            (el) => el.classList.contains("selected")
-          ) && this._allPressOptsText.find((el) => el.classList.contains("selected"))) {
-            optOutput += this._allBoreOptsText.find(
-              (el) => el.classList.contains("selected")
-            ).innerHTML + "__";
-            optOutput += this._activeComp.classList[1] + "__";
-            optOutput += this._allPressOptsText.find(
-              (el) => el.classList.contains("selected")
-            ).innerHTML;
-            console.log("compFlag: ", this._compFlag);
-            this._allOptsModalText.forEach(
-              (el) => el.classList.remove("selected")
-            );
-            this._activeOptsDiv.querySelector(
-              this._secondOptsFlag ? ".opts-text.second" : ".opts-text"
-            ).innerHTML = optOutput;
-            this._optsModal.classList.add("hide");
-            this._secondOptsFlag = false;
-          }
+      let arrUse = [this._allBoreOptsText, this._allPressOptsText];
+      const arrExtra = [this._allTypeOptsText, this._allRangeOptsText];
+      let selectFlag;
+      if (stackView_default._compFlag === "single" || stackView_default._compFlag === "double") {
+        arrUse = arrUse.slice(0, 1).concat(arrExtra, arrUse.slice(1));
       }
+      const textChild = clicked.firstElementChild;
+      textChild.classList.add("selected");
+      if (arrUse.every((el) => el.find((el2) => el2.classList.contains("selected")))) {
+        arrUse.forEach(
+          (el) => optOutput += el.find((el2) => el2.classList.contains("selected")).innerHTML + "|"
+        );
+        optOutput = optOutput.split("|");
+        optOutput = optOutput.slice(0, 1).concat(
+          stackView_default._compFlag.charAt(0).toUpperCase() + stackView_default._compFlag.slice(1),
+          optOutput.slice(1)
+        );
+        optOutput = optOutput.toString();
+        optOutput = optOutput.replaceAll(",", "&nbsp;");
+        this._allOptsModalText.forEach((el) => el.classList.remove("selected"));
+        this._activeOptsDiv.querySelector(
+          this._secondOptsFlag ? ".opts-text.second" : ".opts-text"
+        ).innerHTML = optOutput;
+        this._resetOptions();
+        this._closeModal();
+      }
+    }
+    //_________________________________________________________________________
+    _resetOptions() {
+      this._typeOpts.classList.add("hide");
+      this._rangeOpts.classList.add("hide");
+      this._secondOptsFlag = false;
     }
     //_________________________________________________________________________
     _closeModal() {
       this._optsModal.classList.add("hide");
-    }
-    //_________________________________________________________________________
-    _closeModalGates() {
-      this._optsModalGates.classList.add("hide");
+      this._secondOptsFlag = false;
     }
   };
   var optionsView_default = new OptionsView();
 
-  // src/Views/stackView.js
+  // src/views/stackView.js
   var viewBtn = document.querySelector(".view_button");
   var StackView = class extends View {
     //Clicks for stack components
@@ -28094,7 +28047,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("MVC2 - Oct 5, 2024");
+  console.log("MVC2 - Oct 8, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
@@ -28136,7 +28089,9 @@
     stackView_default._activeSideComp?.classList.remove("active");
     stackBtnsView_default.toggleCrossBtns("remove");
     heightsView_default._allHeightDivs.forEach((el) => el.classList.remove("highlight"));
+    optionsView_default._resetOptions();
     clicked.classList.add("active");
+    stackView_default._retarget();
   };
   controlHeight = function() {
     heightsView_default._retarget();
@@ -28145,25 +28100,18 @@
   };
   controlOptions = function(clicked) {
     optionsView_default._retarget();
-    console.log("compFlag: ", stackView_default._compFlag);
     if (clicked.classList.contains("second")) optionsView_default._secondOptsFlag = true;
     if (stackView_default._compFlag === "single" || stackView_default._compFlag === "double") {
-      optionsView_default._optsModalGates.classList.remove("hide");
-    } else {
-      optionsView_default._optsModal.classList.remove("hide");
+      optionsView_default._typeOpts.classList.remove("hide");
+      optionsView_default._rangeOpts.classList.remove("hide");
     }
+    optionsView_default._optsModal.classList.remove("hide");
   };
   controlOptsModal = function(clicked) {
     optionsView_default._setOptsText(clicked);
   };
-  controlOptsModalGates = function(clicked) {
-    optionsView_default._setOptsText(clicked);
-  };
   controlModalBtn = function() {
     optionsView_default._closeModal();
-  };
-  controlModalGatesBtn = function() {
-    optionsView_default._closeModalGates();
   };
   controlAdapt = function() {
     adaptorsView_default._autoAdapt();
@@ -28186,9 +28134,7 @@
     heightsView_default._addHandlerHeight(controlHeight);
     optionsView_default._addHandlerOptions(controlOptions);
     optionsView_default._addHandlerModalBtn(controlModalBtn);
-    optionsView_default._addHandlerModalGatesBtn(controlModalGatesBtn);
     optionsView_default._addHandlerOptsModal(controlOptsModal);
-    optionsView_default._addHandlerOptsModalGates(controlOptsModalGates);
     adaptorsView_default._addHandlerAdapt(controlAdapt);
     adaptorsView_default._addHandlerScaleStack(controlScaleStack);
     adaptorsView_default._addHandlerPDF(controlPDF);

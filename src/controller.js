@@ -1,13 +1,13 @@
-import stackView from "./Views/stackView.js";
-import heightsView from "./Views/heightsView.js";
-import stackBtnsView from "./Views/stackBtnsView.js";
+import stackView from "./views/stackView.js";
+import heightsView from "./views/heightsView.js";
+import stackBtnsView from "./views/stackBtnsView.js";
 import { setIds, setIdsSides } from "./helpers.js";
-import optionsView from "./Views/optionsView.js";
+import optionsView from "./views/optionsView.js";
 import adaptorsView from "./views/adaptorsView.js";
 import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 
-console.log("MVC2 - Oct 5, 2024");
+console.log("MVC2 - Oct 8, 2024");
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
   stackView._retarget();
@@ -54,7 +54,9 @@ controlCompClick = function (clicked) {
   stackView._activeSideComp?.classList.remove("active");
   stackBtnsView.toggleCrossBtns("remove");
   heightsView._allHeightDivs.forEach((el) => el.classList.remove("highlight"));
+  optionsView._resetOptions();
   clicked.classList.add("active");
+  stackView._retarget();
 };
 //____________________________________________________________________
 controlHeight = function () {
@@ -65,29 +67,20 @@ controlHeight = function () {
 //____________________________________________________________________
 controlOptions = function (clicked) {
   optionsView._retarget();
-  console.log("compFlag: ", stackView._compFlag);
   if (clicked.classList.contains("second")) optionsView._secondOptsFlag = true;
   if (stackView._compFlag === "single" || stackView._compFlag === "double") {
-    optionsView._optsModalGates.classList.remove("hide");
-  } else {
-    optionsView._optsModal.classList.remove("hide");
+    optionsView._typeOpts.classList.remove("hide");
+    optionsView._rangeOpts.classList.remove("hide");
   }
+  optionsView._optsModal.classList.remove("hide");
 };
 //____________________________________________________________________
 controlOptsModal = function (clicked) {
   optionsView._setOptsText(clicked);
 };
 //____________________________________________________________________
-controlOptsModalGates = function (clicked) {
-  optionsView._setOptsText(clicked);
-};
-//____________________________________________________________________
 controlModalBtn = function () {
   optionsView._closeModal();
-};
-//____________________________________________________________________
-controlModalGatesBtn = function () {
-  optionsView._closeModalGates();
 };
 //____________________________________________________________________
 controlAdapt = function () {
@@ -117,9 +110,7 @@ const init = function () {
   heightsView._addHandlerHeight(controlHeight);
   optionsView._addHandlerOptions(controlOptions);
   optionsView._addHandlerModalBtn(controlModalBtn);
-  optionsView._addHandlerModalGatesBtn(controlModalGatesBtn);
   optionsView._addHandlerOptsModal(controlOptsModal);
-  optionsView._addHandlerOptsModalGates(controlOptsModalGates);
   adaptorsView._addHandlerAdapt(controlAdapt);
   adaptorsView._addHandlerScaleStack(controlScaleStack);
   adaptorsView._addHandlerPDF(controlPDF);
