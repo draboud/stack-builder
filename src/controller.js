@@ -83,6 +83,43 @@ controlModalBtn = function () {
   optionsView._closeModal();
 };
 //____________________________________________________________________
+controlBoreInput = function (boreValue) {
+  console.log("custom bore set");
+  optionsView._boreFinalValue = boreValue;
+  // console.log(optionsView._boreInput);
+  document
+    .querySelector(".modal_column.bore")
+    .querySelector(".modal_div.custom")
+    .firstElementChild.classList.add("selected");
+};
+//____________________________________________________________________
+controlTypeInput = function (typeValue) {
+  console.log("custom type set");
+  optionsView._typeFinalValue = typeValue;
+  document
+    .querySelector(".modal_column.type")
+    .querySelector(".modal_div.custom")
+    .firstElementChild.classList.add("selected");
+};
+//____________________________________________________________________
+controlRangeInput = function (rangeValue) {
+  console.log("custom range set");
+  optionsView._rangeFinalValue = rangeValue;
+  document
+    .querySelector(".modal_column.range")
+    .querySelector(".modal_div.custom")
+    .firstElementChild.classList.add("selected");
+};
+//____________________________________________________________________
+controlPressInput = function (pressValue) {
+  console.log("custom pressure set");
+  optionsView._pressFinalValue = pressValue;
+  document
+    .querySelector(".modal_column.pressure")
+    .querySelector(".modal_div.custom")
+    .firstElementChild.classList.add("selected");
+};
+//____________________________________________________________________
 controlAdapt = function () {
   adaptorsView._autoAdapt();
 };
@@ -111,6 +148,10 @@ const init = function () {
   optionsView._addHandlerOptions(controlOptions);
   optionsView._addHandlerModalBtn(controlModalBtn);
   optionsView._addHandlerOptsModal(controlOptsModal);
+  optionsView._addHandlerBoreForm(controlBoreInput);
+  optionsView._addHandlerTypeForm(controlTypeInput);
+  optionsView._addHandlerRangeForm(controlRangeInput);
+  optionsView._addHandlerPressForm(controlPressInput);
   adaptorsView._addHandlerAdapt(controlAdapt);
   adaptorsView._addHandlerScaleStack(controlScaleStack);
   adaptorsView._addHandlerPDF(controlPDF);

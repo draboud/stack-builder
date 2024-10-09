@@ -47,7 +47,7 @@ class PDFView extends View {
     doc.setFontSize(15);
     doc.text(notesView._jobTitle, xOffset, 40, { align: "center" });
     doc.setFontSize(11);
-    doc.text("Sept 24, 2024", 570, 40, { align: "right" });
+    doc.text("Oct 9, 2024", 570, 40, { align: "right" });
     if (notesView._notes) {
       doc.text("NOTES: ", 20, 775, {
         align: "left",
