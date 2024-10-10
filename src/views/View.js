@@ -52,10 +52,9 @@ export default class View {
       .querySelector(".opts-div");
     this._allOptsDivs = [...document.querySelectorAll(".opts-div")];
     this._allOptsText = [...document.querySelectorAll(".opts-text")];
-    this._allAdaptors = [...document.querySelectorAll(".adapter_block")];
+    this._allAdaptors = [...document.querySelectorAll(".adapt-div")];
     this._allSpacers = document.querySelectorAll(".opts-spacer");
     this._allHydSpacers = document.querySelectorAll(".hyd_spacer");
-    // this._allAdaptors = document.querySelectorAll(".adapter_block");
     this._allOptsModalText = [
       ...document.querySelectorAll(".bore_opt_text"),
       ...document.querySelectorAll(".type_opt_text"),

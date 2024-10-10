@@ -1,10 +1,18 @@
 import View from "./View";
-import { STACK_MAX, STACK_MAX_FOR_OPTS } from "../config";
+import {
+  GENERATE_MARKUP,
+  STACK_MAX,
+  STACK_MAX_FOR_OPTS,
+  COMP_HEIGHTS,
+  COMP_IMG,
+} from "../config";
+import optionsView from "./optionsView";
 
 const ctrlBtns = document.querySelector(".control_buttons_div");
 
 class AdaptorsView extends View {
   _newHeight;
+
   //Add handler to adapt button
   _addHandlerAdapt = function (handler) {
     ctrlBtns.addEventListener("click", function (e) {
@@ -32,28 +40,41 @@ class AdaptorsView extends View {
   //Add adaptors to stack
   _autoAdapt = function () {
     this._retarget();
-    let newLengthArray = [];
+    let numOfOpts = 0;
     let extArray = [];
     this._allAdaptors.forEach(function (el) {
-      el.remove();
+      el.parentNode.removeChild(el);
     });
+
     this._allOptsText.forEach(function (el) {
       let intArray = "";
-      if (el.classList.contains("hide") || el.classList.contains("second")) {
+      if (el.classList.contains("hide") || el.classList.contains("second"))
         return;
-      }
-      newLengthArray.push(el);
-      intArray += el.innerHTML;
-      extArray.push(intArray);
+
+      // if (el.parentElement.parentElement.id === "c-1") return;
+      const onlyBore = el.innerHTML.split('"')[0];
+      numOfOpts += 1;
+      extArray.push(onlyBore);
     });
-    for (let i = 0; i < newLengthArray.length - 1; i++) {
+    // debugger;
+    for (let i = 0; i < numOfOpts - 1; i++) {
       if (extArray[i] !== extArray[i + 1]) {
         const adapterHtml = `
-          <div class= "adapter_block">
-            <div class= "option_letter top">${extArray[i]}</div>
-            <div class=option_letter bottom">${extArray[i + 1]}</div>
-          </div>`;
+      <div class="adapt-div">
+        <div class="height-div">
+          <div class="height-text">${COMP_HEIGHTS.adaptor}"</div>
+        </div>
+        <img class="img" src=${COMP_IMG.adaptor}>
+        <div class="adaptor-div">
+          <div class="adaptor-text">${extArray[i + 1]}"&nbsp;X&nbsp;${
+          extArray[i]
+        }"&nbsp;DSA</div>
+        </div>
+      </div>`;
         this._allComps[i].insertAdjacentHTML("afterend", adapterHtml);
+        // document
+        //   .querySelectorAll(".comp-div")
+        //   [i].insertAdjacentHTML("afterend", adapterHtml);
       }
     }
   };

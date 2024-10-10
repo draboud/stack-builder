@@ -19301,7 +19301,7 @@
       this._activeOptsDiv = document.querySelector(".comp-div.active").querySelector(".opts-div");
       this._allOptsDivs = [...document.querySelectorAll(".opts-div")];
       this._allOptsText = [...document.querySelectorAll(".opts-text")];
-      this._allAdaptors = [...document.querySelectorAll(".adapter_block")];
+      this._allAdaptors = [...document.querySelectorAll(".adapt-div")];
       this._allSpacers = document.querySelectorAll(".opts-spacer");
       this._allHydSpacers = document.querySelectorAll(".hyd_spacer");
       this._allOptsModalText = [
@@ -19341,7 +19341,8 @@
     side: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png",
     spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd0316fff7c3bffbb6c781_Cross%20-%20Spool.png",
     man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf61a2ceb56331d1bc3b_Cross%20-%20Manual.png",
-    hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf611491cc6deb154360_Cross%20-%20Hydraulic.png"
+    hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf611491cc6deb154360_Cross%20-%20Hydraulic.png",
+    adaptor: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6706acb871e7eebcfaaa2539_adaptor-lines-s.png"
   };
   var COMP_HEIGHTS = {
     wellhead: 27,
@@ -19349,7 +19350,8 @@
     cross: 49,
     single: 72,
     double: 112,
-    annular: 91
+    annular: 91,
+    adaptor: 7
   };
   var GENERATE_MARKUP = function(compType) {
     if (compType === "compBlock") {
@@ -19506,7 +19508,7 @@
     //_________________________________________________________________________
     //Assign component heights
     _addCompHeight(compVal) {
-      if (compVal != "spl" && compVal != "man" && compVal != "hyd") {
+      if (compVal != "spl" && compVal != "man" && compVal != "hyd" && compVal != "plus" && compVal != "minus") {
         this._retarget();
         this._activeComp = document.querySelector(".comp-div.active");
         this._activeComp.querySelector(".height-text").innerHTML = COMP_HEIGHTS[compVal] + '"';
@@ -19550,6 +19552,7 @@
       this._optsModal.addEventListener("click", function(e2) {
         const clicked = e2.target.closest(".modal_div");
         if (!clicked) return;
+        if (clicked.classList.contains("custom")) console.log("custom!");
         handler(clicked);
       });
     }
@@ -19689,9 +19692,9 @@
       if (this._activeComp.classList.contains("cross")) {
         this._activeSideComp?.classList.remove("active");
       }
-      this._compWrapper.firstElementChild.classList.contains("comp-div") ? this._compWrapper.firstElementChild.classList.add("active") : this._compWrapper.firstElementChild.nextElementSibling.classList.add(
+      this._compWrapper.firstElementChild.classList.contains("adapt-div") ? this._compWrapper.firstElementChild.nextElementSibling.classList.add(
         "active"
-      );
+      ) : this._compWrapper.firstElementChild.classList.add("active");
       stackBtnsView_default.toggleCrossBtns("remove");
     };
     //____________________________________________________________________
@@ -19849,27 +19852,31 @@
     //Add adaptors to stack
     _autoAdapt = function() {
       this._retarget();
-      let newLengthArray = [];
+      let numOfOpts = 0;
       let extArray = [];
       this._allAdaptors.forEach(function(el) {
-        el.remove();
+        el.parentNode.removeChild(el);
       });
       this._allOptsText.forEach(function(el) {
         let intArray = "";
-        if (el.classList.contains("hide") || el.classList.contains("second")) {
+        if (el.classList.contains("hide") || el.classList.contains("second"))
           return;
-        }
-        newLengthArray.push(el);
-        intArray += el.innerHTML;
-        extArray.push(intArray);
+        const onlyBore = el.innerHTML.split('"')[0];
+        numOfOpts += 1;
+        extArray.push(onlyBore);
       });
-      for (let i3 = 0; i3 < newLengthArray.length - 1; i3++) {
+      for (let i3 = 0; i3 < numOfOpts - 1; i3++) {
         if (extArray[i3] !== extArray[i3 + 1]) {
           const adapterHtml = `
-          <div class= "adapter_block">
-            <div class= "option_letter top">${extArray[i3]}</div>
-            <div class=option_letter bottom">${extArray[i3 + 1]}</div>
-          </div>`;
+      <div class="adapt-div">
+        <div class="height-div">
+          <div class="height-text">${COMP_HEIGHTS.adaptor}"</div>
+        </div>
+        <img class="img" src=${COMP_IMG.adaptor}>
+        <div class="adaptor-div">
+          <div class="adaptor-text">${extArray[i3 + 1]}"&nbsp;X&nbsp;${extArray[i3]}"&nbsp;DSA</div>
+        </div>
+      </div>`;
           this._allComps[i3].insertAdjacentHTML("afterend", adapterHtml);
         }
       }
@@ -28105,7 +28112,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("MVC2 - Oct 8, 2024");
+  console.log("MVC2 - Oct 9, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
@@ -28116,6 +28123,7 @@
         break;
       case "minus":
         stackView_default._delComp();
+        adaptorsView_default._autoAdapt();
         break;
       case "spl":
       case "man":

@@ -7,7 +7,7 @@ import adaptorsView from "./views/adaptorsView.js";
 import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 
-console.log("MVC2 - Oct 8, 2024");
+console.log("MVC2 - Oct 9, 2024");
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
   stackView._retarget();
@@ -19,6 +19,7 @@ const controlStackBtns = function (arrayEl) {
       break;
     case "minus":
       stackView._delComp();
+      adaptorsView._autoAdapt();
       break;
     case "spl":
     case "man":

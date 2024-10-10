@@ -1,6 +1,5 @@
-import stackView from "./Views/stackView";
-import stackBtnsView from "./Views/stackBtnsView";
-
+import stackView from "./views/stackView";
+import stackBtnsView from "./views/stackBtnsView";
 //________________________________________________________________________
 //ID main comps
 export const setIds = function () {

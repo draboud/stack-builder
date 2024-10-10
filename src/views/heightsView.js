@@ -16,7 +16,13 @@ class HeightsView extends View {
   //_________________________________________________________________________
   //Assign component heights
   _addCompHeight(compVal) {
-    if (compVal != "spl" && compVal != "man" && compVal != "hyd") {
+    if (
+      compVal != "spl" &&
+      compVal != "man" &&
+      compVal != "hyd" &&
+      compVal != "plus" &&
+      compVal != "minus"
+    ) {
       this._retarget();
       this._activeComp = document.querySelector(".comp-div.active");
       this._activeComp.querySelector(".height-text").innerHTML =

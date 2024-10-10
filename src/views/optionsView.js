@@ -39,6 +39,7 @@ class OptionsView extends View {
     this._optsModal.addEventListener("click", function (e) {
       const clicked = e.target.closest(".modal_div");
       if (!clicked) return;
+      if (clicked.classList.contains("custom")) console.log("custom!");
       handler(clicked);
     });
   }
@@ -105,12 +106,18 @@ class OptionsView extends View {
             el.find((el2) => el2.classList.contains("selected")).innerHTML +
             "|")
       );
+      // if (
+      //   arrUse.every((el) => el.find((el2) => el2.classList.contains("selected")))
+      // ) {
+      //   arrUse.forEach(
+      //     (el) =>
+      //       (optOutput += el.find((el2) =>
+      //         el2.classList.contains("selected").classList.contain("custom")
+      //           ? console.log("yes")
+      //           : console.log("no")
+      //       ))
+      //   );
       optOutput = optOutput.split("|");
-
-      // if (this._boreInput.value) optOutput[0] = this._boreInput.value;
-      // if (this._typeInput.value) optOutput[1] = this._typeInput.value;
-      // if (this._rangeInput.value) optOutput[2] = this._rangeInput.value;
-      // if (this._pressInput.value) optOutput[3] = this._pressInput.value;
 
       if (this._boreFinalValue) optOutput[0] = this._boreFinalValue;
       if (this._typeFinalValue) optOutput[1] = this._typeFinalValue;

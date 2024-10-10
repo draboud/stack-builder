@@ -45,11 +45,12 @@ class StackView extends View {
     if (this._activeComp.classList.contains("cross")) {
       this._activeSideComp?.classList.remove("active");
     }
-    this._compWrapper.firstElementChild.classList.contains("comp-div")
-      ? this._compWrapper.firstElementChild.classList.add("active")
-      : this._compWrapper.firstElementChild.nextElementSibling.classList.add(
+
+    this._compWrapper.firstElementChild.classList.contains("adapt-div")
+      ? this._compWrapper.firstElementChild.nextElementSibling.classList.add(
           "active"
-        );
+        )
+      : this._compWrapper.firstElementChild.classList.add("active");
     stackBtnsView.toggleCrossBtns("remove");
   };
   //____________________________________________________________________

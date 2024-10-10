@@ -1,4 +1,4 @@
-import stackView from "./Views/stackView";
+import stackView from "./views/stackView";
 
 export const COMP_CLASSES = [
   "washington",
@@ -41,6 +41,9 @@ export const COMP_IMG = {
   man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf61a2ceb56331d1bc3b_Cross%20-%20Manual.png",
 
   hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf611491cc6deb154360_Cross%20-%20Hydraulic.png",
+
+  adaptor:
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6706acb871e7eebcfaaa2539_adaptor-lines-s.png",
 };
 
 export const COMP_HEIGHTS = {
@@ -50,6 +53,7 @@ export const COMP_HEIGHTS = {
   single: 72,
   double: 112,
   annular: 91,
+  adaptor: 7,
 };
 //_________________________________________________________________________
 //Send indicator into function for either 'compBlock', 'compSideBlock', 'adaptor'
@@ -86,6 +90,18 @@ export const GENERATE_MARKUP = function (compType) {
       <div class="hyd_spacer hide"></div>
     </div>`;
   }
+  // if (compType === "adaptor") {
+  //   return `
+  //   <div class="comp-div adaptor">
+  //     <div class="height-div">
+  //       <div class="height-text">${COMP_HEIGHTS.adaptor}"</div>
+  //     </div>
+  //     <img class="img" src=${COMP_IMG.adaptor}>
+  //     <div class="opts-div">
+  //       <div class="opts-text">options</div>
+  //      </div>
+  //   </div>`;
+  // }
 };
 //_________________________________________________________________________
 // for scaleStack
