@@ -19328,7 +19328,9 @@
     "wellhead",
     "spl",
     "man",
-    "hyd"
+    "hyd",
+    "gate_valve",
+    "bell_nipple"
   ];
   var COMP_IMG = {
     blank: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s-p-500.png",
@@ -19342,7 +19344,9 @@
     spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd0316fff7c3bffbb6c781_Cross%20-%20Spool.png",
     man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf61a2ceb56331d1bc3b_Cross%20-%20Manual.png",
     hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf611491cc6deb154360_Cross%20-%20Hydraulic.png",
-    adaptor: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6706acb871e7eebcfaaa2539_adaptor-lines-s.png"
+    adaptor: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6706acb871e7eebcfaaa2539_adaptor-lines-s.png",
+    bell_nipple: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6707e33c92c129265e244ade_bell_nipple-lines-s.png",
+    gate_valve: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6707e32d9da98d7a2926a97c_gate_valve-lines-s.png"
   };
   var COMP_HEIGHTS = {
     wellhead: 27,
@@ -19351,7 +19355,9 @@
     single: 72,
     double: 112,
     annular: 91,
-    adaptor: 7
+    adaptor: 7,
+    gate_valve: 72,
+    bell_nipple: 112
   };
   var GENERATE_MARKUP = function(compType) {
     if (compType === "compBlock") {
@@ -19531,6 +19537,7 @@
     _rangeInput = document.querySelector(".range_input");
     _pressInput = document.querySelector(".press_input");
     _customDiv = document.querySelector(".modal_div.custom");
+    _modalBlockout = document.querySelector(".modal_blockout");
     _boreFinalValue;
     _typeFinalValue;
     _rangeFinalValue;
@@ -19627,7 +19634,6 @@
         this._activeOptsDiv.querySelector(
           this._secondOptsFlag ? ".opts-text.second" : ".opts-text"
         ).innerHTML = optOutput;
-        console.log("");
         this._resetOptions();
         this._closeModal();
       }
@@ -19703,6 +19709,9 @@
       this._retarget();
       let compImg;
       heightsView_default._activeHeightDiv.classList.remove("highlight");
+      [".opts-text", ".opts-text.second"].forEach(
+        (el) => optionsView_default._activeOptsDiv.querySelector(el).innerHTML = "options"
+      );
       if (this._activeComp.classList.contains("cross")) cleanCross();
       const heightDiv = this._activeComp.querySelector(".height-div");
       const imageEl = this._activeComp.querySelector(".img");
@@ -19722,6 +19731,7 @@
         el === compFlag ? this._activeComp.classList.add(compFlag) : this._activeComp.classList.remove(el);
       });
       this._compSpecialCases(compFlag);
+      console.log("compFlag: ", compFlag);
     };
     //____________________________________________________________________
     //Check for special cases: 'double' or 'cross' and apply treatments
@@ -19927,10 +19937,19 @@
 
   // src/views/notesView.js
   var form = document.querySelector(".form");
+  var notesBtn = document.querySelector(".notes_button");
   var NotesView = class extends View {
+    _notesForm = document.querySelector(".form_row");
     _jobTitle;
     _notes;
     _testTitle;
+    _addHandlerNotesBtn = function(handler) {
+      notesBtn.addEventListener("click", function(e2) {
+        const clicked = e2.target.closest(".notes_button");
+        if (!clicked) return;
+        handler();
+      });
+    };
     //___________________________________________________________________________
     _addHandlerNotes = function(handler) {
       form.addEventListener("submit", function(e2) {
@@ -28094,7 +28113,7 @@
       doc.setFontSize(15);
       doc.text(notesView_default._jobTitle, xOffset, 40, { align: "center" });
       doc.setFontSize(11);
-      doc.text("Oct 9, 2024", 570, 40, { align: "right" });
+      doc.text("Oct 10, 2024", 570, 40, { align: "right" });
       if (notesView_default._notes) {
         doc.text("NOTES: ", 20, 775, {
           align: "left",
@@ -28112,7 +28131,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("MVC2 - Oct 9, 2024");
+  console.log("MVC2 - Oct 10, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
@@ -28205,9 +28224,13 @@
   controlScaleStack = function() {
     adaptorsView_default._newHeight = adaptorsView_default._scaleStack();
   };
+  controlNotesBtn = function() {
+    notesView_default._notesForm.classList.remove("hide");
+  };
   controlNotes = function(title, notes) {
     notesView_default._jobTitle = title;
     notesView_default._notes = notes;
+    notesView_default._notesForm.classList.add("hide");
   };
   controlPDF = function() {
     adaptorsView_default._newHeight = adaptorsView_default._scaleStack();
@@ -28228,6 +28251,7 @@
     adaptorsView_default._addHandlerAdapt(controlAdapt);
     adaptorsView_default._addHandlerScaleStack(controlScaleStack);
     adaptorsView_default._addHandlerPDF(controlPDF);
+    notesView_default._addHandlerNotesBtn(controlNotesBtn);
     notesView_default._addHandlerNotes(controlNotes);
   };
   init();

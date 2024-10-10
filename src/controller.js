@@ -7,7 +7,7 @@ import adaptorsView from "./views/adaptorsView.js";
 import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 
-console.log("MVC2 - Oct 9, 2024");
+console.log("MVC2 - Oct 10, 2024");
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
   stackView._retarget();
@@ -129,9 +129,15 @@ controlScaleStack = function () {
   adaptorsView._newHeight = adaptorsView._scaleStack();
 };
 //____________________________________________________________________
+controlNotesBtn = function () {
+  // optionsView._modalBlockout.classList.remove("hide");
+  notesView._notesForm.classList.remove("hide");
+};
+//____________________________________________________________________
 controlNotes = function (title, notes) {
   notesView._jobTitle = title;
   notesView._notes = notes;
+  notesView._notesForm.classList.add("hide");
 };
 //____________________________________________________________________
 
@@ -156,6 +162,7 @@ const init = function () {
   adaptorsView._addHandlerAdapt(controlAdapt);
   adaptorsView._addHandlerScaleStack(controlScaleStack);
   adaptorsView._addHandlerPDF(controlPDF);
+  notesView._addHandlerNotesBtn(controlNotesBtn);
   notesView._addHandlerNotes(controlNotes);
 };
 init();

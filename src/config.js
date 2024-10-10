@@ -11,6 +11,8 @@ export const COMP_CLASSES = [
   "spl",
   "man",
   "hyd",
+  "gate_valve",
+  "bell_nipple",
 ];
 
 export const COMP_IMG = {
@@ -44,6 +46,12 @@ export const COMP_IMG = {
 
   adaptor:
     "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6706acb871e7eebcfaaa2539_adaptor-lines-s.png",
+
+  bell_nipple:
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6707e33c92c129265e244ade_bell_nipple-lines-s.png",
+
+  gate_valve:
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6707e32d9da98d7a2926a97c_gate_valve-lines-s.png",
 };
 
 export const COMP_HEIGHTS = {
@@ -54,6 +62,8 @@ export const COMP_HEIGHTS = {
   double: 112,
   annular: 91,
   adaptor: 7,
+  gate_valve: 72,
+  bell_nipple: 112,
 };
 //_________________________________________________________________________
 //Send indicator into function for either 'compBlock', 'compSideBlock', 'adaptor'

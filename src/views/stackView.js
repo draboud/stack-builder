@@ -60,42 +60,55 @@ class StackView extends View {
     let compImg;
 
     heightsView._activeHeightDiv.classList.remove("highlight"); //reset heights
-    // [".opts-text", ".opts-text.second"].forEach(
-    //   (el) =>
-    //     (optionsView._activeOptsDiv.querySelector(el).innerHTML = "options")
-    // ); //reset options
+    [".opts-text", ".opts-text.second"].forEach(
+      (el) =>
+        (optionsView._activeOptsDiv.querySelector(el).innerHTML = "options")
+    ); //reset options
+
     //if this active block was previously a cross, clear all added sides
     if (this._activeComp.classList.contains("cross")) cleanCross();
+
     const heightDiv = this._activeComp.querySelector(".height-div");
     const imageEl = this._activeComp.querySelector(".img");
     const optsDiv = this._activeComp.querySelector(".opts-div");
+
     imageEl.parentNode.removeChild(imageEl); //just change src instead?
+
     compImg = COMP_IMG[compFlag];
     const htmlImg = `<img class= img src=${compImg}>`;
+
     heightDiv.insertAdjacentHTML("afterend", htmlImg);
+
     imageEl.classList.remove("hide");
+
     optsDiv.querySelector(".opts-text.second").classList.add("hide");
     optsDiv.querySelector(".opts-spacer").classList.add("hide");
+
     this._activeComp.querySelector(".side_left_div").classList.add("hide");
     this._activeComp.querySelector(".side_right_div").classList.add("hide");
     this._activeComp.querySelector(".height-div").classList.remove("hide");
     this._activeComp.querySelector(".opts-div").classList.remove("hide");
+
     COMP_CLASSES.forEach((el) => {
       el === compFlag
         ? this._activeComp.classList.add(compFlag)
         : this._activeComp.classList.remove(el); //don't need?
     });
+
     this._compSpecialCases(compFlag);
+    console.log("compFlag: ", compFlag);
   };
   //____________________________________________________________________
   //Check for special cases: 'double' or 'cross' and apply treatments
   _compSpecialCases = function (compFlag) {
     if (compFlag != "double" && compFlag != "cross") return;
     const optsDiv = this._activeComp.querySelector(".opts-div");
+
     if (compFlag === "double") {
       optsDiv.querySelector(".opts-text.hide")?.classList.remove("hide");
       optsDiv.querySelector(".opts-spacer.hide")?.classList.remove("hide");
     }
+
     if (compFlag === "cross") {
       this._activeComp.querySelector(".side_left_div").classList.remove("hide");
       this._activeComp
@@ -110,6 +123,7 @@ class StackView extends View {
     const sideDiv = this._compWrapper
       .querySelector(".comp-div.active.cross")
       .querySelector(`.side_${side}_div`);
+
     sideDiv.addEventListener("click", (e) => {
       const clicked = e.target.closest(`.${side}_comp`);
       if (!clicked) return;

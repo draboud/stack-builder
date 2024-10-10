@@ -15,6 +15,7 @@ class OptionsView extends View {
   _pressInput = document.querySelector(".press_input");
 
   _customDiv = document.querySelector(".modal_div.custom");
+  _modalBlockout = document.querySelector(".modal_blockout");
 
   _boreFinalValue;
   _typeFinalValue;
@@ -138,7 +139,6 @@ class OptionsView extends View {
       this._activeOptsDiv.querySelector(
         this._secondOptsFlag ? ".opts-text.second" : ".opts-text"
       ).innerHTML = optOutput;
-      console.log("");
       this._resetOptions();
       this._closeModal();
     }
