@@ -58,11 +58,9 @@ class StackView extends View {
   _configComp = function (compFlag) {
     this._retarget();
     let compImg;
-
     heightsView._activeHeightDiv.classList.remove("highlight"); //reset heights
     [".opts-text", ".opts-text.second"].forEach(
-      (el) =>
-        (optionsView._activeOptsDiv.querySelector(el).innerHTML = "options")
+      (el) => (this._activeOptsDiv.querySelector(el).innerHTML = "options")
     ); //reset options
 
     //if this active block was previously a cross, clear all added sides
@@ -96,7 +94,6 @@ class StackView extends View {
     });
 
     this._compSpecialCases(compFlag);
-    console.log("compFlag: ", compFlag);
   };
   //____________________________________________________________________
   //Check for special cases: 'double' or 'cross' and apply treatments

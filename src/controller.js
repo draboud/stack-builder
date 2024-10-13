@@ -85,13 +85,16 @@ controlModalBtn = function () {
 };
 //____________________________________________________________________
 controlBoreInput = function (boreValue) {
-  console.log("custom bore set");
-  optionsView._boreFinalValue = boreValue;
-  // console.log(optionsView._boreInput);
+  optionsView._boreFinalValue = boreValue + '"';
   document
     .querySelector(".modal_column.bore")
-    .querySelector(".modal_div.custom")
+    .querySelector(".opt_div.custom")
     .firstElementChild.classList.add("selected");
+  //register 'click' on custom option
+  document
+    .querySelector(".modal_column.bore")
+    .querySelector(".opt_div.custom")
+    .click();
 };
 //____________________________________________________________________
 controlTypeInput = function (typeValue) {
@@ -99,26 +102,39 @@ controlTypeInput = function (typeValue) {
   optionsView._typeFinalValue = typeValue;
   document
     .querySelector(".modal_column.type")
-    .querySelector(".modal_div.custom")
+    .querySelector(".opt_div.custom")
     .firstElementChild.classList.add("selected");
+  //register 'click' on custom option
+  document
+    .querySelector(".modal_column.type")
+    .querySelector(".opt_div.custom")
+    .click();
 };
 //____________________________________________________________________
 controlRangeInput = function (rangeValue) {
-  console.log("custom range set");
-  optionsView._rangeFinalValue = rangeValue;
+  optionsView._rangeFinalValue = rangeValue + '"';
   document
     .querySelector(".modal_column.range")
-    .querySelector(".modal_div.custom")
+    .querySelector(".opt_div.custom")
     .firstElementChild.classList.add("selected");
+  //register 'click' on custom option
+  document
+    .querySelector(".modal_column.range")
+    .querySelector(".opt_div.custom")
+    .click();
 };
 //____________________________________________________________________
 controlPressInput = function (pressValue) {
-  console.log("custom pressure set");
-  optionsView._pressFinalValue = pressValue;
+  optionsView._pressFinalValue = pressValue + "&nbsp;PSI";
   document
     .querySelector(".modal_column.pressure")
-    .querySelector(".modal_div.custom")
+    .querySelector(".opt_div.custom")
     .firstElementChild.classList.add("selected");
+  //register 'click' on custom option
+  document
+    .querySelector(".modal_column.pressure")
+    .querySelector(".opt_div.custom")
+    .click();
 };
 //____________________________________________________________________
 controlAdapt = function () {
@@ -130,13 +146,19 @@ controlScaleStack = function () {
 };
 //____________________________________________________________________
 controlNotesBtn = function () {
-  // optionsView._modalBlockout.classList.remove("hide");
+  notesView._modalBlockout.classList.remove("hide");
   notesView._notesForm.classList.remove("hide");
 };
 //____________________________________________________________________
 controlNotes = function (title, notes) {
   notesView._jobTitle = title;
   notesView._notes = notes;
+  notesView._notesForm.classList.add("hide");
+  notesView._modalBlockout.classList.add("hide");
+};
+//____________________________________________________________________
+controlModalBlockout = function (modal) {
+  notesView._modalBlockout.classList.add("hide");
   notesView._notesForm.classList.add("hide");
 };
 //____________________________________________________________________
@@ -164,5 +186,9 @@ const init = function () {
   adaptorsView._addHandlerPDF(controlPDF);
   notesView._addHandlerNotesBtn(controlNotesBtn);
   notesView._addHandlerNotes(controlNotes);
+  notesView._addHandlerModalBlockout(controlModalBlockout);
 };
 init();
+
+//TEST AREA....................................................
+//.............................................................

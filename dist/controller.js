@@ -19523,6 +19523,40 @@
   };
   var heightsView_default = new HeightsView();
 
+  // src/views/notesView.js
+  var form = document.querySelector(".form");
+  var notesBtn = document.querySelector(".notes_button");
+  var NotesView = class extends View {
+    _notesForm = document.querySelector(".notes_form");
+    _jobTitle;
+    _notes;
+    _testTitle;
+    _modalBlockout = document.querySelector(".modal_blockout");
+    _addHandlerNotesBtn = function(handler) {
+      notesBtn.addEventListener("click", function(e2) {
+        const clicked = e2.target.closest(".notes_button");
+        if (!clicked) return;
+        handler();
+      });
+    };
+    //___________________________________________________________________________
+    _addHandlerNotes = function(handler) {
+      form.addEventListener("submit", function(e2) {
+        e2.preventDefault();
+        const jobTitleInput = document.querySelector(".job_title_input").value;
+        const notesInput = document.querySelector(".custom_notes_input").value;
+        handler(jobTitleInput, notesInput);
+      });
+    };
+    //_________________________________________________________________________
+    _addHandlerModalBlockout(handler) {
+      this._modalBlockout.addEventListener("click", function() {
+        handler();
+      });
+    }
+  };
+  var notesView_default = new NotesView();
+
   // src/views/optionsView.js
   var OptionsView = class extends View {
     _optsModal = document.querySelector(".options_modal");
@@ -19536,8 +19570,7 @@
     _typeInput = document.querySelector(".type_input");
     _rangeInput = document.querySelector(".range_input");
     _pressInput = document.querySelector(".press_input");
-    _customDiv = document.querySelector(".modal_div.custom");
-    _modalBlockout = document.querySelector(".modal_blockout");
+    _customDiv = document.querySelector(".opt_div.custom");
     _boreFinalValue;
     _typeFinalValue;
     _rangeFinalValue;
@@ -19557,9 +19590,8 @@
     //_________________________________________________________________________
     _addHandlerOptsModal(handler) {
       this._optsModal.addEventListener("click", function(e2) {
-        const clicked = e2.target.closest(".modal_div");
+        const clicked = e2.target.closest(".opt_div");
         if (!clicked) return;
-        if (clicked.classList.contains("custom")) console.log("custom!");
         handler(clicked);
       });
     }
@@ -19607,23 +19639,28 @@
     _setOptsText(clicked) {
       this._retarget();
       let optOutput = "";
-      let arrUse = [this._allBoreOptsText, this._allPressOptsText];
       const arrExtra = [this._allTypeOptsText, this._allRangeOptsText];
-      let selectFlag;
+      let arrUse = [this._allBoreOptsText, this._allPressOptsText];
+      let selectedText = "";
       if (stackView_default._compFlag === "single" || stackView_default._compFlag === "double") {
         arrUse = arrUse.slice(0, 1).concat(arrExtra, arrUse.slice(1));
       }
       const textChild = clicked.firstElementChild;
-      textChild.classList.add("selected");
+      this._setActiveOpt(textChild);
       if (arrUse.every((el) => el.find((el2) => el2.classList.contains("selected")))) {
-        arrUse.forEach(
-          (el) => optOutput += el.find((el2) => el2.classList.contains("selected")).innerHTML + "|"
-        );
+        arrUse.forEach(function(el) {
+          selectedText = el.find((el2) => el2.classList.contains("selected"));
+          selectedText.innerHTML === "Custom:" ? optOutput += "&nbsp;|" : optOutput += selectedText.innerHTML + "|";
+        });
         optOutput = optOutput.split("|");
         if (this._boreFinalValue) optOutput[0] = this._boreFinalValue;
         if (this._typeFinalValue) optOutput[1] = this._typeFinalValue;
-        if (this._rangeFinalValue) optOutput[2] = this._rangeFinalValue;
-        if (this._pressFinalValue) optOutput[3] = this._pressFinalValue;
+        if (this._rangeFinalValue)
+          optOutput[2] = this._rangeFinalValue.replaceAll("-", "&#8209;");
+        if (this._pressFinalValue) {
+          this._typeOpts.classList.contains("hide") ? optOutput[1] = this._pressFinalValue : optOutput[3] = this._pressFinalValue;
+        }
+        optOutput.splice(-1, 1);
         optOutput = optOutput.slice(0, 1).concat(
           stackView_default._compFlag.charAt(0).toUpperCase() + stackView_default._compFlag.slice(1),
           optOutput.slice(1)
@@ -19637,6 +19674,16 @@
         this._resetOptions();
         this._closeModal();
       }
+    }
+    //_________________________________________________________________________
+    _setActiveOpt(selectedText) {
+      const allColumnOpts = [
+        ...selectedText.closest(".modal_column").querySelectorAll(".opt_div")
+      ];
+      allColumnOpts.forEach(
+        (el) => el.firstElementChild.classList.remove("selected")
+      );
+      selectedText.classList.add("selected");
     }
     //_________________________________________________________________________
     _resetOptions() {
@@ -19710,7 +19757,7 @@
       let compImg;
       heightsView_default._activeHeightDiv.classList.remove("highlight");
       [".opts-text", ".opts-text.second"].forEach(
-        (el) => optionsView_default._activeOptsDiv.querySelector(el).innerHTML = "options"
+        (el) => this._activeOptsDiv.querySelector(el).innerHTML = "options"
       );
       if (this._activeComp.classList.contains("cross")) cleanCross();
       const heightDiv = this._activeComp.querySelector(".height-div");
@@ -19731,7 +19778,6 @@
         el === compFlag ? this._activeComp.classList.add(compFlag) : this._activeComp.classList.remove(el);
       });
       this._compSpecialCases(compFlag);
-      console.log("compFlag: ", compFlag);
     };
     //____________________________________________________________________
     //Check for special cases: 'double' or 'cross' and apply treatments
@@ -19934,33 +19980,6 @@
     };
   };
   var adaptorsView_default = new AdaptorsView();
-
-  // src/views/notesView.js
-  var form = document.querySelector(".form");
-  var notesBtn = document.querySelector(".notes_button");
-  var NotesView = class extends View {
-    _notesForm = document.querySelector(".form_row");
-    _jobTitle;
-    _notes;
-    _testTitle;
-    _addHandlerNotesBtn = function(handler) {
-      notesBtn.addEventListener("click", function(e2) {
-        const clicked = e2.target.closest(".notes_button");
-        if (!clicked) return;
-        handler();
-      });
-    };
-    //___________________________________________________________________________
-    _addHandlerNotes = function(handler) {
-      form.addEventListener("submit", function(e2) {
-        e2.preventDefault();
-        const jobTitleInput = document.querySelector(".job_title_input").value;
-        const notesInput = document.querySelector(".custom_notes_input").value;
-        handler(jobTitleInput, notesInput);
-      });
-    };
-  };
-  var notesView_default = new NotesView();
 
   // node_modules/jspdf/dist/jspdf.es.min.js
   init_typeof();
@@ -28199,24 +28218,25 @@
     optionsView_default._closeModal();
   };
   controlBoreInput = function(boreValue) {
-    console.log("custom bore set");
-    optionsView_default._boreFinalValue = boreValue;
-    document.querySelector(".modal_column.bore").querySelector(".modal_div.custom").firstElementChild.classList.add("selected");
+    optionsView_default._boreFinalValue = boreValue + '"';
+    document.querySelector(".modal_column.bore").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
+    document.querySelector(".modal_column.bore").querySelector(".opt_div.custom").click();
   };
   controlTypeInput = function(typeValue) {
     console.log("custom type set");
     optionsView_default._typeFinalValue = typeValue;
-    document.querySelector(".modal_column.type").querySelector(".modal_div.custom").firstElementChild.classList.add("selected");
+    document.querySelector(".modal_column.type").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
+    document.querySelector(".modal_column.type").querySelector(".opt_div.custom").click();
   };
   controlRangeInput = function(rangeValue) {
-    console.log("custom range set");
-    optionsView_default._rangeFinalValue = rangeValue;
-    document.querySelector(".modal_column.range").querySelector(".modal_div.custom").firstElementChild.classList.add("selected");
+    optionsView_default._rangeFinalValue = rangeValue + '"';
+    document.querySelector(".modal_column.range").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
+    document.querySelector(".modal_column.range").querySelector(".opt_div.custom").click();
   };
   controlPressInput = function(pressValue) {
-    console.log("custom pressure set");
-    optionsView_default._pressFinalValue = pressValue;
-    document.querySelector(".modal_column.pressure").querySelector(".modal_div.custom").firstElementChild.classList.add("selected");
+    optionsView_default._pressFinalValue = pressValue + "&nbsp;PSI";
+    document.querySelector(".modal_column.pressure").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
+    document.querySelector(".modal_column.pressure").querySelector(".opt_div.custom").click();
   };
   controlAdapt = function() {
     adaptorsView_default._autoAdapt();
@@ -28225,11 +28245,17 @@
     adaptorsView_default._newHeight = adaptorsView_default._scaleStack();
   };
   controlNotesBtn = function() {
+    notesView_default._modalBlockout.classList.remove("hide");
     notesView_default._notesForm.classList.remove("hide");
   };
   controlNotes = function(title, notes) {
     notesView_default._jobTitle = title;
     notesView_default._notes = notes;
+    notesView_default._notesForm.classList.add("hide");
+    notesView_default._modalBlockout.classList.add("hide");
+  };
+  controlModalBlockout = function(modal) {
+    notesView_default._modalBlockout.classList.add("hide");
     notesView_default._notesForm.classList.add("hide");
   };
   controlPDF = function() {
@@ -28253,6 +28279,7 @@
     adaptorsView_default._addHandlerPDF(controlPDF);
     notesView_default._addHandlerNotesBtn(controlNotesBtn);
     notesView_default._addHandlerNotes(controlNotes);
+    notesView_default._addHandlerModalBlockout(controlModalBlockout);
   };
   init();
 })();

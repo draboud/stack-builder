@@ -1,4 +1,5 @@
 import stackView from "./stackView";
+import notesView from "./notesView";
 import View from "./View";
 
 class OptionsView extends View {
@@ -14,8 +15,7 @@ class OptionsView extends View {
   _rangeInput = document.querySelector(".range_input");
   _pressInput = document.querySelector(".press_input");
 
-  _customDiv = document.querySelector(".modal_div.custom");
-  _modalBlockout = document.querySelector(".modal_blockout");
+  _customDiv = document.querySelector(".opt_div.custom");
 
   _boreFinalValue;
   _typeFinalValue;
@@ -38,9 +38,8 @@ class OptionsView extends View {
   //_________________________________________________________________________
   _addHandlerOptsModal(handler) {
     this._optsModal.addEventListener("click", function (e) {
-      const clicked = e.target.closest(".modal_div");
+      const clicked = e.target.closest(".opt_div");
       if (!clicked) return;
-      if (clicked.classList.contains("custom")) console.log("custom!");
       handler(clicked);
     });
   }
@@ -88,43 +87,38 @@ class OptionsView extends View {
   _setOptsText(clicked) {
     this._retarget();
     let optOutput = "";
-    let arrUse = [this._allBoreOptsText, this._allPressOptsText];
     const arrExtra = [this._allTypeOptsText, this._allRangeOptsText];
-    let selectFlag;
+    let arrUse = [this._allBoreOptsText, this._allPressOptsText];
+    let selectedText = "";
 
     if (stackView._compFlag === "single" || stackView._compFlag === "double") {
       arrUse = arrUse.slice(0, 1).concat(arrExtra, arrUse.slice(1));
     }
     const textChild = clicked.firstElementChild;
-    textChild.classList.add("selected");
+    this._setActiveOpt(textChild);
 
     if (
       arrUse.every((el) => el.find((el2) => el2.classList.contains("selected")))
     ) {
-      arrUse.forEach(
-        (el) =>
-          (optOutput +=
-            el.find((el2) => el2.classList.contains("selected")).innerHTML +
-            "|")
-      );
-      // if (
-      //   arrUse.every((el) => el.find((el2) => el2.classList.contains("selected")))
-      // ) {
-      //   arrUse.forEach(
-      //     (el) =>
-      //       (optOutput += el.find((el2) =>
-      //         el2.classList.contains("selected").classList.contain("custom")
-      //           ? console.log("yes")
-      //           : console.log("no")
-      //       ))
-      //   );
+      arrUse.forEach(function (el) {
+        selectedText = el.find((el2) => el2.classList.contains("selected"));
+        selectedText.innerHTML === "Custom:"
+          ? (optOutput += "&nbsp;" + "|")
+          : (optOutput += selectedText.innerHTML + "|");
+      });
+
       optOutput = optOutput.split("|");
 
       if (this._boreFinalValue) optOutput[0] = this._boreFinalValue;
       if (this._typeFinalValue) optOutput[1] = this._typeFinalValue;
-      if (this._rangeFinalValue) optOutput[2] = this._rangeFinalValue;
-      if (this._pressFinalValue) optOutput[3] = this._pressFinalValue;
-
+      if (this._rangeFinalValue)
+        optOutput[2] = this._rangeFinalValue.replaceAll("-", "&#8209;");
+      if (this._pressFinalValue) {
+        this._typeOpts.classList.contains("hide")
+          ? (optOutput[1] = this._pressFinalValue)
+          : (optOutput[3] = this._pressFinalValue);
+      }
+      optOutput.splice(-1, 1);
       optOutput = optOutput
         .slice(0, 1)
         .concat(
@@ -144,6 +138,16 @@ class OptionsView extends View {
     }
   }
   //_________________________________________________________________________
+  _setActiveOpt(selectedText) {
+    const allColumnOpts = [
+      ...selectedText.closest(".modal_column").querySelectorAll(".opt_div"),
+    ];
+    allColumnOpts.forEach((el) =>
+      el.firstElementChild.classList.remove("selected")
+    );
+    selectedText.classList.add("selected");
+  }
+  //_________________________________________________________________________
   _resetOptions() {
     this._boreFinalValue = "";
     this._typeFinalValue = "";
@@ -159,7 +163,6 @@ class OptionsView extends View {
     this._secondOptsFlag = false;
   }
   //_________________________________________________________________________
-
   _closeModal() {
     this._optsModal.classList.add("hide");
     this._secondOptsFlag = false;

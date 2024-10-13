@@ -1,3 +1,6 @@
+// import notesView from "./notesView";
+// import optionsView from "./optionsView";
+
 export default class View {
   _data;
   _compWrapper = document.querySelector(".comp-wrapper");
