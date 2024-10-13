@@ -7,7 +7,7 @@ import adaptorsView from "./views/adaptorsView.js";
 import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 
-console.log("MVC2 - Oct 10, 2024");
+console.log("MVC2 - Oct 13, 2024");
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
   stackView._retarget();
@@ -185,7 +185,8 @@ const init = function () {
   adaptorsView._addHandlerScaleStack(controlScaleStack);
   adaptorsView._addHandlerPDF(controlPDF);
   notesView._addHandlerNotesBtn(controlNotesBtn);
-  notesView._addHandlerNotes(controlNotes);
+  // notesView._addHandlerNotes(controlNotes);
+  notesView._addHandlerSaveBtn(controlNotes);
   notesView._addHandlerModalBlockout(controlModalBlockout);
 };
 init();

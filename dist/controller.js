@@ -19526,6 +19526,7 @@
   // src/views/notesView.js
   var form = document.querySelector(".form");
   var notesBtn = document.querySelector(".notes_button");
+  var saveBtn = document.querySelector(".save_button");
   var NotesView = class extends View {
     _notesForm = document.querySelector(".notes_form");
     _jobTitle;
@@ -19540,9 +19541,13 @@
       });
     };
     //___________________________________________________________________________
-    _addHandlerNotes = function(handler) {
+    _addHandlerSaveBtn = function(handler) {
       form.addEventListener("submit", function(e2) {
         e2.preventDefault();
+      });
+      saveBtn.addEventListener("click", function(e2) {
+        const clicked = e2.target.closest(".save_button");
+        if (!clicked) return;
         const jobTitleInput = document.querySelector(".job_title_input").value;
         const notesInput = document.querySelector(".custom_notes_input").value;
         handler(jobTitleInput, notesInput);
@@ -28150,7 +28155,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("MVC2 - Oct 10, 2024");
+  console.log("MVC2 - Oct 13, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
@@ -28278,7 +28283,7 @@
     adaptorsView_default._addHandlerScaleStack(controlScaleStack);
     adaptorsView_default._addHandlerPDF(controlPDF);
     notesView_default._addHandlerNotesBtn(controlNotesBtn);
-    notesView_default._addHandlerNotes(controlNotes);
+    notesView_default._addHandlerSaveBtn(controlNotes);
     notesView_default._addHandlerModalBlockout(controlModalBlockout);
   };
   init();

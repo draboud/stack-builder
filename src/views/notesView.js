@@ -2,6 +2,7 @@ import View from "./View";
 
 const form = document.querySelector(".form");
 const notesBtn = document.querySelector(".notes_button");
+const saveBtn = document.querySelector(".save_button");
 
 class NotesView extends View {
   _notesForm = document.querySelector(".notes_form");
@@ -18,9 +19,13 @@ class NotesView extends View {
     });
   };
   //___________________________________________________________________________
-  _addHandlerNotes = function (handler) {
+  _addHandlerSaveBtn = function (handler) {
     form.addEventListener("submit", function (e) {
       e.preventDefault();
+    });
+    saveBtn.addEventListener("click", function (e) {
+      const clicked = e.target.closest(".save_button");
+      if (!clicked) return;
       const jobTitleInput = document.querySelector(".job_title_input").value;
       const notesInput = document.querySelector(".custom_notes_input").value;
       handler(jobTitleInput, notesInput);
@@ -28,7 +33,6 @@ class NotesView extends View {
   };
   //_________________________________________________________________________
   _addHandlerModalBlockout(handler) {
-    // this._btnClose.addEventListener('click', this.toggleWindow.bind(this));
     this._modalBlockout.addEventListener("click", function () {
       handler();
     });
