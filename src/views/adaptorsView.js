@@ -89,11 +89,13 @@ class AdaptorsView extends View {
     this._allHeightText.forEach(function (el) {
       stackHeight += parseFloat(el.innerHTML.slice(0, -1));
     });
+    // debugger;
 
     if (stackHeight > STACK_MAX) {
       let factor = (stackHeight - STACK_MAX) / stackHeight;
       let result = (100 - factor * 100) / 100;
-      newHeight = stackHeight * result;
+      // newHeight = stackHeight * result;
+      newHeight = stackHeight;
 
       this._allCompImgs.forEach(function (el) {
         el.style.height = $(el).height() * result + "px";
@@ -102,7 +104,13 @@ class AdaptorsView extends View {
       this._allComps.forEach(function (el) {
         el.style.width = $(el).width() * result + "px";
       });
-
+      //............................................................
+      this._allOptsDivs.forEach(function (el) {
+        // el.style.left = $(el).width() * result + "px";
+        el.style.left =
+          getComputedStyle(el).getPropertyValue("left") * result + "px";
+      });
+      //............................................................
       this._allSpacers.forEach(function (el) {
         el.style.height = $(el).height() * result + "px";
       });
@@ -110,6 +118,11 @@ class AdaptorsView extends View {
       this._allHydSpacers.forEach(function (el) {
         el.style.height = $(el).height() * result + "px";
       });
+
+      this._allAdaptors.forEach(function (el) {
+        el.style.height = $(el).height() * result + "px";
+      });
+
       //______________________________________________________________________
       this._leftArray.forEach(function (el) {
         el.style.width = $(el).width() * result + "px";

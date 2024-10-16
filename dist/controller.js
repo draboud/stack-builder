@@ -19393,7 +19393,7 @@
     </div>`;
     }
   };
-  var STACK_MAX = 620;
+  var STACK_MAX = 500;
   var STACK_MAX_FOR_OPTS = 1e3;
   var PDF_SETTINGS = {
     xAxis: 15,
@@ -19954,17 +19954,23 @@
       if (stackHeight > STACK_MAX) {
         let factor = (stackHeight - STACK_MAX) / stackHeight;
         let result = (100 - factor * 100) / 100;
-        newHeight = stackHeight * result;
+        newHeight = stackHeight;
         this._allCompImgs.forEach(function(el) {
           el.style.height = $(el).height() * result + "px";
         });
         this._allComps.forEach(function(el) {
           el.style.width = $(el).width() * result + "px";
         });
+        this._allOptsDivs.forEach(function(el) {
+          el.style.left = getComputedStyle(el).getPropertyValue("left") * result + "px";
+        });
         this._allSpacers.forEach(function(el) {
           el.style.height = $(el).height() * result + "px";
         });
         this._allHydSpacers.forEach(function(el) {
+          el.style.height = $(el).height() * result + "px";
+        });
+        this._allAdaptors.forEach(function(el) {
           el.style.height = $(el).height() * result + "px";
         });
         this._leftArray.forEach(function(el) {
@@ -28155,7 +28161,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("MVC2 - Oct 13, 2024");
+  console.log("MVC2 - Oct 16, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];

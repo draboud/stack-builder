@@ -115,7 +115,8 @@ export const GENERATE_MARKUP = function (compType) {
 };
 //_________________________________________________________________________
 // for scaleStack
-export const STACK_MAX = 620;
+// export const STACK_MAX = 620;
+export const STACK_MAX = 500;
 export const STACK_MAX_FOR_OPTS = 1000;
 //_________________________________________________________________________
 //for pdf settings

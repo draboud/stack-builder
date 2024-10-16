@@ -118,7 +118,9 @@ class OptionsView extends View {
           ? (optOutput[1] = this._pressFinalValue)
           : (optOutput[3] = this._pressFinalValue);
       }
+
       optOutput.splice(-1, 1);
+
       optOutput = optOutput
         .slice(0, 1)
         .concat(
@@ -128,11 +130,12 @@ class OptionsView extends View {
         );
       optOutput = optOutput.toString();
       optOutput = optOutput.replaceAll(",", "&nbsp;");
-
       this._allOptsModalText.forEach((el) => el.classList.remove("selected"));
+
       this._activeOptsDiv.querySelector(
         this._secondOptsFlag ? ".opts-text.second" : ".opts-text"
       ).innerHTML = optOutput;
+
       this._resetOptions();
       this._closeModal();
     }
