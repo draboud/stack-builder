@@ -16,26 +16,6 @@ export const COMP_CLASSES = [
 ];
 
 export const COMP_IMG = {
-  blank:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s-p-500.png",
-  annular:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43c4b43469a2e8adef108_annular-lines-s-p-500.png",
-
-  double:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a607b6e620e8d095cd8_double-lines-s-p-500.png",
-
-  single:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a600e30348edb10ea25_single-lines-s-p-500.png",
-
-  cross:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a6185c880cf2c85a7c3_cross-lines-s-p-500.png",
-
-  spool:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a60ad38b5aab5702ba1_spool-lines-s-p-500.png",
-
-  wellhead:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b434b3ef1b19da5b4282b7_wellhead-lines-s-p-500.png",
-
   side: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png",
 
   spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd0316fff7c3bffbb6c781_Cross%20-%20Spool.png",
@@ -44,14 +24,48 @@ export const COMP_IMG = {
 
   hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf611491cc6deb154360_Cross%20-%20Hydraulic.png",
 
-  adaptor:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6706acb871e7eebcfaaa2539_adaptor-lines-s.png",
+  //alternate side comp imgs:...........................................
+  // spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67117a12b7be63f689976418_cross-spl.png",
+
+  // man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67117a128b9b4fcb4d820863_cross-man.png",
+
+  // hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67117a12fd16176ad78204f4_cross-hyd.png",
+  //....................................................................
+
+  double:
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67113e2e31935f629aac8048_double-2.png",
+
+  single:
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a63278e75e8411fe6c_single-2.png",
+
+  cross:
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a651504ebf148b4cd6_cross-2.png",
+  // cross:
+  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67117a12fd16176ad78204f4_cross-hyd.png",
 
   bell_nipple:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6707e33c92c129265e244ade_bell_nipple-lines-s.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6fcd56570fad07590_bell%20nipple-2.png",
 
   gate_valve:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6707e32d9da98d7a2926a97c_gate_valve-lines-s.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6fcd56570fad0758d_gate%20valve-2.png",
+
+  washington:
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6f41e86f336bcb5e2_washington-2.png",
+
+  wellhead:
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a674e41c46ddf6a523_wellhead-2.png",
+
+  annular:
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a69b81cf89e91e3c58_annular-2.png",
+
+  spool:
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a693ce93795200daa9_spool-2.png",
+
+  blank:
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s.png",
+
+  adaptor:
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6711472a9b81cf89e9209361_dsa-2.png",
 };
 
 export const COMP_HEIGHTS = {
@@ -64,6 +78,7 @@ export const COMP_HEIGHTS = {
   adaptor: 7,
   gate_valve: 72,
   bell_nipple: 112,
+  washington: 60,
 };
 //_________________________________________________________________________
 //Send indicator into function for either 'compBlock', 'compSideBlock', 'adaptor'
@@ -115,9 +130,10 @@ export const GENERATE_MARKUP = function (compType) {
 };
 //_________________________________________________________________________
 // for scaleStack
-// export const STACK_MAX = 620;
-export const STACK_MAX = 500;
+export const STACK_MAX = 620;
+// export const STACK_MAX = 400;
 export const STACK_MAX_FOR_OPTS = 1000;
+export const COMP_DIV_WIDTH = 230;
 //_________________________________________________________________________
 //for pdf settings
 export const PDF_SETTINGS = {

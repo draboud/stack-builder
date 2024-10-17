@@ -5,6 +5,7 @@ import {
   STACK_MAX_FOR_OPTS,
   COMP_HEIGHTS,
   COMP_IMG,
+  COMP_DIV_WIDTH,
 } from "../config";
 import optionsView from "./optionsView";
 
@@ -56,7 +57,6 @@ class AdaptorsView extends View {
       numOfOpts += 1;
       extArray.push(onlyBore);
     });
-    // debugger;
     for (let i = 0; i < numOfOpts - 1; i++) {
       if (extArray[i] !== extArray[i + 1]) {
         const adapterHtml = `
@@ -82,35 +82,25 @@ class AdaptorsView extends View {
   //Adjust height of stack after certain threshold value, in order to fit on a4 pdf
   _scaleStack = function () {
     this._retarget();
-
     let stackHeight = 0;
     let newHeight;
-
+    // let currOptDivHeight;
+    // let newOptDivHeight;
     this._allHeightText.forEach(function (el) {
       stackHeight += parseFloat(el.innerHTML.slice(0, -1));
     });
-    // debugger;
 
+    //______________________________________________________________________
     if (stackHeight > STACK_MAX) {
       let factor = (stackHeight - STACK_MAX) / stackHeight;
       let result = (100 - factor * 100) / 100;
       // newHeight = stackHeight * result;
-      newHeight = stackHeight;
-
-      this._allCompImgs.forEach(function (el) {
-        el.style.height = $(el).height() * result + "px";
-      });
+      // newHeight = stackHeight;
 
       this._allComps.forEach(function (el) {
         el.style.width = $(el).width() * result + "px";
       });
-      //............................................................
-      this._allOptsDivs.forEach(function (el) {
-        // el.style.left = $(el).width() * result + "px";
-        el.style.left =
-          getComputedStyle(el).getPropertyValue("left") * result + "px";
-      });
-      //............................................................
+
       this._allSpacers.forEach(function (el) {
         el.style.height = $(el).height() * result + "px";
       });
@@ -120,18 +110,29 @@ class AdaptorsView extends View {
       });
 
       this._allAdaptors.forEach(function (el) {
-        el.style.height = $(el).height() * result + "px";
+        el.style.width = $(el).width() * result + "px";
       });
 
-      //______________________________________________________________________
       this._leftArray.forEach(function (el) {
         el.style.width = $(el).width() * result + "px";
-        // el.style.height = $(el).height() * result + "px";
       });
 
       this._rightArray.forEach(function (el) {
         el.style.width = $(el).width() * result + "px";
       });
+
+      //............................................................
+      // this._allOptsDivs.forEach(function (el) {
+      //   // el.style.left = $(el).width() * result + "px";
+
+      //   currOptDivHeight = parseFloat(
+      //     getComputedStyle(el).getPropertyValue("left").replace("px", "")
+      //   );
+      //   newOptDivHeight = currOptDivHeight * result + "px";
+      //   el.style.left = newOptDivHeight;
+      // });
+      //............................................................
+
       //______________________________________________________________________
 
       if (stackHeight > STACK_MAX_FOR_OPTS) {
@@ -139,9 +140,19 @@ class AdaptorsView extends View {
           el.style.height = "0px";
         });
       }
-    } else {
-      newHeight = stackHeight;
     }
+    // else {
+    //   //apply smaller shrink regardless
+    //   // this._allComps.forEach(function (el) {
+    //   //   el.style.width = COMP_DIV_WIDTH + "px";
+    //   // });
+    //   // this._allAdaptors.forEach(function (el) {
+    //   //   el.style.width = COMP_DIV_WIDTH + "px";
+    //   // });
+    // }
+
+    newHeight = stackHeight;
+
     return newHeight;
   };
 }

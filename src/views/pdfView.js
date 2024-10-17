@@ -7,20 +7,28 @@ class PDFView extends View {
   //_________________________________________________________________________
   //Convert html content to pdf
   _convertToPDF = function (newHeight) {
-    if (!notesView._jobTitle) {
-      alert("enter a title");
-      return;
-    }
-    const allCompDivs = document.querySelectorAll(".comp-div");
-    allCompDivs.forEach(function (el) {
-      el.classList.remove("active");
-    });
+    // if (!notesView._jobTitle) {
+    //   alert("enter a title");
+    //   return;
+    // }
+    const printDivHeight = $(document.querySelector(".comp-wrapper")).height();
+    // const allCompDivs = document.querySelectorAll(".comp-div");
+    // allCompDivs.forEach(function (el) {
+    //   el.classList.remove("active");
+    // });
+    //...........................................................
+    this._retarget();
+    this._allComps.forEach((el) => el.classList.remove("active"));
+    this._leftArray.forEach((el) => el.classList.remove("active"));
+    this._rightArray.forEach((el) => el.classList.remove("active"));
+    //...........................................................
     const elementHTML = document.querySelector(".content_to_print");
     const doc = new jsPDF("p", "pt", "a4");
     const img = new Image();
     const xOffset = doc.internal.pageSize.getWidth() / 2;
     //   const pageHeight = 841;
-    const yDown = (PDF_SETTINGS.pageHeight - newHeight) / 2;
+    // const yDown = (PDF_SETTINGS.pageHeight - newHeight) / 2;
+    const yDown = (PDF_SETTINGS.pageHeight - printDivHeight) / 2;
 
     img.src = PDF_SETTINGS.logoImg;
 
@@ -45,7 +53,7 @@ class PDFView extends View {
       PDF_SETTINGS.logoY * PDF_SETTINGS.scaleFactor
     );
     doc.setFontSize(15);
-    doc.text(notesView._jobTitle, xOffset, 40, { align: "center" });
+    // doc.text(notesView._jobTitle, xOffset, 40, { align: "center" });
     doc.setFontSize(11);
     doc.text("Oct 10, 2024", 570, 40, { align: "right" });
     if (notesView._notes) {

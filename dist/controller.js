@@ -19333,20 +19333,28 @@
     "bell_nipple"
   ];
   var COMP_IMG = {
-    blank: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s-p-500.png",
-    annular: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43c4b43469a2e8adef108_annular-lines-s-p-500.png",
-    double: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a607b6e620e8d095cd8_double-lines-s-p-500.png",
-    single: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a600e30348edb10ea25_single-lines-s-p-500.png",
-    cross: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a6185c880cf2c85a7c3_cross-lines-s-p-500.png",
-    spool: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a60ad38b5aab5702ba1_spool-lines-s-p-500.png",
-    wellhead: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b434b3ef1b19da5b4282b7_wellhead-lines-s-p-500.png",
     side: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png",
     spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd0316fff7c3bffbb6c781_Cross%20-%20Spool.png",
     man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf61a2ceb56331d1bc3b_Cross%20-%20Manual.png",
     hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf611491cc6deb154360_Cross%20-%20Hydraulic.png",
-    adaptor: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6706acb871e7eebcfaaa2539_adaptor-lines-s.png",
-    bell_nipple: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6707e33c92c129265e244ade_bell_nipple-lines-s.png",
-    gate_valve: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6707e32d9da98d7a2926a97c_gate_valve-lines-s.png"
+    //alternate side comp imgs:...........................................
+    // spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67117a12b7be63f689976418_cross-spl.png",
+    // man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67117a128b9b4fcb4d820863_cross-man.png",
+    // hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67117a12fd16176ad78204f4_cross-hyd.png",
+    //....................................................................
+    double: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67113e2e31935f629aac8048_double-2.png",
+    single: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a63278e75e8411fe6c_single-2.png",
+    cross: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a651504ebf148b4cd6_cross-2.png",
+    // cross:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67117a12fd16176ad78204f4_cross-hyd.png",
+    bell_nipple: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6fcd56570fad07590_bell%20nipple-2.png",
+    gate_valve: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6fcd56570fad0758d_gate%20valve-2.png",
+    washington: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6f41e86f336bcb5e2_washington-2.png",
+    wellhead: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a674e41c46ddf6a523_wellhead-2.png",
+    annular: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a69b81cf89e91e3c58_annular-2.png",
+    spool: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a693ce93795200daa9_spool-2.png",
+    blank: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s.png",
+    adaptor: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6711472a9b81cf89e9209361_dsa-2.png"
   };
   var COMP_HEIGHTS = {
     wellhead: 27,
@@ -19357,7 +19365,8 @@
     annular: 91,
     adaptor: 7,
     gate_valve: 72,
-    bell_nipple: 112
+    bell_nipple: 112,
+    washington: 60
   };
   var GENERATE_MARKUP = function(compType) {
     if (compType === "compBlock") {
@@ -19393,7 +19402,7 @@
     </div>`;
     }
   };
-  var STACK_MAX = 500;
+  var STACK_MAX = 620;
   var STACK_MAX_FOR_OPTS = 1e3;
   var PDF_SETTINGS = {
     xAxis: 15,
@@ -19954,15 +19963,8 @@
       if (stackHeight > STACK_MAX) {
         let factor = (stackHeight - STACK_MAX) / stackHeight;
         let result = (100 - factor * 100) / 100;
-        newHeight = stackHeight;
-        this._allCompImgs.forEach(function(el) {
-          el.style.height = $(el).height() * result + "px";
-        });
         this._allComps.forEach(function(el) {
           el.style.width = $(el).width() * result + "px";
-        });
-        this._allOptsDivs.forEach(function(el) {
-          el.style.left = getComputedStyle(el).getPropertyValue("left") * result + "px";
         });
         this._allSpacers.forEach(function(el) {
           el.style.height = $(el).height() * result + "px";
@@ -19971,7 +19973,7 @@
           el.style.height = $(el).height() * result + "px";
         });
         this._allAdaptors.forEach(function(el) {
-          el.style.height = $(el).height() * result + "px";
+          el.style.width = $(el).width() * result + "px";
         });
         this._leftArray.forEach(function(el) {
           el.style.width = $(el).width() * result + "px";
@@ -19984,9 +19986,8 @@
             el.style.height = "0px";
           });
         }
-      } else {
-        newHeight = stackHeight;
       }
+      newHeight = stackHeight;
       return newHeight;
     };
   };
@@ -28105,19 +28106,16 @@
     //_________________________________________________________________________
     //Convert html content to pdf
     _convertToPDF = function(newHeight) {
-      if (!notesView_default._jobTitle) {
-        alert("enter a title");
-        return;
-      }
-      const allCompDivs = document.querySelectorAll(".comp-div");
-      allCompDivs.forEach(function(el) {
-        el.classList.remove("active");
-      });
+      const printDivHeight = $(document.querySelector(".comp-wrapper")).height();
+      this._retarget();
+      this._allComps.forEach((el) => el.classList.remove("active"));
+      this._leftArray.forEach((el) => el.classList.remove("active"));
+      this._rightArray.forEach((el) => el.classList.remove("active"));
       const elementHTML = document.querySelector(".content_to_print");
       const doc = new jspdf_es_min_default("p", "pt", "a4");
       const img = new Image();
       const xOffset = doc.internal.pageSize.getWidth() / 2;
-      const yDown = (PDF_SETTINGS.pageHeight - newHeight) / 2;
+      const yDown = (PDF_SETTINGS.pageHeight - printDivHeight) / 2;
       img.src = PDF_SETTINGS.logoImg;
       doc.html(elementHTML, {
         callback: function(doc2) {
@@ -28141,7 +28139,6 @@
         PDF_SETTINGS.logoY * PDF_SETTINGS.scaleFactor
       );
       doc.setFontSize(15);
-      doc.text(notesView_default._jobTitle, xOffset, 40, { align: "center" });
       doc.setFontSize(11);
       doc.text("Oct 10, 2024", 570, 40, { align: "right" });
       if (notesView_default._notes) {
