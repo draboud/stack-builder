@@ -81,6 +81,7 @@ class AdaptorsView extends View {
 
     let stackHeight = 0;
     let newHeight;
+    // const printDivHeight = $(document.querySelector(".comp-wrapper")).height();
 
     this._allHeightText.forEach(function (el) {
       stackHeight += parseFloat(el.innerHTML.slice(0, -1));
@@ -89,8 +90,10 @@ class AdaptorsView extends View {
     if (stackHeight > STACK_MAX) {
       let factor = (stackHeight - STACK_MAX) / stackHeight;
       let result = (100 - factor * 100) / 100;
+      // let result = ((STACK_MAX - stackHeight) * -1) / STACK_MAX;
+      // let result =
       newHeight = stackHeight;
-
+      // debugger;
       this._allComps.forEach(function (el) {
         el.style.width = $(el).width() * result + "px";
       });
@@ -122,9 +125,10 @@ class AdaptorsView extends View {
           el.style.height = "0px";
         });
       }
+    } else {
+      this._allComps.forEach((el) => (el.style.width = "230px"));
+      this._allAdaptors.forEach((el) => (el.style.width = "230px"));
     }
-    this._allComps.forEach((el) => (el.style.width = "230px"));
-    this._allAdaptors.forEach((el) => (el.style.width = "230px"));
 
     newHeight = stackHeight;
     return newHeight;
