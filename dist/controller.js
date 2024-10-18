@@ -28180,7 +28180,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("new-comps - Oct 17, 2024");
+  console.log("post-new-comps - Oct 17, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
