@@ -52,6 +52,8 @@ export const COMP_IMG = {
 
   gate_valve:
     "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6707e32d9da98d7a2926a97c_gate_valve-lines-s.png",
+
+  // adaptor: "",
 };
 
 export const COMP_HEIGHTS = {
@@ -64,6 +66,7 @@ export const COMP_HEIGHTS = {
   adaptor: 7,
   gate_valve: 72,
   bell_nipple: 112,
+  washington: 60,
 };
 //_________________________________________________________________________
 //Send indicator into function for either 'compBlock', 'compSideBlock', 'adaptor'
@@ -115,8 +118,8 @@ export const GENERATE_MARKUP = function (compType) {
 };
 //_________________________________________________________________________
 // for scaleStack
-// export const STACK_MAX = 620;
-export const STACK_MAX = 500;
+export const STACK_MAX = 620;
+// export const STACK_MAX = 500;
 export const STACK_MAX_FOR_OPTS = 1000;
 //_________________________________________________________________________
 //for pdf settings

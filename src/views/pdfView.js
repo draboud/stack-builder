@@ -7,20 +7,21 @@ class PDFView extends View {
   //_________________________________________________________________________
   //Convert html content to pdf
   _convertToPDF = function (newHeight) {
-    if (!notesView._jobTitle) {
-      alert("enter a title");
-      return;
-    }
-    const allCompDivs = document.querySelectorAll(".comp-div");
-    allCompDivs.forEach(function (el) {
-      el.classList.remove("active");
-    });
+    // if (!notesView._jobTitle) {
+    //   alert("enter a title");
+    //   return;
+    // }
+
+    this._retarget();
+    this._allComps.forEach((el) => el.classList.remove("active"));
+    this._leftArray.forEach((el) => el.classList.remove("active"));
+    this._rightArray.forEach((el) => el.classList.remove("active"));
     const elementHTML = document.querySelector(".content_to_print");
     const doc = new jsPDF("p", "pt", "a4");
     const img = new Image();
+    const printDivHeight = $(document.querySelector(".comp-wrapper")).height();
     const xOffset = doc.internal.pageSize.getWidth() / 2;
-    //   const pageHeight = 841;
-    const yDown = (PDF_SETTINGS.pageHeight - newHeight) / 2;
+    const yDown = (PDF_SETTINGS.pageHeight - printDivHeight) / 2;
 
     img.src = PDF_SETTINGS.logoImg;
 

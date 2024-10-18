@@ -19347,6 +19347,7 @@
     adaptor: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6706acb871e7eebcfaaa2539_adaptor-lines-s.png",
     bell_nipple: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6707e33c92c129265e244ade_bell_nipple-lines-s.png",
     gate_valve: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6707e32d9da98d7a2926a97c_gate_valve-lines-s.png"
+    // adaptor: "",
   };
   var COMP_HEIGHTS = {
     wellhead: 27,
@@ -19357,7 +19358,8 @@
     annular: 91,
     adaptor: 7,
     gate_valve: 72,
-    bell_nipple: 112
+    bell_nipple: 112,
+    washington: 60
   };
   var GENERATE_MARKUP = function(compType) {
     if (compType === "compBlock") {
@@ -19393,7 +19395,7 @@
     </div>`;
     }
   };
-  var STACK_MAX = 500;
+  var STACK_MAX = 620;
   var STACK_MAX_FOR_OPTS = 1e3;
   var PDF_SETTINGS = {
     xAxis: 15,
@@ -19955,14 +19957,8 @@
         let factor = (stackHeight - STACK_MAX) / stackHeight;
         let result = (100 - factor * 100) / 100;
         newHeight = stackHeight;
-        this._allCompImgs.forEach(function(el) {
-          el.style.height = $(el).height() * result + "px";
-        });
         this._allComps.forEach(function(el) {
           el.style.width = $(el).width() * result + "px";
-        });
-        this._allOptsDivs.forEach(function(el) {
-          el.style.left = getComputedStyle(el).getPropertyValue("left") * result + "px";
         });
         this._allSpacers.forEach(function(el) {
           el.style.height = $(el).height() * result + "px";
@@ -19971,7 +19967,7 @@
           el.style.height = $(el).height() * result + "px";
         });
         this._allAdaptors.forEach(function(el) {
-          el.style.height = $(el).height() * result + "px";
+          el.style.width = $(el).width() * result + "px";
         });
         this._leftArray.forEach(function(el) {
           el.style.width = $(el).width() * result + "px";
@@ -19984,9 +19980,8 @@
             el.style.height = "0px";
           });
         }
-      } else {
-        newHeight = stackHeight;
       }
+      newHeight = stackHeight;
       return newHeight;
     };
   };
@@ -28105,19 +28100,16 @@
     //_________________________________________________________________________
     //Convert html content to pdf
     _convertToPDF = function(newHeight) {
-      if (!notesView_default._jobTitle) {
-        alert("enter a title");
-        return;
-      }
-      const allCompDivs = document.querySelectorAll(".comp-div");
-      allCompDivs.forEach(function(el) {
-        el.classList.remove("active");
-      });
+      this._retarget();
+      this._allComps.forEach((el) => el.classList.remove("active"));
+      this._leftArray.forEach((el) => el.classList.remove("active"));
+      this._rightArray.forEach((el) => el.classList.remove("active"));
       const elementHTML = document.querySelector(".content_to_print");
       const doc = new jspdf_es_min_default("p", "pt", "a4");
       const img = new Image();
+      const printDivHeight = $(document.querySelector(".comp-wrapper")).height();
       const xOffset = doc.internal.pageSize.getWidth() / 2;
-      const yDown = (PDF_SETTINGS.pageHeight - newHeight) / 2;
+      const yDown = (PDF_SETTINGS.pageHeight - printDivHeight) / 2;
       img.src = PDF_SETTINGS.logoImg;
       doc.html(elementHTML, {
         callback: function(doc2) {
