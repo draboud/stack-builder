@@ -20000,9 +20000,10 @@
             el.style.height = "0px";
           });
         }
+      } else {
+        this._allComps.forEach((el) => el.style.width = "230px");
+        this._allAdaptors.forEach((el) => el.style.width = "230px");
       }
-      this._allComps.forEach((el) => el.style.width = "230px");
-      this._allAdaptors.forEach((el) => el.style.width = "230px");
       newHeight = stackHeight;
       return newHeight;
     };
