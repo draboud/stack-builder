@@ -19333,6 +19333,9 @@
     "bell_nipple"
   ];
   var COMP_IMG = {
+    // spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd0316fff7c3bffbb6c781_Cross%20-%20Spool.png",
+    // man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf61a2ceb56331d1bc3b_Cross%20-%20Manual.png",
+    // hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6711a24a216cf3489112e58e_Cross%20-%20Hydraulic-2.png",
     // annular:
     //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43c4b43469a2e8adef108_annular-lines-s-p-500.png",
     // double:
@@ -19355,9 +19358,9 @@
     //new-comps.............................................................
     blank: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s-p-500.png",
     side: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png",
-    spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd0316fff7c3bffbb6c781_Cross%20-%20Spool.png",
-    man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf61a2ceb56331d1bc3b_Cross%20-%20Manual.png",
-    hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6711a24a216cf3489112e58e_Cross%20-%20Hydraulic-2.png",
+    spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67126fdf06a43383a969f298_Cross%20-%20Spool-2.png",
+    man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67126fdf0797b645d0c5214a_Cross%20-%20Manual-2.png",
+    hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67126fde59814ff97b1037f7_Cross%20-%20Hydraulic-2b.png",
     adaptor: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6711472a9b81cf89e9209361_dsa-2.png",
     single: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a63278e75e8411fe6c_single-2.png",
     cross: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a651504ebf148b4cd6_cross-2.png",
@@ -19968,41 +19971,42 @@
     //Adjust height of stack after certain threshold value, in order to fit on a4 pdf
     _scaleStack = function() {
       this._retarget();
+      this._allComps.forEach((el) => el.classList.remove("active"));
+      this._leftArray.forEach((el) => el.classList.remove("active"));
+      this._rightArray.forEach((el) => el.classList.remove("active"));
       let stackHeight = 0;
       let newHeight;
+      let factor;
+      let result;
       this._allHeightText.forEach(function(el) {
         stackHeight += parseFloat(el.innerHTML.slice(0, -1));
       });
       if (stackHeight > STACK_MAX) {
-        let factor = (stackHeight - STACK_MAX) / stackHeight;
-        let result = (100 - factor * 100) / 100;
-        newHeight = stackHeight;
-        this._allComps.forEach(function(el) {
-          el.style.width = $(el).width() * result + "px";
-        });
+        factor = (stackHeight - STACK_MAX) / stackHeight;
+        result = (100 - factor * 100) / 100;
+      } else result = 0.766;
+      this._allComps.forEach(function(el) {
+        el.style.width = $(el).width() * result + "px";
+      });
+      this._allSpacers.forEach(function(el) {
+        el.style.height = $(el).height() * result + "px";
+      });
+      this._allHydSpacers.forEach(function(el) {
+        el.style.height = $(el).height() * result + "px";
+      });
+      this._allAdaptors.forEach(function(el) {
+        el.style.width = $(el).width() * result + "px";
+      });
+      this._leftArray.forEach(function(el) {
+        el.style.width = $(el).width() * result + "px";
+      });
+      this._rightArray.forEach(function(el) {
+        el.style.width = $(el).width() * result + "px";
+      });
+      if (stackHeight > STACK_MAX_FOR_OPTS) {
         this._allSpacers.forEach(function(el) {
-          el.style.height = $(el).height() * result + "px";
+          el.style.height = "0px";
         });
-        this._allHydSpacers.forEach(function(el) {
-          el.style.height = $(el).height() * result + "px";
-        });
-        this._allAdaptors.forEach(function(el) {
-          el.style.width = $(el).width() * result + "px";
-        });
-        this._leftArray.forEach(function(el) {
-          el.style.width = $(el).width() * result + "px";
-        });
-        this._rightArray.forEach(function(el) {
-          el.style.width = $(el).width() * result + "px";
-        });
-        if (stackHeight > STACK_MAX_FOR_OPTS) {
-          this._allSpacers.forEach(function(el) {
-            el.style.height = "0px";
-          });
-        }
-      } else {
-        this._allComps.forEach((el) => el.style.width = "230px");
-        this._allAdaptors.forEach((el) => el.style.width = "230px");
       }
       newHeight = stackHeight;
       return newHeight;
@@ -28123,14 +28127,6 @@
     //_________________________________________________________________________
     //Convert html content to pdf
     _convertToPDF = function(newHeight) {
-      if (!notesView_default._jobTitle) {
-        alert("enter a title");
-        return;
-      }
-      this._retarget();
-      this._allComps.forEach((el) => el.classList.remove("active"));
-      this._leftArray.forEach((el) => el.classList.remove("active"));
-      this._rightArray.forEach((el) => el.classList.remove("active"));
       const elementHTML = document.querySelector(".content_to_print");
       const doc = new jspdf_es_min_default("p", "pt", "a4");
       const img = new Image();
@@ -28174,13 +28170,13 @@
         });
       }
       doc.text("STACK HEIGHT: ", 20, 735, { align: "left" });
-      doc.text(newHeight.toString(), 20, 750, { align: "left" });
+      doc.text(newHeight.toString() + '"', 20, 750, { align: "left" });
     };
   };
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("Main - Oct 17, 2024");
+  console.log("post-new-comps - Oct 18, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];

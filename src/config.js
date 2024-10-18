@@ -16,6 +16,12 @@ export const COMP_CLASSES = [
 ];
 
 export const COMP_IMG = {
+  // spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd0316fff7c3bffbb6c781_Cross%20-%20Spool.png",
+
+  // man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf61a2ceb56331d1bc3b_Cross%20-%20Manual.png",
+
+  // hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6711a24a216cf3489112e58e_Cross%20-%20Hydraulic-2.png",
+
   // annular:
   //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43c4b43469a2e8adef108_annular-lines-s-p-500.png",
 
@@ -51,11 +57,11 @@ export const COMP_IMG = {
 
   side: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png",
 
-  spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd0316fff7c3bffbb6c781_Cross%20-%20Spool.png",
+  spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67126fdf06a43383a969f298_Cross%20-%20Spool-2.png",
 
-  man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf61a2ceb56331d1bc3b_Cross%20-%20Manual.png",
+  man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67126fdf0797b645d0c5214a_Cross%20-%20Manual-2.png",
 
-  hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6711a24a216cf3489112e58e_Cross%20-%20Hydraulic-2.png",
+  hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67126fde59814ff97b1037f7_Cross%20-%20Hydraulic-2b.png",
 
   adaptor:
     "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6711472a9b81cf89e9209361_dsa-2.png",
