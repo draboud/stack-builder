@@ -123,6 +123,9 @@ class AdaptorsView extends View {
         });
       }
     }
+    this._allComps.forEach((el) => (el.style.width = "230px"));
+    this._allAdaptors.forEach((el) => (el.style.width = "230px"));
+
     newHeight = stackHeight;
     return newHeight;
   };
