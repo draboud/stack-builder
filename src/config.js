@@ -22,15 +22,7 @@ export const COMP_IMG = {
 
   man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf61a2ceb56331d1bc3b_Cross%20-%20Manual.png",
 
-  hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf611491cc6deb154360_Cross%20-%20Hydraulic.png",
-
-  //alternate side comp imgs:...........................................
-  // spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67117a12b7be63f689976418_cross-spl.png",
-
-  // man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67117a128b9b4fcb4d820863_cross-man.png",
-
-  // hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67117a12fd16176ad78204f4_cross-hyd.png",
-  //....................................................................
+  hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6711a24a216cf3489112e58e_Cross%20-%20Hydraulic-2.png",
 
   double:
     "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67113e2e31935f629aac8048_double-2.png",
@@ -40,8 +32,6 @@ export const COMP_IMG = {
 
   cross:
     "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a651504ebf148b4cd6_cross-2.png",
-  // cross:
-  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67117a12fd16176ad78204f4_cross-hyd.png",
 
   bell_nipple:
     "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6fcd56570fad07590_bell%20nipple-2.png",
@@ -115,18 +105,6 @@ export const GENERATE_MARKUP = function (compType) {
       <div class="hyd_spacer hide"></div>
     </div>`;
   }
-  // if (compType === "adaptor") {
-  //   return `
-  //   <div class="comp-div adaptor">
-  //     <div class="height-div">
-  //       <div class="height-text">${COMP_HEIGHTS.adaptor}"</div>
-  //     </div>
-  //     <img class="img" src=${COMP_IMG.adaptor}>
-  //     <div class="opts-div">
-  //       <div class="opts-text">options</div>
-  //      </div>
-  //   </div>`;
-  // }
 };
 //_________________________________________________________________________
 // for scaleStack

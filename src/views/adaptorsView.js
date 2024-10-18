@@ -7,7 +7,7 @@ import {
   COMP_IMG,
   COMP_DIV_WIDTH,
 } from "../config";
-import optionsView from "./optionsView";
+// import optionsView from "./optionsView";
 
 const ctrlBtns = document.querySelector(".control_buttons_div");
 
@@ -84,8 +84,7 @@ class AdaptorsView extends View {
     this._retarget();
     let stackHeight = 0;
     let newHeight;
-    // let currOptDivHeight;
-    // let newOptDivHeight;
+
     this._allHeightText.forEach(function (el) {
       stackHeight += parseFloat(el.innerHTML.slice(0, -1));
     });
@@ -121,18 +120,6 @@ class AdaptorsView extends View {
         el.style.width = $(el).width() * result + "px";
       });
 
-      //............................................................
-      // this._allOptsDivs.forEach(function (el) {
-      //   // el.style.left = $(el).width() * result + "px";
-
-      //   currOptDivHeight = parseFloat(
-      //     getComputedStyle(el).getPropertyValue("left").replace("px", "")
-      //   );
-      //   newOptDivHeight = currOptDivHeight * result + "px";
-      //   el.style.left = newOptDivHeight;
-      // });
-      //............................................................
-
       //______________________________________________________________________
 
       if (stackHeight > STACK_MAX_FOR_OPTS) {
@@ -141,15 +128,6 @@ class AdaptorsView extends View {
         });
       }
     }
-    // else {
-    //   //apply smaller shrink regardless
-    //   // this._allComps.forEach(function (el) {
-    //   //   el.style.width = COMP_DIV_WIDTH + "px";
-    //   // });
-    //   // this._allAdaptors.forEach(function (el) {
-    //   //   el.style.width = COMP_DIV_WIDTH + "px";
-    //   // });
-    // }
 
     newHeight = stackHeight;
 

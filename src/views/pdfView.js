@@ -2,15 +2,16 @@ import View from "./View";
 import notesView from "./notesView";
 import jsPDF from "jspdf";
 import { PDF_SETTINGS } from "../config";
+import stackView from "./stackView";
 
 class PDFView extends View {
   //_________________________________________________________________________
   //Convert html content to pdf
   _convertToPDF = function (newHeight) {
-    // if (!notesView._jobTitle) {
-    //   alert("enter a title");
-    //   return;
-    // }
+    if (!notesView._jobTitle) {
+      alert("enter a title");
+      return;
+    }
     const printDivHeight = $(document.querySelector(".comp-wrapper")).height();
     // const allCompDivs = document.querySelectorAll(".comp-div");
     // allCompDivs.forEach(function (el) {
@@ -21,6 +22,7 @@ class PDFView extends View {
     this._allComps.forEach((el) => el.classList.remove("active"));
     this._leftArray.forEach((el) => el.classList.remove("active"));
     this._rightArray.forEach((el) => el.classList.remove("active"));
+
     //...........................................................
     const elementHTML = document.querySelector(".content_to_print");
     const doc = new jsPDF("p", "pt", "a4");
@@ -53,7 +55,7 @@ class PDFView extends View {
       PDF_SETTINGS.logoY * PDF_SETTINGS.scaleFactor
     );
     doc.setFontSize(15);
-    // doc.text(notesView._jobTitle, xOffset, 40, { align: "center" });
+    doc.text(notesView._jobTitle, xOffset, 40, { align: "center" });
     doc.setFontSize(11);
     doc.text("Oct 10, 2024", 570, 40, { align: "right" });
     if (notesView._notes) {

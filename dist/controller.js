@@ -19250,7 +19250,7 @@
     }
   });
 
-  // src/views/View.js
+  // src/Views/View.js
   var View = class {
     _data;
     _compWrapper = document.querySelector(".comp-wrapper");
@@ -19336,17 +19336,10 @@
     side: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png",
     spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd0316fff7c3bffbb6c781_Cross%20-%20Spool.png",
     man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf61a2ceb56331d1bc3b_Cross%20-%20Manual.png",
-    hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf611491cc6deb154360_Cross%20-%20Hydraulic.png",
-    //alternate side comp imgs:...........................................
-    // spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67117a12b7be63f689976418_cross-spl.png",
-    // man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67117a128b9b4fcb4d820863_cross-man.png",
-    // hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67117a12fd16176ad78204f4_cross-hyd.png",
-    //....................................................................
+    hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6711a24a216cf3489112e58e_Cross%20-%20Hydraulic-2.png",
     double: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67113e2e31935f629aac8048_double-2.png",
     single: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a63278e75e8411fe6c_single-2.png",
     cross: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a651504ebf148b4cd6_cross-2.png",
-    // cross:
-    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67117a12fd16176ad78204f4_cross-hyd.png",
     bell_nipple: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6fcd56570fad07590_bell%20nipple-2.png",
     gate_valve: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6fcd56570fad0758d_gate%20valve-2.png",
     washington: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6f41e86f336bcb5e2_washington-2.png",
@@ -19415,7 +19408,7 @@
     logoImg: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b41c3b6d1b3e37580ee90a_Team%20Snubbing%20International%20-%20Horizontal-p-500.png"
   };
 
-  // src/views/stackBtnsView.js
+  // src/Views/stackBtnsView.js
   var [compSpl, compMan, compHyd] = Array.from([
     ...document.querySelectorAll(".comp_button_cross")
   ]);
@@ -19507,7 +19500,7 @@
     });
   };
 
-  // src/views/heightsView.js
+  // src/Views/heightsView.js
   var HeightsView = class extends View {
     //Height clicks assigned to height text
     _addHandlerHeight(handler) {
@@ -19571,7 +19564,7 @@
   };
   var notesView_default = new NotesView();
 
-  // src/views/optionsView.js
+  // src/Views/optionsView.js
   var OptionsView = class extends View {
     _optsModal = document.querySelector(".options_modal");
     _typeOpts = document.querySelector(".modal_column.type");
@@ -19721,7 +19714,7 @@
   };
   var optionsView_default = new OptionsView();
 
-  // src/views/stackView.js
+  // src/Views/stackView.js
   var viewBtn = document.querySelector(".view_button");
   var StackView = class extends View {
     //Clicks for stack components
@@ -28106,6 +28099,10 @@
     //_________________________________________________________________________
     //Convert html content to pdf
     _convertToPDF = function(newHeight) {
+      if (!notesView_default._jobTitle) {
+        alert("enter a title");
+        return;
+      }
       const printDivHeight = $(document.querySelector(".comp-wrapper")).height();
       this._retarget();
       this._allComps.forEach((el) => el.classList.remove("active"));
@@ -28139,6 +28136,7 @@
         PDF_SETTINGS.logoY * PDF_SETTINGS.scaleFactor
       );
       doc.setFontSize(15);
+      doc.text(notesView_default._jobTitle, xOffset, 40, { align: "center" });
       doc.setFontSize(11);
       doc.text("Oct 10, 2024", 570, 40, { align: "right" });
       if (notesView_default._notes) {
@@ -28158,18 +28156,16 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("MVC2 - Oct 16, 2024");
+  console.log("CONTROLLER - Oct 5, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
-    stackView_default._compFlag = compVal;
     switch (compVal) {
       case "plus":
         stackView_default._addComp();
         break;
       case "minus":
         stackView_default._delComp();
-        adaptorsView_default._autoAdapt();
         break;
       case "spl":
       case "man":
@@ -28201,9 +28197,7 @@
     stackView_default._activeSideComp?.classList.remove("active");
     stackBtnsView_default.toggleCrossBtns("remove");
     heightsView_default._allHeightDivs.forEach((el) => el.classList.remove("highlight"));
-    optionsView_default._resetOptions();
     clicked.classList.add("active");
-    stackView_default._retarget();
   };
   controlHeight = function() {
     heightsView_default._retarget();
@@ -28213,38 +28207,14 @@
   controlOptions = function(clicked) {
     optionsView_default._retarget();
     if (clicked.classList.contains("second")) optionsView_default._secondOptsFlag = true;
-    if (stackView_default._compFlag === "single" || stackView_default._compFlag === "double") {
-      optionsView_default._typeOpts.classList.remove("hide");
-      optionsView_default._rangeOpts.classList.remove("hide");
-    }
     optionsView_default._optsModal.classList.remove("hide");
   };
   controlOptsModal = function(clicked) {
-    optionsView_default._setOptsText(clicked);
-  };
-  controlModalBtn = function() {
-    optionsView_default._closeModal();
-  };
-  controlBoreInput = function(boreValue) {
-    optionsView_default._boreFinalValue = boreValue + '"';
-    document.querySelector(".modal_column.bore").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
-    document.querySelector(".modal_column.bore").querySelector(".opt_div.custom").click();
-  };
-  controlTypeInput = function(typeValue) {
-    console.log("custom type set");
-    optionsView_default._typeFinalValue = typeValue;
-    document.querySelector(".modal_column.type").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
-    document.querySelector(".modal_column.type").querySelector(".opt_div.custom").click();
-  };
-  controlRangeInput = function(rangeValue) {
-    optionsView_default._rangeFinalValue = rangeValue + '"';
-    document.querySelector(".modal_column.range").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
-    document.querySelector(".modal_column.range").querySelector(".opt_div.custom").click();
-  };
-  controlPressInput = function(pressValue) {
-    optionsView_default._pressFinalValue = pressValue + "&nbsp;PSI";
-    document.querySelector(".modal_column.pressure").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
-    document.querySelector(".modal_column.pressure").querySelector(".opt_div.custom").click();
+    optionsView_default._activeOptsDiv.querySelector(
+      optionsView_default._secondOptsFlag ? ".opts-text.second" : ".opts-text"
+    ).innerHTML = clicked.innerHTML;
+    optionsView_default._optsModal.classList.add("hide");
+    optionsView_default._secondOptsFlag = false;
   };
   controlAdapt = function() {
     adaptorsView_default._autoAdapt();
@@ -28252,19 +28222,18 @@
   controlScaleStack = function() {
     adaptorsView_default._newHeight = adaptorsView_default._scaleStack();
   };
-  controlNotesBtn = function() {
-    notesView_default._modalBlockout.classList.remove("hide");
+  controlNotesForm = function() {
     notesView_default._notesForm.classList.remove("hide");
+    notesView_default._modalBlockout.classList.remove("hide");
   };
-  controlNotes = function(title, notes) {
+  controlSaveBtn = function(title, notes) {
     notesView_default._jobTitle = title;
     notesView_default._notes = notes;
-    notesView_default._notesForm.classList.add("hide");
-    notesView_default._modalBlockout.classList.add("hide");
+    controlBlockout();
   };
-  controlModalBlockout = function(modal) {
-    notesView_default._modalBlockout.classList.add("hide");
+  controlBlockout = function() {
     notesView_default._notesForm.classList.add("hide");
+    notesView_default._modalBlockout.classList.add("hide");
   };
   controlPDF = function() {
     adaptorsView_default._newHeight = adaptorsView_default._scaleStack();
@@ -28276,18 +28245,13 @@
     stackView_default._addHandlerCompClick(controlCompClick);
     heightsView_default._addHandlerHeight(controlHeight);
     optionsView_default._addHandlerOptions(controlOptions);
-    optionsView_default._addHandlerModalBtn(controlModalBtn);
     optionsView_default._addHandlerOptsModal(controlOptsModal);
-    optionsView_default._addHandlerBoreForm(controlBoreInput);
-    optionsView_default._addHandlerTypeForm(controlTypeInput);
-    optionsView_default._addHandlerRangeForm(controlRangeInput);
-    optionsView_default._addHandlerPressForm(controlPressInput);
     adaptorsView_default._addHandlerAdapt(controlAdapt);
     adaptorsView_default._addHandlerScaleStack(controlScaleStack);
     adaptorsView_default._addHandlerPDF(controlPDF);
-    notesView_default._addHandlerNotesBtn(controlNotesBtn);
-    notesView_default._addHandlerSaveBtn(controlNotes);
-    notesView_default._addHandlerModalBlockout(controlModalBlockout);
+    notesView_default._addHandlerNotesBtn(controlNotesForm);
+    notesView_default._addHandlerModalBlockout(controlBlockout);
+    notesView_default._addHandlerSaveBtn(controlSaveBtn);
   };
   init();
 })();

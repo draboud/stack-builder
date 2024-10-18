@@ -1,25 +1,23 @@
-import stackView from "./views/stackView.js";
-import heightsView from "./views/heightsView.js";
-import stackBtnsView from "./views/stackBtnsView.js";
+import stackView from "./Views/stackView.js";
+import heightsView from "./Views/heightsView.js";
+import stackBtnsView from "./Views/stackBtnsView.js";
 import { setIds, setIdsSides } from "./helpers.js";
-import optionsView from "./views/optionsView.js";
+import optionsView from "./Views/optionsView.js";
 import adaptorsView from "./views/adaptorsView.js";
 import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 
-console.log("MVC2 - Oct 16, 2024");
+console.log("CONTROLLER - Oct 5, 2024");
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
   stackView._retarget();
   const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
-  stackView._compFlag = compVal;
   switch (compVal) {
     case "plus":
       stackView._addComp();
       break;
     case "minus":
       stackView._delComp();
-      adaptorsView._autoAdapt();
       break;
     case "spl":
     case "man":
@@ -55,9 +53,7 @@ controlCompClick = function (clicked) {
   stackView._activeSideComp?.classList.remove("active");
   stackBtnsView.toggleCrossBtns("remove");
   heightsView._allHeightDivs.forEach((el) => el.classList.remove("highlight"));
-  optionsView._resetOptions();
   clicked.classList.add("active");
-  stackView._retarget();
 };
 //____________________________________________________________________
 controlHeight = function () {
@@ -69,72 +65,15 @@ controlHeight = function () {
 controlOptions = function (clicked) {
   optionsView._retarget();
   if (clicked.classList.contains("second")) optionsView._secondOptsFlag = true;
-  if (stackView._compFlag === "single" || stackView._compFlag === "double") {
-    optionsView._typeOpts.classList.remove("hide");
-    optionsView._rangeOpts.classList.remove("hide");
-  }
   optionsView._optsModal.classList.remove("hide");
 };
 //____________________________________________________________________
 controlOptsModal = function (clicked) {
-  optionsView._setOptsText(clicked);
-};
-//____________________________________________________________________
-controlModalBtn = function () {
-  optionsView._closeModal();
-};
-//____________________________________________________________________
-controlBoreInput = function (boreValue) {
-  optionsView._boreFinalValue = boreValue + '"';
-  document
-    .querySelector(".modal_column.bore")
-    .querySelector(".opt_div.custom")
-    .firstElementChild.classList.add("selected");
-  //register 'click' on custom option
-  document
-    .querySelector(".modal_column.bore")
-    .querySelector(".opt_div.custom")
-    .click();
-};
-//____________________________________________________________________
-controlTypeInput = function (typeValue) {
-  console.log("custom type set");
-  optionsView._typeFinalValue = typeValue;
-  document
-    .querySelector(".modal_column.type")
-    .querySelector(".opt_div.custom")
-    .firstElementChild.classList.add("selected");
-  //register 'click' on custom option
-  document
-    .querySelector(".modal_column.type")
-    .querySelector(".opt_div.custom")
-    .click();
-};
-//____________________________________________________________________
-controlRangeInput = function (rangeValue) {
-  optionsView._rangeFinalValue = rangeValue + '"';
-  document
-    .querySelector(".modal_column.range")
-    .querySelector(".opt_div.custom")
-    .firstElementChild.classList.add("selected");
-  //register 'click' on custom option
-  document
-    .querySelector(".modal_column.range")
-    .querySelector(".opt_div.custom")
-    .click();
-};
-//____________________________________________________________________
-controlPressInput = function (pressValue) {
-  optionsView._pressFinalValue = pressValue + "&nbsp;PSI";
-  document
-    .querySelector(".modal_column.pressure")
-    .querySelector(".opt_div.custom")
-    .firstElementChild.classList.add("selected");
-  //register 'click' on custom option
-  document
-    .querySelector(".modal_column.pressure")
-    .querySelector(".opt_div.custom")
-    .click();
+  optionsView._activeOptsDiv.querySelector(
+    optionsView._secondOptsFlag ? ".opts-text.second" : ".opts-text"
+  ).innerHTML = clicked.innerHTML;
+  optionsView._optsModal.classList.add("hide");
+  optionsView._secondOptsFlag = false;
 };
 //____________________________________________________________________
 controlAdapt = function () {
@@ -145,21 +84,22 @@ controlScaleStack = function () {
   adaptorsView._newHeight = adaptorsView._scaleStack();
 };
 //____________________________________________________________________
-controlNotesBtn = function () {
-  notesView._modalBlockout.classList.remove("hide");
+controlNotesForm = function () {
   notesView._notesForm.classList.remove("hide");
+  notesView._modalBlockout.classList.remove("hide");
 };
 //____________________________________________________________________
-controlNotes = function (title, notes) {
+controlSaveBtn = function (title, notes) {
   notesView._jobTitle = title;
   notesView._notes = notes;
-  notesView._notesForm.classList.add("hide");
-  notesView._modalBlockout.classList.add("hide");
+  // notesView._notesForm.classList.remove("hide");
+  // notesView._modalBlockout.classList.remove("hide");
+  controlBlockout();
 };
 //____________________________________________________________________
-controlModalBlockout = function (modal) {
-  notesView._modalBlockout.classList.add("hide");
+controlBlockout = function () {
   notesView._notesForm.classList.add("hide");
+  notesView._modalBlockout.classList.add("hide");
 };
 //____________________________________________________________________
 
@@ -175,21 +115,12 @@ const init = function () {
   stackView._addHandlerCompClick(controlCompClick);
   heightsView._addHandlerHeight(controlHeight);
   optionsView._addHandlerOptions(controlOptions);
-  optionsView._addHandlerModalBtn(controlModalBtn);
   optionsView._addHandlerOptsModal(controlOptsModal);
-  optionsView._addHandlerBoreForm(controlBoreInput);
-  optionsView._addHandlerTypeForm(controlTypeInput);
-  optionsView._addHandlerRangeForm(controlRangeInput);
-  optionsView._addHandlerPressForm(controlPressInput);
   adaptorsView._addHandlerAdapt(controlAdapt);
   adaptorsView._addHandlerScaleStack(controlScaleStack);
   adaptorsView._addHandlerPDF(controlPDF);
-  notesView._addHandlerNotesBtn(controlNotesBtn);
-  // notesView._addHandlerNotes(controlNotes);
-  notesView._addHandlerSaveBtn(controlNotes);
-  notesView._addHandlerModalBlockout(controlModalBlockout);
+  notesView._addHandlerNotesBtn(controlNotesForm);
+  notesView._addHandlerModalBlockout(controlBlockout);
+  notesView._addHandlerSaveBtn(controlSaveBtn);
 };
 init();
-
-//TEST AREA....................................................
-//.............................................................
