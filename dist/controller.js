@@ -28123,6 +28123,10 @@
     //_________________________________________________________________________
     //Convert html content to pdf
     _convertToPDF = function(newHeight) {
+      if (!notesView_default._jobTitle) {
+        alert("enter a title");
+        return;
+      }
       this._retarget();
       this._allComps.forEach((el) => el.classList.remove("active"));
       this._leftArray.forEach((el) => el.classList.remove("active"));

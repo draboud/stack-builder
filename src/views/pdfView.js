@@ -7,10 +7,10 @@ class PDFView extends View {
   //_________________________________________________________________________
   //Convert html content to pdf
   _convertToPDF = function (newHeight) {
-    // if (!notesView._jobTitle) {
-    //   alert("enter a title");
-    //   return;
-    // }
+    if (!notesView._jobTitle) {
+      alert("enter a title");
+      return;
+    }
 
     this._retarget();
     this._allComps.forEach((el) => el.classList.remove("active"));
