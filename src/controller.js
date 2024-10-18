@@ -7,7 +7,7 @@ import adaptorsView from "./views/adaptorsView.js";
 import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 
-console.log("post-new-comps - Oct 17, 2024");
+console.log("post-new-comps - Oct 18, 2024");
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
   stackView._retarget();

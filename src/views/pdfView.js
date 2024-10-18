@@ -7,15 +7,11 @@ class PDFView extends View {
   //_________________________________________________________________________
   //Convert html content to pdf
   _convertToPDF = function (newHeight) {
-    if (!notesView._jobTitle) {
-      alert("enter a title");
-      return;
-    }
+    // if (!notesView._jobTitle) {
+    //   alert("enter a title");
+    //   return;
+    // }
 
-    this._retarget();
-    this._allComps.forEach((el) => el.classList.remove("active"));
-    this._leftArray.forEach((el) => el.classList.remove("active"));
-    this._rightArray.forEach((el) => el.classList.remove("active"));
     const elementHTML = document.querySelector(".content_to_print");
     const doc = new jsPDF("p", "pt", "a4");
     const img = new Image();
@@ -60,7 +56,7 @@ class PDFView extends View {
       });
     }
     doc.text("STACK HEIGHT: ", 20, 735, { align: "left" });
-    doc.text(newHeight.toString(), 20, 750, { align: "left" });
+    doc.text(newHeight.toString() + '"', 20, 750, { align: "left" });
   };
 }
 export default new PDFView();

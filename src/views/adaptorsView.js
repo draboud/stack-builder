@@ -51,7 +51,6 @@ class AdaptorsView extends View {
       if (el.classList.contains("hide") || el.classList.contains("second"))
         return;
 
-      // if (el.parentElement.parentElement.id === "c-1") return;
       const onlyBore = el.innerHTML.split('"')[0];
       numOfOpts += 1;
       extArray.push(onlyBore);
@@ -78,56 +77,54 @@ class AdaptorsView extends View {
   //Adjust height of stack after certain threshold value, in order to fit on a4 pdf
   _scaleStack = function () {
     this._retarget();
+    this._allComps.forEach((el) => el.classList.remove("active"));
+    this._leftArray.forEach((el) => el.classList.remove("active"));
+    this._rightArray.forEach((el) => el.classList.remove("active"));
 
     let stackHeight = 0;
     let newHeight;
-    // const printDivHeight = $(document.querySelector(".comp-wrapper")).height();
+    let factor;
+    let result;
 
     this._allHeightText.forEach(function (el) {
       stackHeight += parseFloat(el.innerHTML.slice(0, -1));
     });
 
     if (stackHeight > STACK_MAX) {
-      let factor = (stackHeight - STACK_MAX) / stackHeight;
-      let result = (100 - factor * 100) / 100;
-      // let result = ((STACK_MAX - stackHeight) * -1) / STACK_MAX;
-      // let result =
-      newHeight = stackHeight;
-      // debugger;
-      this._allComps.forEach(function (el) {
-        el.style.width = $(el).width() * result + "px";
-      });
+      factor = (stackHeight - STACK_MAX) / stackHeight;
+      result = (100 - factor * 100) / 100;
+    } else result = 0.766;
 
+    this._allComps.forEach(function (el) {
+      el.style.width = $(el).width() * result + "px";
+    });
+
+    this._allSpacers.forEach(function (el) {
+      el.style.height = $(el).height() * result + "px";
+    });
+
+    this._allHydSpacers.forEach(function (el) {
+      el.style.height = $(el).height() * result + "px";
+    });
+
+    this._allAdaptors.forEach(function (el) {
+      el.style.width = $(el).width() * result + "px";
+    });
+
+    this._leftArray.forEach(function (el) {
+      el.style.width = $(el).width() * result + "px";
+    });
+
+    this._rightArray.forEach(function (el) {
+      el.style.width = $(el).width() * result + "px";
+    });
+
+    //______________________________________________________________________
+
+    if (stackHeight > STACK_MAX_FOR_OPTS) {
       this._allSpacers.forEach(function (el) {
-        el.style.height = $(el).height() * result + "px";
+        el.style.height = "0px";
       });
-
-      this._allHydSpacers.forEach(function (el) {
-        el.style.height = $(el).height() * result + "px";
-      });
-
-      this._allAdaptors.forEach(function (el) {
-        el.style.width = $(el).width() * result + "px";
-      });
-
-      this._leftArray.forEach(function (el) {
-        el.style.width = $(el).width() * result + "px";
-      });
-
-      this._rightArray.forEach(function (el) {
-        el.style.width = $(el).width() * result + "px";
-      });
-
-      //______________________________________________________________________
-
-      if (stackHeight > STACK_MAX_FOR_OPTS) {
-        this._allSpacers.forEach(function (el) {
-          el.style.height = "0px";
-        });
-      }
-    } else {
-      this._allComps.forEach((el) => (el.style.width = "230px"));
-      this._allAdaptors.forEach((el) => (el.style.width = "230px"));
     }
 
     newHeight = stackHeight;
