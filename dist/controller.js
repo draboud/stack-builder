@@ -28218,7 +28218,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("Live-Date Oct 18, 2024");
+  console.log("Height Input Oct 18, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
