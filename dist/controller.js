@@ -19550,7 +19550,29 @@
 
   // src/views/statsView.js
   var stackHeightText = document.querySelector(".stack-height-text");
+  var dateText = document.querySelector(".date-text");
+  var date = /* @__PURE__ */ new Date();
   var StatsView = class extends View {
+    months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "June",
+      "July",
+      "Aug",
+      "Sept",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
+    //____________________________________________________________________
+    _setDate() {
+      const currentDate = dateText.innerHTML = `${this.months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+      return currentDate;
+    }
+    //____________________________________________________________________
     //Displays stack height to UI
     _liveHeightTotal() {
       let stackHeight2 = 0;
@@ -19565,6 +19587,7 @@
       }
       return stackHeight2;
     }
+    //____________________________________________________________________
   };
   var statsView_default = new StatsView();
 
@@ -28177,7 +28200,7 @@
       );
       doc.setFontSize(15);
       doc.setFontSize(11);
-      doc.text("Oct 10, 2024", 570, 40, { align: "right" });
+      doc.text(`${statsView_default._setDate()}`, 570, 40, { align: "right" });
       if (notesView_default._notes) {
         doc.text("NOTES: ", 20, 775, {
           align: "left",
@@ -28195,7 +28218,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("Live-Height Oct 18, 2024 TEST");
+  console.log("Live-Date Oct 18, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
@@ -28310,6 +28333,7 @@
     pdfView_default._convertToPDF(adaptorsView_default._newHeight);
   };
   var init = function() {
+    statsView_default._setDate();
     stackBtnsView_default._addHandlerStackBtns(controlStackBtns);
     stackBtnsView_default._addHandlerCrossPlusMinus(controlCrossPlusMinus);
     stackView_default._addHandlerCompClick(controlCompClick);

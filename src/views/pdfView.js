@@ -2,6 +2,7 @@ import View from "./View";
 import notesView from "./notesView";
 import jsPDF from "jspdf";
 import { PDF_SETTINGS } from "../config";
+import statsView from "./statsView";
 
 class PDFView extends View {
   //_________________________________________________________________________
@@ -44,7 +45,8 @@ class PDFView extends View {
     doc.setFontSize(15);
     // doc.text(notesView._jobTitle, xOffset, 40, { align: "center" });
     doc.setFontSize(11);
-    doc.text("Oct 10, 2024", 570, 40, { align: "right" });
+    // doc.text("Oct 10, 2024", 570, 40, { align: "right" });
+    doc.text(`${statsView._setDate()}`, 570, 40, { align: "right" });
     if (notesView._notes) {
       doc.text("NOTES: ", 20, 775, {
         align: "left",

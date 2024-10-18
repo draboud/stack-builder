@@ -8,7 +8,8 @@ import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 import statsView from "./views/statsView.js";
 
-console.log("Live-Height Oct 18, 2024 TEST");
+console.log("Live-Date Oct 18, 2024");
+
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
   stackView._retarget();
@@ -173,6 +174,7 @@ controlPDF = function () {
 //____________________________________________________________________
 
 const init = function () {
+  statsView._setDate();
   stackBtnsView._addHandlerStackBtns(controlStackBtns);
   stackBtnsView._addHandlerCrossPlusMinus(controlCrossPlusMinus);
   stackView._addHandlerCompClick(controlCompClick);
