@@ -1,3 +1,4 @@
+import statsView from "./statsView";
 import View from "./View";
 
 const form = document.querySelector(".form");
@@ -28,6 +29,9 @@ class NotesView extends View {
       if (!clicked) return;
       const jobTitleInput = document.querySelector(".job_title_input").value;
       const notesInput = document.querySelector(".custom_notes_input").value;
+      const jobDisplay = (document.querySelector(".job-title-text").innerHTML =
+        "Job Title: " + jobTitleInput);
+
       handler(jobTitleInput, notesInput);
     });
   };

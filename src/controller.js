@@ -6,8 +6,9 @@ import optionsView from "./views/optionsView.js";
 import adaptorsView from "./views/adaptorsView.js";
 import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
+import statsView from "./views/statsView.js";
 
-console.log("post-new-comps - Oct 18, 2024");
+console.log("Live-Height Oct 18, 2024 TEST");
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
   stackView._retarget();
@@ -37,6 +38,7 @@ const controlStackBtns = function (arrayEl) {
   setIds();
   setIdsSides();
   heightsView._addCompHeight(compVal);
+  statsView._liveHeightTotal();
 };
 //____________________________________________________________________
 controlCrossPlusMinus = function (sign) {
@@ -139,6 +141,7 @@ controlPressInput = function (pressValue) {
 //____________________________________________________________________
 controlAdapt = function () {
   adaptorsView._autoAdapt();
+  statsView._liveHeightTotal();
 };
 //____________________________________________________________________
 controlScaleStack = function () {

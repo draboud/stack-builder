@@ -6,6 +6,7 @@ import heightsView from "./heightsView";
 import optionsView from "./optionsView";
 
 const viewBtn = document.querySelector(".view_button");
+const stackHeight = document.querySelector(".stack-height-text");
 
 class StackView extends View {
   //Clicks for stack components

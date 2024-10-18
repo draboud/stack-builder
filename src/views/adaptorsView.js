@@ -7,6 +7,8 @@ import {
   COMP_IMG,
 } from "../config";
 import optionsView from "./optionsView";
+import heightsView from "./heightsView";
+import statsView from "./statsView";
 
 const ctrlBtns = document.querySelector(".control_buttons_div");
 
@@ -76,19 +78,19 @@ class AdaptorsView extends View {
   //____________________________________________________________________
   //Adjust height of stack after certain threshold value, in order to fit on a4 pdf
   _scaleStack = function () {
-    this._retarget();
-    this._allComps.forEach((el) => el.classList.remove("active"));
-    this._leftArray.forEach((el) => el.classList.remove("active"));
-    this._rightArray.forEach((el) => el.classList.remove("active"));
-
     let stackHeight = 0;
     let newHeight;
     let factor;
     let result;
+    this._retarget();
+    stackHeight = statsView._liveHeightTotal();
+    this._allComps.forEach((el) => el.classList.remove("active"));
+    this._leftArray.forEach((el) => el.classList.remove("active"));
+    this._rightArray.forEach((el) => el.classList.remove("active"));
 
-    this._allHeightText.forEach(function (el) {
-      stackHeight += parseFloat(el.innerHTML.slice(0, -1));
-    });
+    // this._allHeightText.forEach(function (el) {
+    //   stackHeight += parseFloat(el.innerHTML.slice(0, -1));
+    // });
 
     if (stackHeight > STACK_MAX) {
       factor = (stackHeight - STACK_MAX) / stackHeight;

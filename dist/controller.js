@@ -19548,6 +19548,26 @@
   };
   var heightsView_default = new HeightsView();
 
+  // src/views/statsView.js
+  var stackHeightText = document.querySelector(".stack-height-text");
+  var StatsView = class extends View {
+    //Displays stack height to UI
+    _liveHeightTotal() {
+      let stackHeight2 = 0;
+      let runningResult;
+      this._retarget();
+      this._allHeightText.forEach(function(el) {
+        stackHeight2 += parseFloat(el.innerHTML.slice(0, -1));
+      });
+      if (stackHeight2) {
+        runningResult = stackHeight2;
+        stackHeightText.innerHTML = "Stack Height: " + runningResult + '"';
+      }
+      return stackHeight2;
+    }
+  };
+  var statsView_default = new StatsView();
+
   // src/views/notesView.js
   var form = document.querySelector(".form");
   var notesBtn = document.querySelector(".notes_button");
@@ -19575,6 +19595,7 @@
         if (!clicked) return;
         const jobTitleInput = document.querySelector(".job_title_input").value;
         const notesInput = document.querySelector(".custom_notes_input").value;
+        const jobDisplay = document.querySelector(".job-title-text").innerHTML = "Job Title: " + jobTitleInput;
         handler(jobTitleInput, notesInput);
       });
     };
@@ -19739,6 +19760,7 @@
 
   // src/views/stackView.js
   var viewBtn = document.querySelector(".view_button");
+  var stackHeight = document.querySelector(".stack-height-text");
   var StackView = class extends View {
     //Clicks for stack components
     _addHandlerCompClick(handler) {
@@ -19970,19 +19992,17 @@
     //____________________________________________________________________
     //Adjust height of stack after certain threshold value, in order to fit on a4 pdf
     _scaleStack = function() {
-      this._retarget();
-      this._allComps.forEach((el) => el.classList.remove("active"));
-      this._leftArray.forEach((el) => el.classList.remove("active"));
-      this._rightArray.forEach((el) => el.classList.remove("active"));
-      let stackHeight = 0;
+      let stackHeight2 = 0;
       let newHeight;
       let factor;
       let result;
-      this._allHeightText.forEach(function(el) {
-        stackHeight += parseFloat(el.innerHTML.slice(0, -1));
-      });
-      if (stackHeight > STACK_MAX) {
-        factor = (stackHeight - STACK_MAX) / stackHeight;
+      this._retarget();
+      stackHeight2 = statsView_default._liveHeightTotal();
+      this._allComps.forEach((el) => el.classList.remove("active"));
+      this._leftArray.forEach((el) => el.classList.remove("active"));
+      this._rightArray.forEach((el) => el.classList.remove("active"));
+      if (stackHeight2 > STACK_MAX) {
+        factor = (stackHeight2 - STACK_MAX) / stackHeight2;
         result = (100 - factor * 100) / 100;
       } else result = 0.766;
       this._allComps.forEach(function(el) {
@@ -20003,12 +20023,12 @@
       this._rightArray.forEach(function(el) {
         el.style.width = $(el).width() * result + "px";
       });
-      if (stackHeight > STACK_MAX_FOR_OPTS) {
+      if (stackHeight2 > STACK_MAX_FOR_OPTS) {
         this._allSpacers.forEach(function(el) {
           el.style.height = "0px";
         });
       }
-      newHeight = stackHeight;
+      newHeight = stackHeight2;
       return newHeight;
     };
   };
@@ -28156,7 +28176,6 @@
         PDF_SETTINGS.logoY * PDF_SETTINGS.scaleFactor
       );
       doc.setFontSize(15);
-      doc.text(notesView_default._jobTitle, xOffset, 40, { align: "center" });
       doc.setFontSize(11);
       doc.text("Oct 10, 2024", 570, 40, { align: "right" });
       if (notesView_default._notes) {
@@ -28176,7 +28195,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("post-new-comps - Oct 18, 2024");
+  console.log("Live-Height Oct 18, 2024 TEST");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
@@ -28205,6 +28224,7 @@
     setIds();
     setIdsSides();
     heightsView_default._addCompHeight(compVal);
+    statsView_default._liveHeightTotal();
   };
   controlCrossPlusMinus = function(sign) {
     stackView_default._retarget();
@@ -28266,6 +28286,7 @@
   };
   controlAdapt = function() {
     adaptorsView_default._autoAdapt();
+    statsView_default._liveHeightTotal();
   };
   controlScaleStack = function() {
     adaptorsView_default._newHeight = adaptorsView_default._scaleStack();
