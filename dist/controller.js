@@ -28156,6 +28156,7 @@
         PDF_SETTINGS.logoY * PDF_SETTINGS.scaleFactor
       );
       doc.setFontSize(15);
+      doc.text(notesView_default._jobTitle, xOffset, 40, { align: "center" });
       doc.setFontSize(11);
       doc.text("Oct 10, 2024", 570, 40, { align: "right" });
       if (notesView_default._notes) {
