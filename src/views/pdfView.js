@@ -7,10 +7,10 @@ class PDFView extends View {
   //_________________________________________________________________________
   //Convert html content to pdf
   _convertToPDF = function (newHeight) {
-    // if (!notesView._jobTitle) {
-    //   alert("enter a title");
-    //   return;
-    // }
+    if (!notesView._jobTitle) {
+      alert("enter a title");
+      return;
+    }
 
     this._retarget();
     this._allComps.forEach((el) => el.classList.remove("active"));
@@ -46,7 +46,7 @@ class PDFView extends View {
       PDF_SETTINGS.logoY * PDF_SETTINGS.scaleFactor
     );
     doc.setFontSize(15);
-    // doc.text(notesView._jobTitle, xOffset, 40, { align: "center" });
+    doc.text(notesView._jobTitle, xOffset, 40, { align: "center" });
     doc.setFontSize(11);
     doc.text("Oct 10, 2024", 570, 40, { align: "right" });
     if (notesView._notes) {
