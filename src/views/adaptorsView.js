@@ -88,14 +88,15 @@ class AdaptorsView extends View {
     this._leftArray.forEach((el) => el.classList.remove("active"));
     this._rightArray.forEach((el) => el.classList.remove("active"));
 
-    // this._allHeightText.forEach(function (el) {
-    //   stackHeight += parseFloat(el.innerHTML.slice(0, -1));
-    // });
+    const visHeight = $(document.querySelector(".comp-wrapper")).height();
 
-    if (stackHeight > STACK_MAX) {
-      factor = (stackHeight - STACK_MAX) / stackHeight;
+    if (visHeight > STACK_MAX) {
+      factor = (visHeight - STACK_MAX) / visHeight;
       result = (100 - factor * 100) / 100;
+      console.log("SCALED!");
     } else result = 0.766;
+
+    console.log("visHeight: ", visHeight);
 
     this._allComps.forEach(function (el) {
       el.style.width = $(el).width() * result + "px";

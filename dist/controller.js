@@ -20049,10 +20049,13 @@
       this._allComps.forEach((el) => el.classList.remove("active"));
       this._leftArray.forEach((el) => el.classList.remove("active"));
       this._rightArray.forEach((el) => el.classList.remove("active"));
-      if (stackHeight2 > STACK_MAX) {
-        factor = (stackHeight2 - STACK_MAX) / stackHeight2;
+      const visHeight = $(document.querySelector(".comp-wrapper")).height();
+      if (visHeight > STACK_MAX) {
+        factor = (visHeight - STACK_MAX) / visHeight;
         result = (100 - factor * 100) / 100;
+        console.log("SCALED!");
       } else result = 0.766;
+      console.log("visHeight: ", visHeight);
       this._allComps.forEach(function(el) {
         el.style.width = $(el).width() * result + "px";
       });
