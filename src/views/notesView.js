@@ -4,6 +4,7 @@ import View from "./View";
 const form = document.querySelector(".form");
 const notesBtn = document.querySelector(".notes_button");
 const saveBtn = document.querySelector(".save_button");
+const notesCloseBtn = document.querySelector(".notes_close_button");
 
 class NotesView extends View {
   _notesForm = document.querySelector(".notes_form");
@@ -35,7 +36,16 @@ class NotesView extends View {
       handler(jobTitleInput, notesInput);
     });
   };
-  //_________________________________________________________________________
+  //___________________________________________________________________________
+  _addHandlerNotesCloseBtn = function (handler) {
+    notesCloseBtn.addEventListener("click", function (e) {
+      const clicked = e.target.closest(".notes_close_button");
+      if (!clicked) return;
+      handler();
+    });
+  };
+  //___________________________________________________________________________
+
   _addHandlerModalBlockout(handler) {
     this._modalBlockout.addEventListener("click", function () {
       handler();

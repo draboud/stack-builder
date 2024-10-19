@@ -19620,6 +19620,7 @@
   var form = document.querySelector(".form");
   var notesBtn = document.querySelector(".notes_button");
   var saveBtn = document.querySelector(".save_button");
+  var notesCloseBtn = document.querySelector(".notes_close_button");
   var NotesView = class extends View {
     _notesForm = document.querySelector(".notes_form");
     _jobTitle;
@@ -19647,7 +19648,15 @@
         handler(jobTitleInput, notesInput);
       });
     };
-    //_________________________________________________________________________
+    //___________________________________________________________________________
+    _addHandlerNotesCloseBtn = function(handler) {
+      notesCloseBtn.addEventListener("click", function(e2) {
+        const clicked = e2.target.closest(".notes_close_button");
+        if (!clicked) return;
+        handler();
+      });
+    };
+    //___________________________________________________________________________
     _addHandlerModalBlockout(handler) {
       this._modalBlockout.addEventListener("click", function() {
         handler();
@@ -19980,6 +19989,7 @@
 
   // src/views/adaptorsView.js
   var ctrlBtns = document.querySelector(".control_buttons_div");
+  var scalingResult;
   var AdaptorsView = class extends View {
     _newHeight;
     //Add handler to adapt button
@@ -20079,8 +20089,35 @@
           el.style.height = "0px";
         });
       }
+      scalingResult = result;
       newHeight = stackHeight2;
       return newHeight;
+    };
+    //____________________________________________________________________
+    //Undo scaling and reapply 'active' to top comp for continual editing
+    _descaling = function() {
+      this._allComps.forEach(function(el) {
+        el.style.width = $(el).width() / scalingResult + "px";
+      });
+      this._allSpacers.forEach(function(el) {
+        el.style.height = $(el).height() / scalingResult + "px";
+      });
+      this._allHydSpacers.forEach(function(el) {
+        el.style.height = $(el).height() / scalingResult + "px";
+      });
+      this._allAdaptors.forEach(function(el) {
+        el.style.width = $(el).width() / scalingResult + "px";
+      });
+      this._leftArray.forEach(function(el) {
+        el.style.width = $(el).width() / scalingResult + "px";
+      });
+      this._rightArray.forEach(function(el) {
+        el.style.width = $(el).width() / scalingResult + "px";
+      });
+      this._allSpacers.forEach(function(el) {
+        el.style.height = "20px";
+      });
+      this._allComps[0].classList.add("active");
     };
   };
   var adaptorsView_default = new AdaptorsView();
@@ -28249,7 +28286,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("Height Input Oct 18, 2024");
+  console.log("Descale - Oct 19, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
@@ -28358,6 +28395,10 @@
     notesView_default._notesForm.classList.add("hide");
     notesView_default._modalBlockout.classList.add("hide");
   };
+  controlNotesCloseBtn = function() {
+    notesView_default._notesForm.classList.add("hide");
+    notesView_default._modalBlockout.classList.add("hide");
+  };
   controlModalBlockout = function(modal) {
     notesView_default._modalBlockout.classList.add("hide");
     notesView_default._notesForm.classList.add("hide");
@@ -28365,6 +28406,9 @@
   controlPDF = function() {
     adaptorsView_default._newHeight = adaptorsView_default._scaleStack();
     pdfView_default._convertToPDF(adaptorsView_default._newHeight);
+    setTimeout(() => {
+      adaptorsView_default._descaling();
+    }, 1);
   };
   var init = function() {
     statsView_default._setDate();
@@ -28384,6 +28428,7 @@
     adaptorsView_default._addHandlerScaleStack(controlScaleStack);
     adaptorsView_default._addHandlerPDF(controlPDF);
     notesView_default._addHandlerNotesBtn(controlNotesBtn);
+    notesView_default._addHandlerNotesCloseBtn(controlNotesCloseBtn);
     notesView_default._addHandlerSaveBtn(controlNotes);
     notesView_default._addHandlerModalBlockout(controlModalBlockout);
   };

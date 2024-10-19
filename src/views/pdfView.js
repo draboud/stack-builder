@@ -3,6 +3,7 @@ import notesView from "./notesView";
 import jsPDF from "jspdf";
 import { PDF_SETTINGS } from "../config";
 import statsView from "./statsView";
+import adaptorsView from "./adaptorsView";
 
 class PDFView extends View {
   //_________________________________________________________________________
@@ -60,6 +61,9 @@ class PDFView extends View {
     }
     doc.text("STACK HEIGHT: ", 20, 735, { align: "left" });
     doc.text(newHeight.toString() + '"', 20, 750, { align: "left" });
+
+    //then descale the stack to allow continuation of editing stack
+    // adaptorsView._descaling();
   };
 }
 export default new PDFView();

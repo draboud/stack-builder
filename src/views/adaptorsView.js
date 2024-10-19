@@ -11,6 +11,7 @@ import heightsView from "./heightsView";
 import statsView from "./statsView";
 
 const ctrlBtns = document.querySelector(".control_buttons_div");
+let scalingResult;
 
 class AdaptorsView extends View {
   _newHeight;
@@ -129,9 +130,43 @@ class AdaptorsView extends View {
         el.style.height = "0px";
       });
     }
-
+    scalingResult = result;
     newHeight = stackHeight;
     return newHeight;
+  };
+
+  //____________________________________________________________________
+  //Undo scaling and reapply 'active' to top comp for continual editing
+  _descaling = function () {
+    this._allComps.forEach(function (el) {
+      el.style.width = $(el).width() / scalingResult + "px";
+    });
+
+    this._allSpacers.forEach(function (el) {
+      el.style.height = $(el).height() / scalingResult + "px";
+    });
+
+    this._allHydSpacers.forEach(function (el) {
+      el.style.height = $(el).height() / scalingResult + "px";
+    });
+
+    this._allAdaptors.forEach(function (el) {
+      el.style.width = $(el).width() / scalingResult + "px";
+    });
+
+    this._leftArray.forEach(function (el) {
+      el.style.width = $(el).width() / scalingResult + "px";
+    });
+
+    this._rightArray.forEach(function (el) {
+      el.style.width = $(el).width() / scalingResult + "px";
+    });
+
+    this._allSpacers.forEach(function (el) {
+      el.style.height = "20px";
+    });
+
+    this._allComps[0].classList.add("active");
   };
 }
 

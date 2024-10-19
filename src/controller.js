@@ -8,7 +8,7 @@ import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 import statsView from "./views/statsView.js";
 
-console.log("Height Input Oct 18, 2024");
+console.log("Descale - Oct 19, 2024");
 
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
@@ -168,6 +168,11 @@ controlNotes = function (title, notes) {
   notesView._modalBlockout.classList.add("hide");
 };
 //____________________________________________________________________
+controlNotesCloseBtn = function () {
+  notesView._notesForm.classList.add("hide");
+  notesView._modalBlockout.classList.add("hide");
+};
+//____________________________________________________________________
 controlModalBlockout = function (modal) {
   notesView._modalBlockout.classList.add("hide");
   notesView._notesForm.classList.add("hide");
@@ -177,6 +182,9 @@ controlModalBlockout = function (modal) {
 controlPDF = function () {
   adaptorsView._newHeight = adaptorsView._scaleStack();
   pdfView._convertToPDF(adaptorsView._newHeight);
+  setTimeout(() => {
+    adaptorsView._descaling();
+  }, 1);
 };
 //____________________________________________________________________
 
@@ -199,6 +207,7 @@ const init = function () {
   adaptorsView._addHandlerPDF(controlPDF);
   notesView._addHandlerNotesBtn(controlNotesBtn);
   // notesView._addHandlerNotes(controlNotes);
+  notesView._addHandlerNotesCloseBtn(controlNotesCloseBtn);
   notesView._addHandlerSaveBtn(controlNotes);
   notesView._addHandlerModalBlockout(controlModalBlockout);
 };
