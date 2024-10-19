@@ -64,9 +64,16 @@ controlCompClick = function (clicked) {
 };
 //____________________________________________________________________
 controlHeight = function () {
-  heightsView._retarget();
-  heightsView._allHeightDivs.forEach((el) => el.classList.remove("highlight"));
-  heightsView._activeHeightDiv.classList.add("highlight");
+  // heightsView._retarget();
+  // heightsView._allHeightDivs.forEach((el) => el.classList.remove("highlight"));
+  // heightsView._activeHeightDiv.classList.add("highlight");
+  heightsView._heightModal.classList.remove("hide");
+  document.querySelector(".height_input").focus();
+};
+//____________________________________________________________________
+controlHeightModal = function () {
+  heightsView._heightModal.classList.add("hide");
+  statsView._liveHeightTotal();
 };
 //____________________________________________________________________
 controlOptions = function (clicked) {
@@ -179,6 +186,7 @@ const init = function () {
   stackBtnsView._addHandlerCrossPlusMinus(controlCrossPlusMinus);
   stackView._addHandlerCompClick(controlCompClick);
   heightsView._addHandlerHeight(controlHeight);
+  heightsView._addHandlerHeightModal(controlHeightModal);
   optionsView._addHandlerOptions(controlOptions);
   optionsView._addHandlerModalBtn(controlModalBtn);
   optionsView._addHandlerOptsModal(controlOptsModal);

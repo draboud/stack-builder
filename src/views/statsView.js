@@ -26,7 +26,6 @@ class StatsView extends View {
     } ${date.getDate()}, ${date.getFullYear()}`);
     return currentDate;
   }
-
   //____________________________________________________________________
   //Displays stack height to UI
   _liveHeightTotal() {
@@ -41,7 +40,6 @@ class StatsView extends View {
       runningResult = stackHeight;
       stackHeightText.innerHTML = "Stack Height: " + runningResult + '"';
     }
-
     return stackHeight;
   }
   //____________________________________________________________________

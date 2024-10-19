@@ -19525,6 +19525,9 @@
 
   // src/views/heightsView.js
   var HeightsView = class extends View {
+    _heightModal = document.querySelector(".height_modal");
+    _heightForm = document.querySelector(".heightForm");
+    //_________________________________________________________________________
     //Height clicks assigned to height text
     _addHandlerHeight(handler) {
       this._retarget();
@@ -19535,6 +19538,28 @@
           handler();
         })
       );
+    }
+    //_________________________________________________________________________
+    //Height modal
+    _addHandlerHeightModal(handler) {
+      this._retarget();
+      this._heightForm.addEventListener("submit", function(e2) {
+        e2.preventDefault();
+        const heightInput = document.querySelector(".height_input");
+        if (isNaN(heightInput.value)) {
+          console.log("Enter a number value");
+          heightInput.value = "";
+          return;
+        }
+        stackView_default._activeComp.querySelector(".height-text").innerHTML = heightInput.value + '"';
+        heightInput.value = "";
+        handler();
+      });
+      this._heightModal.addEventListener("click", function(e2) {
+        const clicked = e2.target.closest(".modal_close_button");
+        if (!clicked) return;
+        handler();
+      });
     }
     //_________________________________________________________________________
     //Assign component heights
@@ -28199,6 +28224,9 @@
         PDF_SETTINGS.logoY * PDF_SETTINGS.scaleFactor
       );
       doc.setFontSize(15);
+      if (notesView_default._jobTitle) {
+        doc.text(notesView_default._jobTitle, xOffset, 40, { align: "center" });
+      }
       doc.setFontSize(11);
       doc.text(`${statsView_default._setDate()}`, 570, 40, { align: "right" });
       if (notesView_default._notes) {
@@ -28267,9 +28295,12 @@
     stackView_default._retarget();
   };
   controlHeight = function() {
-    heightsView_default._retarget();
-    heightsView_default._allHeightDivs.forEach((el) => el.classList.remove("highlight"));
-    heightsView_default._activeHeightDiv.classList.add("highlight");
+    heightsView_default._heightModal.classList.remove("hide");
+    document.querySelector(".height_input").focus();
+  };
+  controlHeightModal = function() {
+    heightsView_default._heightModal.classList.add("hide");
+    statsView_default._liveHeightTotal();
   };
   controlOptions = function(clicked) {
     optionsView_default._retarget();
@@ -28338,6 +28369,7 @@
     stackBtnsView_default._addHandlerCrossPlusMinus(controlCrossPlusMinus);
     stackView_default._addHandlerCompClick(controlCompClick);
     heightsView_default._addHandlerHeight(controlHeight);
+    heightsView_default._addHandlerHeightModal(controlHeightModal);
     optionsView_default._addHandlerOptions(controlOptions);
     optionsView_default._addHandlerModalBtn(controlModalBtn);
     optionsView_default._addHandlerOptsModal(controlOptsModal);

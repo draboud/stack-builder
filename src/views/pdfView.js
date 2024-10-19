@@ -43,9 +43,10 @@ class PDFView extends View {
       PDF_SETTINGS.logoY * PDF_SETTINGS.scaleFactor
     );
     doc.setFontSize(15);
-    // doc.text(notesView._jobTitle, xOffset, 40, { align: "center" });
+    if (notesView._jobTitle) {
+      doc.text(notesView._jobTitle, xOffset, 40, { align: "center" });
+    }
     doc.setFontSize(11);
-    // doc.text("Oct 10, 2024", 570, 40, { align: "right" });
     doc.text(`${statsView._setDate()}`, 570, 40, { align: "right" });
     if (notesView._notes) {
       doc.text("NOTES: ", 20, 775, {
