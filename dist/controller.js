@@ -19419,6 +19419,34 @@
     </div>`;
     }
   };
+  var LETTERS = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z"
+  ];
   var STACK_MAX = 620;
   var STACK_MAX_FOR_OPTS = 1e3;
   var PDF_SETTINGS = {
@@ -20136,14 +20164,33 @@
     _checkCrossLimit = function() {
       const leftCount = this._activeComp.querySelector(".side_left_div").childElementCount;
       const rightCount = this._activeComp.querySelector(".side_right_div").childElementCount;
+      const crossNote = this._activeComp.querySelector(".cross_note_div");
+      const crossNoteCount = document.querySelectorAll(".cross_note_div").length;
+      const crossNoteHTML = `
+      <div class= "cross_note_div">
+      <div class= "cross-note">${LETTERS[0]}</div>
+      </div>`;
       if (leftCount > 3 || rightCount > 3) {
         this._activeComp.querySelector(".img").src = COMP_IMG.cross_limit;
         this._activeComp.querySelector(".height-div").classList.add("hide");
         this._activeComp.querySelector(".opts-div").classList.add("hide");
+        if (!crossNote) {
+          this._activeComp.querySelector(".img").insertAdjacentHTML("afterend", crossNoteHTML);
+          this._arrangeCrossLetters();
+        }
       } else {
         this._activeComp.querySelector(".img").src = COMP_IMG.cross;
         this._activeComp.querySelector(".height-div").classList.remove("hide");
         this._activeComp.querySelector(".opts-div").classList.remove("hide");
+        if (crossNote) crossNote.parentNode.removeChild(crossNote);
+        this._arrangeCrossLetters();
+      }
+    };
+    //____________________________________________________________________
+    _arrangeCrossLetters = function() {
+      const crossNoteArr = document.querySelectorAll(".cross_note_div");
+      for (let i3 = 0; i3 < crossNoteArr.length; i3++) {
+        crossNoteArr[i3].querySelector(".cross-note").innerHTML = LETTERS[crossNoteArr.length - 1 - i3];
       }
     };
   };
@@ -28325,6 +28372,7 @@
       case "minus":
         stackView_default._delComp();
         adaptorsView_default._autoAdapt();
+        stackView_default._arrangeCrossLetters();
         break;
       case "spl":
       case "man":

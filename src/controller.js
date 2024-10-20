@@ -22,6 +22,7 @@ const controlStackBtns = function (arrayEl) {
     case "minus":
       stackView._delComp();
       adaptorsView._autoAdapt();
+      stackView._arrangeCrossLetters();
       break;
     case "spl":
     case "man":

@@ -1,5 +1,5 @@
 import View from "./View";
-import { COMP_CLASSES, COMP_IMG, GENERATE_MARKUP } from "../config";
+import { COMP_CLASSES, COMP_IMG, GENERATE_MARKUP, LETTERS } from "../config";
 import stackBtnsView from "./stackBtnsView";
 import { cleanCross } from "../helpers";
 import heightsView from "./heightsView";
@@ -218,16 +218,38 @@ class StackView extends View {
       this._activeComp.querySelector(".side_left_div").childElementCount;
     const rightCount =
       this._activeComp.querySelector(".side_right_div").childElementCount;
+    const crossNote = this._activeComp.querySelector(".cross_note_div");
+    const crossNoteCount = document.querySelectorAll(".cross_note_div").length;
+    const crossNoteHTML = `
+      <div class= "cross_note_div">
+      <div class= "cross-note">${LETTERS[0]}</div>
+      </div>`;
 
     if (leftCount > 3 || rightCount > 3) {
-      // debugger;
       this._activeComp.querySelector(".img").src = COMP_IMG.cross_limit;
       this._activeComp.querySelector(".height-div").classList.add("hide");
       this._activeComp.querySelector(".opts-div").classList.add("hide");
+      if (!crossNote) {
+        this._activeComp
+          .querySelector(".img")
+          .insertAdjacentHTML("afterend", crossNoteHTML);
+        this._arrangeCrossLetters();
+      }
     } else {
+      // debugger;
       this._activeComp.querySelector(".img").src = COMP_IMG.cross;
       this._activeComp.querySelector(".height-div").classList.remove("hide");
       this._activeComp.querySelector(".opts-div").classList.remove("hide");
+      if (crossNote) crossNote.parentNode.removeChild(crossNote);
+      this._arrangeCrossLetters();
+    }
+  };
+  //____________________________________________________________________
+  _arrangeCrossLetters = function () {
+    const crossNoteArr = document.querySelectorAll(".cross_note_div");
+    for (let i = 0; i < crossNoteArr.length; i++) {
+      crossNoteArr[i].querySelector(".cross-note").innerHTML =
+        LETTERS[crossNoteArr.length - 1 - i];
     }
   };
 }
