@@ -28400,6 +28400,7 @@
   controlNotesBtn = function() {
     notesView_default._modalBlockout.classList.remove("hide");
     notesView_default._notesForm.classList.remove("hide");
+    document.querySelector(".job_title_input").focus();
   };
   controlNotes = function(title, notes) {
     notesView_default._jobTitle = title;

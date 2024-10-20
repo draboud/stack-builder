@@ -159,6 +159,7 @@ controlScaleStack = function () {
 controlNotesBtn = function () {
   notesView._modalBlockout.classList.remove("hide");
   notesView._notesForm.classList.remove("hide");
+  document.querySelector(".job_title_input").focus();
 };
 //____________________________________________________________________
 controlNotes = function (title, notes) {
