@@ -19939,6 +19939,7 @@
       const sideSelect = flag === "left" ? targetActiveComp.firstElementChild : targetActiveComp.lastElementChild;
       const beforeOrAfter = flag === "left" ? "afterbegin" : "beforeend";
       sideSelect.insertAdjacentHTML(beforeOrAfter, htmlSide);
+      this._checkCrossLimit();
     };
     //_______________________________________________________________________
     //Remove cross side comp
@@ -19960,6 +19961,7 @@
       ) : targetActiveSideComp.parentNode.lastElementChild.classList.add(
         "active"
       );
+      this._checkCrossLimit();
     };
     //____________________________________________________________________
     //Add component to active side of active cross in stack

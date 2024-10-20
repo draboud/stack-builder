@@ -156,7 +156,7 @@ class StackView extends View {
         : targetActiveComp.lastElementChild;
     const beforeOrAfter = flag === "left" ? "afterbegin" : "beforeend";
     sideSelect.insertAdjacentHTML(beforeOrAfter, htmlSide);
-    // this._checkCrossLimit();
+    this._checkCrossLimit();
   };
   //_______________________________________________________________________
   //Remove cross side comp
@@ -182,7 +182,7 @@ class StackView extends View {
       : targetActiveSideComp.parentNode.lastElementChild.classList.add(
           "active"
         );
-    // this._checkCrossLimit();
+    this._checkCrossLimit();
   };
   //____________________________________________________________________
   //Add component to active side of active cross in stack
