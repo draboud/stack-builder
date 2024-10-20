@@ -59,7 +59,12 @@ class AdaptorsView extends View {
       extArray.push(onlyBore);
     });
     for (let i = 0; i < numOfOpts - 1; i++) {
-      if (extArray[i] !== extArray[i + 1]) {
+      // debugger;
+      if (
+        extArray[i] !== extArray[i + 1] &&
+        !extArray[i].includes("options") &&
+        !extArray[i + 1].includes("options")
+      ) {
         const adapterHtml = `
       <div class="adapt-div">
         <div class="height-div">
@@ -94,7 +99,7 @@ class AdaptorsView extends View {
     if (visHeight > STACK_MAX) {
       factor = (visHeight - STACK_MAX) / visHeight;
       result = (100 - factor * 100) / 100;
-      console.log("SCALED!");
+      if (result > 0.766) result = 0.766;
     } else result = 0.766;
 
     console.log("visHeight: ", visHeight);

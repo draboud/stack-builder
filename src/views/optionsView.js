@@ -1,6 +1,7 @@
 import stackView from "./stackView";
 import notesView from "./notesView";
 import View from "./View";
+import adaptorsView from "./adaptorsView";
 
 class OptionsView extends View {
   _optsModal = document.querySelector(".options_modal");
@@ -138,6 +139,7 @@ class OptionsView extends View {
 
       this._resetOptions();
       this._closeModal();
+      // adaptorsView._autoAdapt();
     }
   }
   //_________________________________________________________________________
@@ -168,6 +170,9 @@ class OptionsView extends View {
   //_________________________________________________________________________
   _closeModal() {
     this._optsModal.classList.add("hide");
+    notesView._modalBlockout.classList.add("hide");
+    const allOpts = [...document.querySelectorAll(".opt_div")];
+    allOpts.forEach((el) => el.firstElementChild.classList.remove("selected"));
     this._secondOptsFlag = false;
   }
 }

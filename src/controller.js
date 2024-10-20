@@ -8,7 +8,7 @@ import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 import statsView from "./views/statsView.js";
 
-console.log("Cross-Notes - Oct 19, 2024");
+console.log("Messages - Oct 20, 2024");
 
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
@@ -64,15 +64,14 @@ controlCompClick = function (clicked) {
 };
 //____________________________________________________________________
 controlHeight = function () {
-  // heightsView._retarget();
-  // heightsView._allHeightDivs.forEach((el) => el.classList.remove("highlight"));
-  // heightsView._activeHeightDiv.classList.add("highlight");
   heightsView._heightModal.classList.remove("hide");
   document.querySelector(".height_input").focus();
+  notesView._modalBlockout.classList.remove("hide");
 };
 //____________________________________________________________________
 controlHeightModal = function () {
-  heightsView._heightModal.classList.add("hide");
+  heightsView._clearAndCloseHeight();
+  notesView._modalBlockout.classList.add("hide");
   statsView._liveHeightTotal();
 };
 //____________________________________________________________________
@@ -84,10 +83,13 @@ controlOptions = function (clicked) {
     optionsView._rangeOpts.classList.remove("hide");
   }
   optionsView._optsModal.classList.remove("hide");
+  notesView._modalBlockout.classList.remove("hide");
 };
 //____________________________________________________________________
 controlOptsModal = function (clicked) {
   optionsView._setOptsText(clicked);
+  adaptorsView._autoAdapt();
+  statsView._liveHeightTotal();
 };
 //____________________________________________________________________
 controlModalBtn = function () {
@@ -159,6 +161,7 @@ controlScaleStack = function () {
 controlNotesBtn = function () {
   notesView._modalBlockout.classList.remove("hide");
   notesView._notesForm.classList.remove("hide");
+  document.querySelector(".job_title_input").focus();
 };
 //____________________________________________________________________
 controlNotes = function (title, notes) {
@@ -176,6 +179,8 @@ controlNotesCloseBtn = function () {
 controlModalBlockout = function (modal) {
   notesView._modalBlockout.classList.add("hide");
   notesView._notesForm.classList.add("hide");
+  heightsView._clearAndCloseHeight();
+  optionsView._closeModal();
 };
 //____________________________________________________________________
 

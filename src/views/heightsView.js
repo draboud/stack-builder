@@ -1,4 +1,5 @@
 import { COMP_HEIGHTS } from "../config.js";
+import notesView from "./notesView.js";
 import stackView from "./stackView.js";
 import View from "./View.js";
 
@@ -52,10 +53,15 @@ class HeightsView extends View {
       compVal != "minus"
     ) {
       this._retarget();
-      this._activeComp = document.querySelector(".comp-div.active");
       this._activeComp.querySelector(".height-text").innerHTML =
         COMP_HEIGHTS[compVal] + '"';
     }
+  }
+  //_________________________________________________________________________
+  _clearAndCloseHeight() {
+    this._heightModal.classList.add("hide");
+    const heightInput = document.querySelector(".height_input");
+    heightInput.value = "";
   }
 }
 
