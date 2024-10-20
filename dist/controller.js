@@ -32,12 +32,6 @@
     mod
   ));
 
-  // src/views/stackView.js
-  var require_stackView = __commonJS({
-    "src/views/stackView.js"() {
-    }
-  });
-
   // node_modules/@babel/runtime/helpers/esm/typeof.js
   function _typeof(o3) {
     "@babel/helpers - typeof";
@@ -19256,76 +19250,6 @@
     }
   });
 
-  // src/controller.js
-  var import_stackView4 = __toESM(require_stackView());
-
-  // src/config.js
-  var COMP_IMG = {
-    // spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd0316fff7c3bffbb6c781_Cross%20-%20Spool.png",
-    // man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf61a2ceb56331d1bc3b_Cross%20-%20Manual.png",
-    // hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6711a24a216cf3489112e58e_Cross%20-%20Hydraulic-2.png",
-    // annular:
-    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43c4b43469a2e8adef108_annular-lines-s-p-500.png",
-    // double:
-    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a607b6e620e8d095cd8_double-lines-s-p-500.png",
-    // single:
-    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a600e30348edb10ea25_single-lines-s-p-500.png",
-    // cross:
-    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a6185c880cf2c85a7c3_cross-lines-s-p-500.png",
-    // spool:
-    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a60ad38b5aab5702ba1_spool-lines-s-p-500.png",
-    // wellhead:
-    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b434b3ef1b19da5b4282b7_wellhead-lines-s-p-500.png",
-    // hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf611491cc6deb154360_Cross%20-%20Hydraulic.png",
-    // adaptor:
-    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6706acb871e7eebcfaaa2539_adaptor-lines-s.png",
-    // bell_nipple:
-    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6707e33c92c129265e244ade_bell_nipple-lines-s.png",
-    // gate_valve:
-    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6707e32d9da98d7a2926a97c_gate_valve-lines-s.png",
-    //new-comps.............................................................
-    blank: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s-p-500.png",
-    side: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png",
-    spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67126fdf06a43383a969f298_Cross%20-%20Spool-2.png",
-    man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67126fdf0797b645d0c5214a_Cross%20-%20Manual-2.png",
-    hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67126fde59814ff97b1037f7_Cross%20-%20Hydraulic-2b.png",
-    adaptor: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6711472a9b81cf89e9209361_dsa-2.png",
-    single: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a63278e75e8411fe6c_single-2.png",
-    cross: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a651504ebf148b4cd6_cross-2.png",
-    cross_limit: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671568a579848e76035dd2da_cross-limit.png",
-    bell_nipple: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6fcd56570fad07590_bell%20nipple-2.png",
-    gate_valve: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6fcd56570fad0758d_gate%20valve-2.png",
-    washington: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6f41e86f336bcb5e2_washington-2.png",
-    wellhead: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a674e41c46ddf6a523_wellhead-2.png",
-    annular: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a69b81cf89e91e3c58_annular-2.png",
-    spool: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a693ce93795200daa9_spool-2.png",
-    double: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67113e2e31935f629aac8048_double-2.png"
-  };
-  var COMP_HEIGHTS = {
-    wellhead: 27,
-    spool: 44,
-    cross: 49,
-    single: 72,
-    double: 112,
-    annular: 91,
-    adaptor: 7,
-    gate_valve: 72,
-    bell_nipple: 112,
-    washington: 60
-  };
-  var STACK_MAX = 620;
-  var STACK_MAX_FOR_OPTS = 1e3;
-  var PDF_SETTINGS = {
-    xAxis: 15,
-    yAxis: 10,
-    scaleFactor: 0.35,
-    logoX: 337.8,
-    logoY: 120.7,
-    pageHeight: 841,
-    notesMaxWidth: "550",
-    logoImg: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b41c3b6d1b3e37580ee90a_Team%20Snubbing%20International%20-%20Horizontal-p-500.png"
-  };
-
   // src/views/View.js
   var View = class {
     _data;
@@ -19393,6 +19317,213 @@
     }
   };
 
+  // src/config.js
+  var COMP_CLASSES = [
+    "washington",
+    "annular",
+    "double",
+    "cross",
+    "single",
+    "spool",
+    "wellhead",
+    "spl",
+    "man",
+    "hyd",
+    "gate_valve",
+    "bell_nipple"
+  ];
+  var COMP_IMG = {
+    // spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd0316fff7c3bffbb6c781_Cross%20-%20Spool.png",
+    // man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf61a2ceb56331d1bc3b_Cross%20-%20Manual.png",
+    // hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6711a24a216cf3489112e58e_Cross%20-%20Hydraulic-2.png",
+    // annular:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43c4b43469a2e8adef108_annular-lines-s-p-500.png",
+    // double:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a607b6e620e8d095cd8_double-lines-s-p-500.png",
+    // single:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a600e30348edb10ea25_single-lines-s-p-500.png",
+    // cross:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a6185c880cf2c85a7c3_cross-lines-s-p-500.png",
+    // spool:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a60ad38b5aab5702ba1_spool-lines-s-p-500.png",
+    // wellhead:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b434b3ef1b19da5b4282b7_wellhead-lines-s-p-500.png",
+    // hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf611491cc6deb154360_Cross%20-%20Hydraulic.png",
+    // adaptor:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6706acb871e7eebcfaaa2539_adaptor-lines-s.png",
+    // bell_nipple:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6707e33c92c129265e244ade_bell_nipple-lines-s.png",
+    // gate_valve:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6707e32d9da98d7a2926a97c_gate_valve-lines-s.png",
+    //new-comps.............................................................
+    blank: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s-p-500.png",
+    side: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png",
+    spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67126fdf06a43383a969f298_Cross%20-%20Spool-2.png",
+    man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67126fdf0797b645d0c5214a_Cross%20-%20Manual-2.png",
+    hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67126fde59814ff97b1037f7_Cross%20-%20Hydraulic-2b.png",
+    adaptor: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6711472a9b81cf89e9209361_dsa-2.png",
+    single: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a63278e75e8411fe6c_single-2.png",
+    cross: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a651504ebf148b4cd6_cross-2.png",
+    cross_limit: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671568a579848e76035dd2da_cross-limit.png",
+    bell_nipple: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6fcd56570fad07590_bell%20nipple-2.png",
+    gate_valve: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6fcd56570fad0758d_gate%20valve-2.png",
+    washington: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6f41e86f336bcb5e2_washington-2.png",
+    wellhead: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a674e41c46ddf6a523_wellhead-2.png",
+    annular: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a69b81cf89e91e3c58_annular-2.png",
+    spool: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a693ce93795200daa9_spool-2.png",
+    double: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67113e2e31935f629aac8048_double-2.png"
+  };
+  var COMP_HEIGHTS = {
+    wellhead: 27,
+    spool: 44,
+    cross: 49,
+    single: 72,
+    double: 112,
+    annular: 91,
+    adaptor: 7,
+    gate_valve: 72,
+    bell_nipple: 112,
+    washington: 60
+  };
+  var GENERATE_MARKUP = function(compType) {
+    if (compType === "compBlock") {
+      return `
+    <div id="new" class="comp-div">
+      <div class="side_left_div hide">
+        <div class="left_comp">
+          <img class="img_side" src=${COMP_IMG.side}>
+          <div class="hyd_spacer hide"></div>
+        </div>
+      </div>
+      <div class="height-div hide">
+        <div class="height-text">height</div>
+      </div>
+      <img class="img" src=${COMP_IMG.blank}>
+      <div class="opts-div hide">
+        <div class="opts-text">options</div>
+        <div class="opts-spacer"></div>
+        <div class="opts-text second">options</div>
+      </div>
+      <div class="side_right_div hide">
+        <div class="right_comp">
+          <img class="img_side" src=${COMP_IMG.side}>
+          <div class="hyd_spacer hide"></div>
+        </div>
+    </div>`;
+    }
+    if (compType === "compSideBlock") {
+      return `
+    <div class= "${stackView_default._sideFlag}_comp active">
+      <img class="img_side" src="https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png">
+      <div class="hyd_spacer hide"></div>
+    </div>`;
+    }
+  };
+  var STACK_MAX = 620;
+  var STACK_MAX_FOR_OPTS = 1e3;
+  var PDF_SETTINGS = {
+    xAxis: 15,
+    yAxis: 10,
+    scaleFactor: 0.35,
+    logoX: 337.8,
+    logoY: 120.7,
+    pageHeight: 841,
+    notesMaxWidth: "550",
+    logoImg: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b41c3b6d1b3e37580ee90a_Team%20Snubbing%20International%20-%20Horizontal-p-500.png"
+  };
+
+  // src/views/stackBtnsView.js
+  var [compSpl, compMan, compHyd] = Array.from([
+    ...document.querySelectorAll(".comp_button_cross")
+  ]);
+  var StackBtnsView = class extends View {
+    _addHandlerStackBtns(handler) {
+      const compButtonsDiv = document.querySelector(".vert_buttons_div");
+      compButtonsDiv.addEventListener("click", function(e2) {
+        const clickedComp = e2.target.closest(".comp_button");
+        const clickedCompCross = e2.target.closest(".comp_button_cross");
+        const clickedAdd = e2.target.closest(".comp_button_plus");
+        const clickedMinus = e2.target.closest(".comp_button_minus");
+        if (!clickedComp && !clickedCompCross && !clickedAdd && !clickedMinus)
+          return;
+        const clickedArray = [
+          clickedComp,
+          clickedCompCross,
+          clickedAdd,
+          clickedMinus
+        ];
+        handler(...clickedArray.filter((el) => el != null));
+      });
+    }
+    //______________________________________________________________________
+    //Side plus and minus clicks
+    _addHandlerCrossPlusMinus(handler) {
+      const plusMinusWrapper = document.querySelector(".plus_minus_wrapper");
+      plusMinusWrapper.addEventListener("click", function(e2) {
+        const clicked = e2.target.closest(".side_effect");
+        if (!clicked) return;
+        e2.stopPropagation();
+        clicked.classList.contains("plus") ? handler("plus") : handler("minus");
+      });
+    }
+    //_____________________________________________________________________
+    //Turn on/off cross buttons
+    toggleCrossBtns(addOrRemove) {
+      addOrRemove === "add" ? [compSpl, compMan, compHyd].forEach((el) => el.classList.add("on")) : [compSpl, compMan, compHyd].forEach((el) => el.classList.remove("on"));
+    }
+  };
+  var stackBtnsView_default = new StackBtnsView();
+
+  // src/helpers.js
+  var setIds = function() {
+    stackView_default._retarget();
+    let compIdCounter = stackView_default._allComps.length;
+    stackView_default._allComps.forEach(function(el, i3) {
+      el.id = "c-" + compIdCounter;
+      compIdCounter -= 1;
+    });
+    stackView_default._allSideComps.forEach(function(el) {
+      el.classList.contains("active") ? sideActiveFlag = true : sideActiveFlag = false;
+    });
+  };
+  var setIdsSides = function() {
+    stackView_default._retarget();
+    const activeCompId = document.querySelector(".comp-div.active").id;
+    let leftCompIdsCounter = stackView_default._leftArray.length;
+    let rightCompIdsCounter = stackView_default._rightArray.length;
+    let indexCountLeft = 1;
+    let indexCountRight = 1;
+    let indexCount = 1;
+    const currentLeftArray = [
+      ...document.querySelector(".comp-div.active").querySelector(".side_left_div").querySelectorAll(".left_comp")
+    ].reverse();
+    currentLeftArray.forEach(function(el) {
+      el.id = `${activeCompId}-left-${indexCountLeft}`;
+      indexCountLeft += 1;
+      leftCompIdsCounter -= 1;
+    });
+    const currentRightArray = [
+      ...document.querySelector(".comp-div.active").querySelector(".side_right_div").querySelectorAll(".right_comp")
+    ];
+    currentRightArray.forEach(function(el) {
+      el.id = `${activeCompId}-right-${indexCountRight}`;
+      indexCountRight += 1;
+      rightCompIdsCounter -= 1;
+    });
+  };
+  var cleanCross = function() {
+    stackBtnsView_default.toggleCrossBtns("remove");
+    ["left", "right"].forEach(function(el) {
+      stackView_default._retarget(el);
+      stackView_default._currentSideComps.forEach((el2) => el2.classList.remove("active"));
+      stackView_default._currentSideComps.at(el === "left" ? 0 : -1).classList.add("active");
+      stackView_default._currentSideComps.forEach(function(el2) {
+        stackView_default._delSideComp(el);
+      });
+      stackView_default._currentSideComps.forEach((el2) => el2.classList.remove("active"));
+    });
+  };
+
   // src/views/statsView.js
   var stackHeightText = document.querySelector(".stack-height-text");
   var dateText = document.querySelector(".date-text");
@@ -19420,17 +19551,17 @@
     //____________________________________________________________________
     //Displays stack height to UI
     _liveHeightTotal() {
-      let stackHeight = 0;
+      let stackHeight2 = 0;
       let runningResult;
       this._retarget();
       this._allHeightText.forEach(function(el) {
-        stackHeight += parseFloat(el.innerHTML.slice(0, -1));
+        stackHeight2 += parseFloat(el.innerHTML.slice(0, -1));
       });
-      if (stackHeight) {
-        runningResult = stackHeight;
+      if (stackHeight2) {
+        runningResult = stackHeight2;
         stackHeightText.innerHTML = "Stack Height: " + runningResult + '"';
       }
-      return stackHeight;
+      return stackHeight2;
     }
     //____________________________________________________________________
   };
@@ -19487,7 +19618,6 @@
   var notesView_default = new NotesView();
 
   // src/views/heightsView.js
-  var import_stackView = __toESM(require_stackView());
   var HeightsView = class extends View {
     _heightModal = document.querySelector(".height_modal");
     _heightForm = document.querySelector(".heightForm");
@@ -19515,7 +19645,7 @@
           heightInput.value = "";
           return;
         }
-        import_stackView.default._activeComp.querySelector(".height-text").innerHTML = heightInput.value + '"';
+        stackView_default._activeComp.querySelector(".height-text").innerHTML = heightInput.value + '"';
         heightInput.value = "";
         handler();
       });
@@ -19541,90 +19671,6 @@
     }
   };
   var heightsView_default = new HeightsView();
-
-  // src/views/stackBtnsView.js
-  var [compSpl, compMan, compHyd] = Array.from([
-    ...document.querySelectorAll(".comp_button_cross")
-  ]);
-  var StackBtnsView = class extends View {
-    _addHandlerStackBtns(handler) {
-      const compButtonsDiv = document.querySelector(".vert_buttons_div");
-      compButtonsDiv.addEventListener("click", function(e2) {
-        const clickedComp = e2.target.closest(".comp_button");
-        const clickedCompCross = e2.target.closest(".comp_button_cross");
-        const clickedAdd = e2.target.closest(".comp_button_plus");
-        const clickedMinus = e2.target.closest(".comp_button_minus");
-        if (!clickedComp && !clickedCompCross && !clickedAdd && !clickedMinus)
-          return;
-        const clickedArray = [
-          clickedComp,
-          clickedCompCross,
-          clickedAdd,
-          clickedMinus
-        ];
-        handler(...clickedArray.filter((el) => el != null));
-      });
-    }
-    //______________________________________________________________________
-    //Side plus and minus clicks
-    _addHandlerCrossPlusMinus(handler) {
-      const plusMinusWrapper = document.querySelector(".plus_minus_wrapper");
-      plusMinusWrapper.addEventListener("click", function(e2) {
-        const clicked = e2.target.closest(".side_effect");
-        if (!clicked) return;
-        e2.stopPropagation();
-        clicked.classList.contains("plus") ? handler("plus") : handler("minus");
-      });
-    }
-    //_____________________________________________________________________
-    //Turn on/off cross buttons
-    toggleCrossBtns(addOrRemove) {
-      addOrRemove === "add" ? [compSpl, compMan, compHyd].forEach((el) => el.classList.add("on")) : [compSpl, compMan, compHyd].forEach((el) => el.classList.remove("on"));
-    }
-  };
-  var stackBtnsView_default = new StackBtnsView();
-
-  // src/helpers.js
-  var import_stackView2 = __toESM(require_stackView());
-  var setIds = function() {
-    import_stackView2.default._retarget();
-    let compIdCounter = import_stackView2.default._allComps.length;
-    import_stackView2.default._allComps.forEach(function(el, i3) {
-      el.id = "c-" + compIdCounter;
-      compIdCounter -= 1;
-    });
-    import_stackView2.default._allSideComps.forEach(function(el) {
-      el.classList.contains("active") ? sideActiveFlag = true : sideActiveFlag = false;
-    });
-  };
-  var setIdsSides = function() {
-    import_stackView2.default._retarget();
-    const activeCompId = document.querySelector(".comp-div.active").id;
-    let leftCompIdsCounter = import_stackView2.default._leftArray.length;
-    let rightCompIdsCounter = import_stackView2.default._rightArray.length;
-    let indexCountLeft = 1;
-    let indexCountRight = 1;
-    let indexCount = 1;
-    const currentLeftArray = [
-      ...document.querySelector(".comp-div.active").querySelector(".side_left_div").querySelectorAll(".left_comp")
-    ].reverse();
-    currentLeftArray.forEach(function(el) {
-      el.id = `${activeCompId}-left-${indexCountLeft}`;
-      indexCountLeft += 1;
-      leftCompIdsCounter -= 1;
-    });
-    const currentRightArray = [
-      ...document.querySelector(".comp-div.active").querySelector(".side_right_div").querySelectorAll(".right_comp")
-    ];
-    currentRightArray.forEach(function(el) {
-      el.id = `${activeCompId}-right-${indexCountRight}`;
-      indexCountRight += 1;
-      rightCompIdsCounter -= 1;
-    });
-  };
-
-  // src/views/optionsView.js
-  var import_stackView3 = __toESM(require_stackView());
 
   // src/views/adaptorsView.js
   var ctrlBtns = document.querySelector(".control_buttons_div");
@@ -19689,12 +19735,12 @@
     //____________________________________________________________________
     //Adjust height of stack after certain threshold value, in order to fit on a4 pdf
     _scaleStack = function() {
-      let stackHeight = 0;
+      let stackHeight2 = 0;
       let newHeight;
       let factor;
       let result;
       this._retarget();
-      stackHeight = statsView_default._liveHeightTotal();
+      stackHeight2 = statsView_default._liveHeightTotal();
       this._allComps.forEach((el) => el.classList.remove("active"));
       this._leftArray.forEach((el) => el.classList.remove("active"));
       this._rightArray.forEach((el) => el.classList.remove("active"));
@@ -19723,13 +19769,13 @@
       this._rightArray.forEach(function(el) {
         el.style.width = $(el).width() * result + "px";
       });
-      if (stackHeight > STACK_MAX_FOR_OPTS) {
+      if (stackHeight2 > STACK_MAX_FOR_OPTS) {
         this._allSpacers.forEach(function(el) {
           el.style.height = "0px";
         });
       }
       scalingResult = result;
-      newHeight = stackHeight;
+      newHeight = stackHeight2;
       return newHeight;
     };
     //____________________________________________________________________
@@ -19846,7 +19892,7 @@
       const arrExtra = [this._allTypeOptsText, this._allRangeOptsText];
       let arrUse = [this._allBoreOptsText, this._allPressOptsText];
       let selectedText = "";
-      if (import_stackView3.default._compFlag === "single" || import_stackView3.default._compFlag === "double") {
+      if (stackView_default._compFlag === "single" || stackView_default._compFlag === "double") {
         arrUse = arrUse.slice(0, 1).concat(arrExtra, arrUse.slice(1));
       }
       const textChild = clicked.firstElementChild;
@@ -19866,7 +19912,7 @@
         }
         optOutput.splice(-1, 1);
         optOutput = optOutput.slice(0, 1).concat(
-          import_stackView3.default._compFlag.charAt(0).toUpperCase() + import_stackView3.default._compFlag.slice(1),
+          stackView_default._compFlag.charAt(0).toUpperCase() + stackView_default._compFlag.slice(1),
           optOutput.slice(1)
         );
         optOutput = optOutput.toString();
@@ -19913,6 +19959,195 @@
     }
   };
   var optionsView_default = new OptionsView();
+
+  // src/views/stackView.js
+  var viewBtn = document.querySelector(".view_button");
+  var stackHeight = document.querySelector(".stack-height-text");
+  var StackView = class extends View {
+    //Clicks for stack components
+    _addHandlerCompClick(handler) {
+      this._compWrapper.addEventListener("click", function(e2) {
+        const clicked = e2.target.closest(".comp-div");
+        if (!clicked) return;
+        handler(clicked);
+      });
+    }
+    //____________________________________________________________________
+    //Add stack comp
+    _addComp() {
+      const htmlComp = GENERATE_MARKUP("compBlock");
+      this._retarget();
+      this._activeComp.insertAdjacentHTML("beforebegin", htmlComp);
+      this._retarget();
+      this._allComps.forEach(function(el) {
+        el.classList.remove("active");
+        if (el.id === "new") el.classList.add("active");
+      });
+      this._activeSideComp?.classList.remove("active");
+      stackBtnsView_default.toggleCrossBtns("remove");
+    }
+    //____________________________________________________________________
+    //Delete stack comp
+    _delComp = function() {
+      this._retarget();
+      if (this._activeComp.id !== "c-1") {
+        this._activeComp.parentNode.removeChild(this._activeComp);
+      } else {
+        console.log("you cannot remove this one!");
+        return;
+      }
+      if (this._activeComp.classList.contains("cross")) {
+        this._activeSideComp?.classList.remove("active");
+      }
+      this._compWrapper.firstElementChild.classList.contains("adapt-div") ? this._compWrapper.firstElementChild.nextElementSibling.classList.add(
+        "active"
+      ) : this._compWrapper.firstElementChild.classList.add("active");
+      stackBtnsView_default.toggleCrossBtns("remove");
+    };
+    //____________________________________________________________________
+    //Add stack comp
+    _configComp = function(compFlag) {
+      this._retarget();
+      let compImg;
+      heightsView_default._activeHeightDiv.classList.remove("highlight");
+      [".opts-text", ".opts-text.second"].forEach(
+        (el) => this._activeOptsDiv.querySelector(el).innerHTML = "options"
+      );
+      if (this._activeComp.classList.contains("cross")) cleanCross();
+      const heightDiv = this._activeComp.querySelector(".height-div");
+      const imageEl = this._activeComp.querySelector(".img");
+      const optsDiv = this._activeComp.querySelector(".opts-div");
+      imageEl.parentNode.removeChild(imageEl);
+      compImg = COMP_IMG[compFlag];
+      const htmlImg = `<img class= img src=${compImg}>`;
+      heightDiv.insertAdjacentHTML("afterend", htmlImg);
+      imageEl.classList.remove("hide");
+      optsDiv.querySelector(".opts-text.second").classList.add("hide");
+      optsDiv.querySelector(".opts-spacer").classList.add("hide");
+      this._activeComp.querySelector(".side_left_div").classList.add("hide");
+      this._activeComp.querySelector(".side_right_div").classList.add("hide");
+      this._activeComp.querySelector(".height-div").classList.remove("hide");
+      this._activeComp.querySelector(".opts-div").classList.remove("hide");
+      COMP_CLASSES.forEach((el) => {
+        el === compFlag ? this._activeComp.classList.add(compFlag) : this._activeComp.classList.remove(el);
+      });
+      this._compSpecialCases(compFlag);
+    };
+    //____________________________________________________________________
+    //Check for special cases: 'double' or 'cross' and apply treatments
+    _compSpecialCases = function(compFlag) {
+      if (compFlag != "double" && compFlag != "cross") return;
+      const optsDiv = this._activeComp.querySelector(".opts-div");
+      if (compFlag === "double") {
+        optsDiv.querySelector(".opts-text.hide")?.classList.remove("hide");
+        optsDiv.querySelector(".opts-spacer.hide")?.classList.remove("hide");
+      }
+      if (compFlag === "cross") {
+        this._activeComp.querySelector(".side_left_div").classList.remove("hide");
+        this._activeComp.querySelector(".side_right_div").classList.remove("hide");
+        ["left", "right"].forEach((el) => this._assignSideClicks(el));
+      }
+    };
+    //____________________________________________________________________
+    //Side component events for cross
+    _assignSideClicks = function(side) {
+      const sideDiv = this._compWrapper.querySelector(".comp-div.active.cross").querySelector(`.side_${side}_div`);
+      sideDiv.addEventListener("click", (e2) => {
+        const clicked = e2.target.closest(`.${side}_comp`);
+        if (!clicked) return;
+        e2.stopPropagation();
+        this._retarget();
+        this._allSideComps.forEach(function(el) {
+          el.classList.remove("active");
+        });
+        clicked.classList.add("active");
+        this._allComps.forEach((el) => el.classList.remove("active"));
+        clicked.closest(".comp-div").classList.add("active");
+        this._sideFlag = side;
+        stackBtnsView_default.toggleCrossBtns("add");
+      });
+    };
+    //_______________________________________________________________________
+    //Add cross side comp
+    _addSideComp = function(flag) {
+      this._sideFlag = flag;
+      const htmlSide = GENERATE_MARKUP("compSideBlock");
+      const targetActiveComp = this._compWrapper.querySelector(
+        //***retarget()?
+        ".comp-div.cross.active"
+      );
+      this._retarget();
+      this._allSideComps.forEach(function(el) {
+        el.classList.remove("active");
+      });
+      const sideSelect = flag === "left" ? targetActiveComp.firstElementChild : targetActiveComp.lastElementChild;
+      const beforeOrAfter = flag === "left" ? "afterbegin" : "beforeend";
+      sideSelect.insertAdjacentHTML(beforeOrAfter, htmlSide);
+      this._checkCrossLimit();
+    };
+    //_______________________________________________________________________
+    //Remove cross side comp
+    _delSideComp = function(flag) {
+      const activeSideComp = this._compWrapper.querySelector(
+        //***retarget()?
+        `.${flag}_comp.active`
+      );
+      if (!activeSideComp) return;
+      if (activeSideComp.id.slice(-2) === "-1") {
+        activeSideComp.querySelector(".hyd_spacer").classList.add("hide");
+        activeSideComp.querySelector(".img_side").src = COMP_IMG.side;
+        return;
+      }
+      activeSideComp.parentNode.removeChild(activeSideComp);
+      const targetActiveSideComp = this._compWrapper.querySelector(".comp-div.active").querySelector(`.${flag}_comp`);
+      flag === "left" ? targetActiveSideComp.parentNode.firstElementChild.classList.add(
+        "active"
+      ) : targetActiveSideComp.parentNode.lastElementChild.classList.add(
+        "active"
+      );
+      this._checkCrossLimit();
+    };
+    //____________________________________________________________________
+    //Add component to active side of active cross in stack
+    _configCrossComp = function(compFlag) {
+      this._retarget();
+      let sideCompImg;
+      if (compFlag === "spl") {
+        sideCompImg = COMP_IMG.spl;
+      }
+      if (compFlag === "man") {
+        sideCompImg = COMP_IMG.man;
+      }
+      if (compFlag === "hyd") {
+        sideCompImg = COMP_IMG.hyd;
+      }
+      this._allSideComps.forEach(function(el) {
+        if (el.classList.contains("active")) {
+          el.querySelector(".hyd_spacer").classList.add("hide");
+          el.querySelector(".img_side").src = sideCompImg;
+          if (compFlag === "hyd") {
+            el.querySelector(".hyd_spacer").classList.remove("hide");
+          }
+        }
+      });
+    };
+    //____________________________________________________________________
+    //Check if more than 3 cross comps, if so => use alt cross img and automate note
+    _checkCrossLimit = function() {
+      const leftCount = this._activeComp.querySelector(".side_left_div").childElementCount;
+      const rightCount = this._activeComp.querySelector(".side_right_div").childElementCount;
+      if (leftCount > 3 || rightCount > 3) {
+        this._activeComp.querySelector(".img").src = COMP_IMG.cross_limit;
+        this._activeComp.querySelector(".height-div").classList.add("hide");
+        this._activeComp.querySelector(".opts-div").classList.add("hide");
+      } else {
+        this._activeComp.querySelector(".img").src = COMP_IMG.cross;
+        this._activeComp.querySelector(".height-div").classList.remove("hide");
+        this._activeComp.querySelector(".opts-div").classList.remove("hide");
+      }
+    };
+  };
+  var stackView_default = new StackView();
 
   // node_modules/jspdf/dist/jspdf.es.min.js
   init_typeof();
@@ -28080,28 +28315,28 @@
   // src/controller.js
   console.log("Messages - Oct 20, 2024");
   var controlStackBtns = function(arrayEl) {
-    import_stackView4.default._retarget();
+    stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
-    import_stackView4.default._compFlag = compVal;
+    stackView_default._compFlag = compVal;
     switch (compVal) {
       case "plus":
-        import_stackView4.default._addComp();
+        stackView_default._addComp();
         break;
       case "minus":
-        import_stackView4.default._delComp();
+        stackView_default._delComp();
         adaptorsView_default._autoAdapt();
         break;
       case "spl":
       case "man":
       case "hyd":
-        if (import_stackView4.default._activeSideComp) {
-          import_stackView4.default._configCrossComp(compVal);
+        if (stackView_default._activeSideComp) {
+          stackView_default._configCrossComp(compVal);
         }
         break;
       default:
-        import_stackView4.default._configComp(compVal);
+        stackView_default._configComp(compVal);
     }
-    if (import_stackView4.default._sideActiveFlag === false) {
+    if (stackView_default._sideActiveFlag === false) {
       stackBtnsView_default.toggleCrossBtns("remove");
     }
     setIds();
@@ -28110,21 +28345,21 @@
     statsView_default._liveHeightTotal();
   };
   controlCrossPlusMinus = function(sign) {
-    import_stackView4.default._retarget();
-    if (import_stackView4.default._activeSideComp) {
-      sign === "plus" ? import_stackView4.default._addSideComp(import_stackView4.default._sideFlag) : import_stackView4.default._delSideComp(import_stackView4.default._sideFlag);
+    stackView_default._retarget();
+    if (stackView_default._activeSideComp) {
+      sign === "plus" ? stackView_default._addSideComp(stackView_default._sideFlag) : stackView_default._delSideComp(stackView_default._sideFlag);
       setIdsSides();
     }
   };
   controlCompClick = function(clicked) {
-    import_stackView4.default._retarget();
-    import_stackView4.default._allComps.forEach((el) => el.classList.remove("active"));
-    import_stackView4.default._activeSideComp?.classList.remove("active");
+    stackView_default._retarget();
+    stackView_default._allComps.forEach((el) => el.classList.remove("active"));
+    stackView_default._activeSideComp?.classList.remove("active");
     stackBtnsView_default.toggleCrossBtns("remove");
     heightsView_default._allHeightDivs.forEach((el) => el.classList.remove("highlight"));
     optionsView_default._resetOptions();
     clicked.classList.add("active");
-    import_stackView4.default._retarget();
+    stackView_default._retarget();
   };
   controlHeight = function() {
     heightsView_default._heightModal.classList.remove("hide");
@@ -28139,7 +28374,7 @@
   controlOptions = function(clicked) {
     optionsView_default._retarget();
     if (clicked.classList.contains("second")) optionsView_default._secondOptsFlag = true;
-    if (import_stackView4.default._compFlag === "single" || import_stackView4.default._compFlag === "double") {
+    if (stackView_default._compFlag === "single" || stackView_default._compFlag === "double") {
       optionsView_default._typeOpts.classList.remove("hide");
       optionsView_default._rangeOpts.classList.remove("hide");
     }
@@ -28214,7 +28449,7 @@
     statsView_default._setDate();
     stackBtnsView_default._addHandlerStackBtns(controlStackBtns);
     stackBtnsView_default._addHandlerCrossPlusMinus(controlCrossPlusMinus);
-    import_stackView4.default._addHandlerCompClick(controlCompClick);
+    stackView_default._addHandlerCompClick(controlCompClick);
     heightsView_default._addHandlerHeight(controlHeight);
     heightsView_default._addHandlerHeightModal(controlHeightModal);
     optionsView_default._addHandlerOptions(controlOptions);
