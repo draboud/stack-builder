@@ -156,6 +156,7 @@ class StackView extends View {
         : targetActiveComp.lastElementChild;
     const beforeOrAfter = flag === "left" ? "afterbegin" : "beforeend";
     sideSelect.insertAdjacentHTML(beforeOrAfter, htmlSide);
+    // this._checkCrossLimit();
   };
   //_______________________________________________________________________
   //Remove cross side comp
@@ -181,6 +182,7 @@ class StackView extends View {
       : targetActiveSideComp.parentNode.lastElementChild.classList.add(
           "active"
         );
+    // this._checkCrossLimit();
   };
   //____________________________________________________________________
   //Add component to active side of active cross in stack
@@ -206,6 +208,25 @@ class StackView extends View {
         }
       }
     });
+  };
+  //____________________________________________________________________
+  //Check if more than 3 cross comps, if so => use alt cross img and automate note
+  _checkCrossLimit = function () {
+    const leftCount =
+      this._activeComp.querySelector(".side_left_div").childElementCount;
+    const rightCount =
+      this._activeComp.querySelector(".side_right_div").childElementCount;
+
+    if (leftCount > 3 || rightCount > 3) {
+      // debugger;
+      this._activeComp.querySelector(".img").src = COMP_IMG.cross_limit;
+      this._activeComp.querySelector(".height-div").classList.add("hide");
+      this._activeComp.querySelector(".opts-div").classList.add("hide");
+    } else {
+      this._activeComp.querySelector(".img").src = COMP_IMG.cross;
+      this._activeComp.querySelector(".height-div").classList.remove("hide");
+      this._activeComp.querySelector(".opts-div").classList.remove("hide");
+    }
   };
 }
 export default new StackView();
