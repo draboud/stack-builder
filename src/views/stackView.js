@@ -219,7 +219,6 @@ class StackView extends View {
     const rightCount =
       this._activeComp.querySelector(".side_right_div").childElementCount;
     const crossNote = this._activeComp.querySelector(".cross_note_div");
-    const crossNoteCount = document.querySelectorAll(".cross_note_div").length;
     const crossNoteHTML = `
       <div class= "cross_note_div">
       <div class= "cross-note">${LETTERS[0]}</div>
@@ -236,7 +235,6 @@ class StackView extends View {
         this._arrangeCrossLetters();
       }
     } else {
-      // debugger;
       this._activeComp.querySelector(".img").src = COMP_IMG.cross;
       this._activeComp.querySelector(".height-div").classList.remove("hide");
       this._activeComp.querySelector(".opts-div").classList.remove("hide");

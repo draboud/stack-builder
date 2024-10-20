@@ -20165,7 +20165,6 @@
       const leftCount = this._activeComp.querySelector(".side_left_div").childElementCount;
       const rightCount = this._activeComp.querySelector(".side_right_div").childElementCount;
       const crossNote = this._activeComp.querySelector(".cross_note_div");
-      const crossNoteCount = document.querySelectorAll(".cross_note_div").length;
       const crossNoteHTML = `
       <div class= "cross_note_div">
       <div class= "cross-note">${LETTERS[0]}</div>
