@@ -139,7 +139,7 @@ class OptionsView extends View {
 
       this._resetOptions();
       this._closeModal();
-      adaptorsView._autoAdapt();
+      // adaptorsView._autoAdapt();
     }
   }
   //_________________________________________________________________________

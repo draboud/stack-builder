@@ -88,6 +88,8 @@ controlOptions = function (clicked) {
 //____________________________________________________________________
 controlOptsModal = function (clicked) {
   optionsView._setOptsText(clicked);
+  adaptorsView._autoAdapt();
+  statsView._liveHeightTotal();
 };
 //____________________________________________________________________
 controlModalBtn = function () {

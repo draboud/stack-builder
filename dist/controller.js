@@ -19922,7 +19922,6 @@
         ).innerHTML = optOutput;
         this._resetOptions();
         this._closeModal();
-        adaptorsView_default._autoAdapt();
       }
     }
     //_________________________________________________________________________
@@ -28366,6 +28365,8 @@
   };
   controlOptsModal = function(clicked) {
     optionsView_default._setOptsText(clicked);
+    adaptorsView_default._autoAdapt();
+    statsView_default._liveHeightTotal();
   };
   controlModalBtn = function() {
     optionsView_default._closeModal();
