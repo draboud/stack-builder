@@ -19586,9 +19586,6 @@
     };
     //___________________________________________________________________________
     _addHandlerSaveBtn = function(handler) {
-      form.addEventListener("submit", function(e2) {
-        e2.preventDefault();
-      });
       saveBtn.addEventListener("click", function(e2) {
         const clicked = e2.target.closest(".save_button");
         if (!clicked) return;
@@ -19596,6 +19593,10 @@
         const notesInput = document.querySelector(".custom_notes_input").value;
         const jobDisplay = document.querySelector(".job-title-text").innerHTML = "Job Title: " + jobTitleInput;
         handler(jobTitleInput, notesInput);
+      });
+      form.addEventListener("submit", function(e2) {
+        e2.preventDefault();
+        saveBtn.click();
       });
     };
     //___________________________________________________________________________

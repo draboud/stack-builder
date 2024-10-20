@@ -22,9 +22,6 @@ class NotesView extends View {
   };
   //___________________________________________________________________________
   _addHandlerSaveBtn = function (handler) {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-    });
     saveBtn.addEventListener("click", function (e) {
       const clicked = e.target.closest(".save_button");
       if (!clicked) return;
@@ -34,6 +31,10 @@ class NotesView extends View {
         "Job Title: " + jobTitleInput);
 
       handler(jobTitleInput, notesInput);
+    });
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      saveBtn.click();
     });
   };
   //___________________________________________________________________________
