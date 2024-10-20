@@ -72,6 +72,9 @@ export const COMP_IMG = {
   cross:
     "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a651504ebf148b4cd6_cross-2.png",
 
+  cross_limit:
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671568a579848e76035dd2da_cross-limit.png",
+
   bell_nipple:
     "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6fcd56570fad07590_bell%20nipple-2.png",
 
