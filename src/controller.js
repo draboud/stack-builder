@@ -8,7 +8,7 @@ import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 import statsView from "./views/statsView.js";
 
-console.log("Auto-Adapt - Oct 19, 2024");
+console.log("Opts-Blockout - Oct 20, 2024");
 
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
@@ -64,9 +64,6 @@ controlCompClick = function (clicked) {
 };
 //____________________________________________________________________
 controlHeight = function () {
-  // heightsView._retarget();
-  // heightsView._allHeightDivs.forEach((el) => el.classList.remove("highlight"));
-  // heightsView._activeHeightDiv.classList.add("highlight");
   heightsView._heightModal.classList.remove("hide");
   document.querySelector(".height_input").focus();
 };
@@ -84,6 +81,7 @@ controlOptions = function (clicked) {
     optionsView._rangeOpts.classList.remove("hide");
   }
   optionsView._optsModal.classList.remove("hide");
+  notesView._modalBlockout.classList.remove("hide");
 };
 //____________________________________________________________________
 controlOptsModal = function (clicked) {
@@ -176,6 +174,7 @@ controlNotesCloseBtn = function () {
 controlModalBlockout = function (modal) {
   notesView._modalBlockout.classList.add("hide");
   notesView._notesForm.classList.add("hide");
+  optionsView._closeModal();
 };
 //____________________________________________________________________
 

@@ -170,6 +170,9 @@ class OptionsView extends View {
   //_________________________________________________________________________
   _closeModal() {
     this._optsModal.classList.add("hide");
+    notesView._modalBlockout.classList.add("hide");
+    const allOpts = [...document.querySelectorAll(".opt_div")];
+    allOpts.forEach((el) => el.firstElementChild.classList.remove("selected"));
     this._secondOptsFlag = false;
   }
 }

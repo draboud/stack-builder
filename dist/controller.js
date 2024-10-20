@@ -19946,6 +19946,9 @@
     //_________________________________________________________________________
     _closeModal() {
       this._optsModal.classList.add("hide");
+      notesView_default._modalBlockout.classList.add("hide");
+      const allOpts = [...document.querySelectorAll(".opt_div")];
+      allOpts.forEach((el) => el.firstElementChild.classList.remove("selected"));
       this._secondOptsFlag = false;
     }
   };
@@ -28287,7 +28290,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("Auto-Adapt - Oct 19, 2024");
+  console.log("Opts-Blockout - Oct 20, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
@@ -28351,6 +28354,7 @@
       optionsView_default._rangeOpts.classList.remove("hide");
     }
     optionsView_default._optsModal.classList.remove("hide");
+    notesView_default._modalBlockout.classList.remove("hide");
   };
   controlOptsModal = function(clicked) {
     optionsView_default._setOptsText(clicked);
@@ -28403,6 +28407,7 @@
   controlModalBlockout = function(modal) {
     notesView_default._modalBlockout.classList.add("hide");
     notesView_default._notesForm.classList.add("hide");
+    optionsView_default._closeModal();
   };
   controlPDF = function() {
     adaptorsView_default._newHeight = adaptorsView_default._scaleStack();
