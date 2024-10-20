@@ -8,7 +8,7 @@ import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 import statsView from "./views/statsView.js";
 
-console.log("Job title submitted with ENTER - Oct 20, 2024");
+console.log("Messages - Oct 20, 2024");
 
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
