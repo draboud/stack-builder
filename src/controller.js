@@ -8,7 +8,7 @@ import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 import statsView from "./views/statsView.js";
 
-console.log("Opts-Blockout - Oct 20, 2024");
+console.log("Height-Blockout - Oct 20, 2024");
 
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
@@ -66,10 +66,12 @@ controlCompClick = function (clicked) {
 controlHeight = function () {
   heightsView._heightModal.classList.remove("hide");
   document.querySelector(".height_input").focus();
+  notesView._modalBlockout.classList.remove("hide");
 };
 //____________________________________________________________________
 controlHeightModal = function () {
-  heightsView._heightModal.classList.add("hide");
+  heightsView._clearAndCloseHeight();
+  notesView._modalBlockout.classList.add("hide");
   statsView._liveHeightTotal();
 };
 //____________________________________________________________________
@@ -174,6 +176,7 @@ controlNotesCloseBtn = function () {
 controlModalBlockout = function (modal) {
   notesView._modalBlockout.classList.add("hide");
   notesView._notesForm.classList.add("hide");
+  heightsView._clearAndCloseHeight();
   optionsView._closeModal();
 };
 //____________________________________________________________________

@@ -19523,56 +19523,6 @@
     });
   };
 
-  // src/views/heightsView.js
-  var HeightsView = class extends View {
-    _heightModal = document.querySelector(".height_modal");
-    _heightForm = document.querySelector(".heightForm");
-    //_________________________________________________________________________
-    //Height clicks assigned to height text
-    _addHandlerHeight(handler) {
-      this._retarget();
-      this._allHeightDivs.forEach(
-        (el) => addEventListener("click", function(e2) {
-          const clicked = e2.target.closest(".height-div");
-          if (!clicked) return;
-          handler();
-        })
-      );
-    }
-    //_________________________________________________________________________
-    //Height modal
-    _addHandlerHeightModal(handler) {
-      this._retarget();
-      this._heightForm.addEventListener("submit", function(e2) {
-        e2.preventDefault();
-        const heightInput = document.querySelector(".height_input");
-        if (isNaN(heightInput.value)) {
-          console.log("Enter a number value");
-          heightInput.value = "";
-          return;
-        }
-        stackView_default._activeComp.querySelector(".height-text").innerHTML = heightInput.value + '"';
-        heightInput.value = "";
-        handler();
-      });
-      this._heightModal.addEventListener("click", function(e2) {
-        const clicked = e2.target.closest(".modal_close_button");
-        if (!clicked) return;
-        handler();
-      });
-    }
-    //_________________________________________________________________________
-    //Assign component heights
-    _addCompHeight(compVal) {
-      if (compVal != "spl" && compVal != "man" && compVal != "hyd" && compVal != "plus" && compVal != "minus") {
-        this._retarget();
-        this._activeComp = document.querySelector(".comp-div.active");
-        this._activeComp.querySelector(".height-text").innerHTML = COMP_HEIGHTS[compVal] + '"';
-      }
-    }
-  };
-  var heightsView_default = new HeightsView();
-
   // src/views/statsView.js
   var stackHeightText = document.querySelector(".stack-height-text");
   var dateText = document.querySelector(".date-text");
@@ -19664,6 +19614,61 @@
     }
   };
   var notesView_default = new NotesView();
+
+  // src/views/heightsView.js
+  var HeightsView = class extends View {
+    _heightModal = document.querySelector(".height_modal");
+    _heightForm = document.querySelector(".heightForm");
+    //_________________________________________________________________________
+    //Height clicks assigned to height text
+    _addHandlerHeight(handler) {
+      this._retarget();
+      this._allHeightDivs.forEach(
+        (el) => addEventListener("click", function(e2) {
+          const clicked = e2.target.closest(".height-div");
+          if (!clicked) return;
+          handler();
+        })
+      );
+    }
+    //_________________________________________________________________________
+    //Height modal
+    _addHandlerHeightModal(handler) {
+      this._retarget();
+      this._heightForm.addEventListener("submit", function(e2) {
+        e2.preventDefault();
+        const heightInput = document.querySelector(".height_input");
+        if (isNaN(heightInput.value)) {
+          console.log("Enter a number value");
+          heightInput.value = "";
+          return;
+        }
+        stackView_default._activeComp.querySelector(".height-text").innerHTML = heightInput.value + '"';
+        heightInput.value = "";
+        handler();
+      });
+      this._heightModal.addEventListener("click", function(e2) {
+        const clicked = e2.target.closest(".modal_close_button");
+        if (!clicked) return;
+        handler();
+      });
+    }
+    //_________________________________________________________________________
+    //Assign component heights
+    _addCompHeight(compVal) {
+      if (compVal != "spl" && compVal != "man" && compVal != "hyd" && compVal != "plus" && compVal != "minus") {
+        this._retarget();
+        this._activeComp.querySelector(".height-text").innerHTML = COMP_HEIGHTS[compVal] + '"';
+      }
+    }
+    //_________________________________________________________________________
+    _clearAndCloseHeight() {
+      this._heightModal.classList.add("hide");
+      const heightInput = document.querySelector(".height_input");
+      heightInput.value = "";
+    }
+  };
+  var heightsView_default = new HeightsView();
 
   // src/views/adaptorsView.js
   var ctrlBtns = document.querySelector(".control_buttons_div");
@@ -28290,7 +28295,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("Opts-Blockout - Oct 20, 2024");
+  console.log("Height-Blockout - Oct 20, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
@@ -28341,9 +28346,11 @@
   controlHeight = function() {
     heightsView_default._heightModal.classList.remove("hide");
     document.querySelector(".height_input").focus();
+    notesView_default._modalBlockout.classList.remove("hide");
   };
   controlHeightModal = function() {
-    heightsView_default._heightModal.classList.add("hide");
+    heightsView_default._clearAndCloseHeight();
+    notesView_default._modalBlockout.classList.add("hide");
     statsView_default._liveHeightTotal();
   };
   controlOptions = function(clicked) {
@@ -28407,6 +28414,7 @@
   controlModalBlockout = function(modal) {
     notesView_default._modalBlockout.classList.add("hide");
     notesView_default._notesForm.classList.add("hide");
+    heightsView_default._clearAndCloseHeight();
     optionsView_default._closeModal();
   };
   controlPDF = function() {
