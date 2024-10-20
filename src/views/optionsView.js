@@ -1,6 +1,7 @@
 import stackView from "./stackView";
 import notesView from "./notesView";
 import View from "./View";
+import adaptorsView from "./adaptorsView";
 
 class OptionsView extends View {
   _optsModal = document.querySelector(".options_modal");
@@ -138,6 +139,7 @@ class OptionsView extends View {
 
       this._resetOptions();
       this._closeModal();
+      adaptorsView._autoAdapt();
     }
   }
   //_________________________________________________________________________

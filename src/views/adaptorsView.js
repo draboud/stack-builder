@@ -59,7 +59,12 @@ class AdaptorsView extends View {
       extArray.push(onlyBore);
     });
     for (let i = 0; i < numOfOpts - 1; i++) {
-      if (extArray[i] !== extArray[i + 1]) {
+      // debugger;
+      if (
+        extArray[i] !== extArray[i + 1] &&
+        !extArray[i].includes("options") &&
+        !extArray[i + 1].includes("options")
+      ) {
         const adapterHtml = `
       <div class="adapt-div">
         <div class="height-div">
