@@ -19746,7 +19746,7 @@
       if (visHeight > STACK_MAX) {
         factor = (visHeight - STACK_MAX) / visHeight;
         result = (100 - factor * 100) / 100;
-        console.log("SCALED!");
+        if (result > 0.766) result = 0.766;
       } else result = 0.766;
       console.log("visHeight: ", visHeight);
       this._allComps.forEach(function(el) {
