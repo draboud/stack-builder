@@ -19358,9 +19358,9 @@
     //new-comps.............................................................
     blank: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s-p-500.png",
     side: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png",
-    spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67126fdf06a43383a969f298_Cross%20-%20Spool-2.png",
-    man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67126fdf0797b645d0c5214a_Cross%20-%20Manual-2.png",
-    hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67126fde59814ff97b1037f7_Cross%20-%20Hydraulic-2b.png",
+    spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67169049143f5941f530f550_spl.png",
+    man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67169049599bef43e708a130_man.png",
+    hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67168fd00da78f297275477c_hyd.png",
     adaptor: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6711472a9b81cf89e9209361_dsa-2.png",
     single: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a63278e75e8411fe6c_single-2.png",
     cross: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a651504ebf148b4cd6_cross-2.png",
@@ -19713,13 +19713,6 @@
         handler();
       });
     };
-    _addHandlerScaleStack = function(handler) {
-      ctrlBtns.addEventListener("click", function(e2) {
-        const clicked = e2.target.closest(".view_button");
-        if (!clicked) return;
-        handler();
-      });
-    };
     _addHandlerPDF = function(handler) {
       ctrlBtns.addEventListener("click", function(e2) {
         const clicked = e2.target.closest(".pdf_button");
@@ -19992,6 +19985,7 @@
   var viewBtn = document.querySelector(".view_button");
   var stackHeight = document.querySelector(".stack-height-text");
   var StackView = class extends View {
+    // allCrossNotes = [];
     //Clicks for stack components
     _addHandlerCompClick(handler) {
       this._compWrapper.addEventListener("click", function(e2) {
@@ -20191,6 +20185,27 @@
       for (let i3 = 0; i3 < crossNoteArr.length; i3++) {
         crossNoteArr[i3].querySelector(".cross-note").innerHTML = LETTERS[crossNoteArr.length - 1 - i3];
       }
+    };
+    //____________________________________________________________________
+    //Prepare cross comps for PDF notes output
+    _prepCrossNotes = function() {
+      const allCrossNotes = [...document.querySelectorAll(".cross_note_div")];
+      const allNotesOutput = [];
+      allCrossNotes.forEach(function(el) {
+        const thisCrossNote = {};
+        thisCrossNote.letter = el.parentNode.querySelector(".cross-note").innerHTML;
+        thisCrossNote.height = el.parentNode.querySelector(".height-text").innerHTML.slice(0, -1) + '"';
+        thisCrossNote.options = el.parentNode.querySelector(".opts-text").innerHTML.replaceAll("&nbsp", " ").replaceAll(";", " ");
+        thisCrossNote.sides = [...el.parentNode.querySelectorAll(".img_side")];
+        thisCrossNote.leftSrcs = [];
+        thisCrossNote.rightSrcs = [];
+        thisCrossNote.sides.forEach(function(el2) {
+          el2.parentElement.classList.contains("left_comp") ? thisCrossNote.leftSrcs.push(el2.src.slice(-7).replace(".png", "")) : thisCrossNote.rightSrcs.push(el2.src.slice(-7).replace(".png", ""));
+        });
+        thisCrossNote.outputStr = "NOTE " + thisCrossNote.letter + ": " + thisCrossNote.options + "--LEFT COMPS: " + thisCrossNote.leftSrcs + " RIGHT COMPS: " + thisCrossNote.rightSrcs;
+        console.log(thisCrossNote);
+        console.log(thisCrossNote.outputStr);
+      });
     };
   };
   var stackView_default = new StackView();
@@ -28507,7 +28522,6 @@
     optionsView_default._addHandlerRangeForm(controlRangeInput);
     optionsView_default._addHandlerPressForm(controlPressInput);
     adaptorsView_default._addHandlerAdapt(controlAdapt);
-    adaptorsView_default._addHandlerScaleStack(controlScaleStack);
     adaptorsView_default._addHandlerPDF(controlPDF);
     notesView_default._addHandlerNotesBtn(controlNotesBtn);
     notesView_default._addHandlerNotesCloseBtn(controlNotesCloseBtn);
@@ -28515,6 +28529,10 @@
     notesView_default._addHandlerModalBlockout(controlModalBlockout);
   };
   init();
+  var testBtn = document.querySelector(".test_button");
+  testBtn.addEventListener("click", function() {
+    stackView_default._prepCrossNotes();
+  });
 })();
 /*! Bundled license information:
 

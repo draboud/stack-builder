@@ -9,6 +9,8 @@ const viewBtn = document.querySelector(".view_button");
 const stackHeight = document.querySelector(".stack-height-text");
 
 class StackView extends View {
+  // allCrossNotes = [];
+
   //Clicks for stack components
   _addHandlerCompClick(handler) {
     //Main comps clicks
@@ -248,7 +250,51 @@ class StackView extends View {
     for (let i = 0; i < crossNoteArr.length; i++) {
       crossNoteArr[i].querySelector(".cross-note").innerHTML =
         LETTERS[crossNoteArr.length - 1 - i];
+
+      // this.allCrossNotes.push(crossNoteArr[i]);
     }
+    // this._prepCrossNotes(allCrossNotes);
+  };
+  //____________________________________________________________________
+  //Prepare cross comps for PDF notes output
+  _prepCrossNotes = function () {
+    const allCrossNotes = [...document.querySelectorAll(".cross_note_div")];
+    const allNotesOutput = [];
+
+    allCrossNotes.forEach(function (el) {
+      const thisCrossNote = {};
+      thisCrossNote.letter =
+        el.parentNode.querySelector(".cross-note").innerHTML;
+      thisCrossNote.height =
+        el.parentNode.querySelector(".height-text").innerHTML.slice(0, -1) +
+        '"';
+      thisCrossNote.options = el.parentNode
+        .querySelector(".opts-text")
+        .innerHTML.replaceAll("&nbsp", " ")
+        .replaceAll(";", " ");
+      thisCrossNote.sides = [...el.parentNode.querySelectorAll(".img_side")];
+      thisCrossNote.leftSrcs = [];
+      thisCrossNote.rightSrcs = [];
+      thisCrossNote.sides.forEach(function (el) {
+        el.parentElement.classList.contains("left_comp")
+          ? thisCrossNote.leftSrcs.push(el.src.slice(-7).replace(".png", ""))
+          : thisCrossNote.rightSrcs.push(el.src.slice(-7).replace(".png", ""));
+      });
+      thisCrossNote.outputStr =
+        "NOTE " +
+        thisCrossNote.letter +
+        ": " +
+        thisCrossNote.options +
+        "--" +
+        "LEFT COMPS: " +
+        thisCrossNote.leftSrcs +
+        " " +
+        "RIGHT COMPS: " +
+        thisCrossNote.rightSrcs;
+
+      console.log(thisCrossNote);
+      console.log(thisCrossNote.outputStr);
+    });
   };
 }
 export default new StackView();

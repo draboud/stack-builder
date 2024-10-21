@@ -24,13 +24,7 @@ class AdaptorsView extends View {
       handler();
     });
   };
-  _addHandlerScaleStack = function (handler) {
-    ctrlBtns.addEventListener("click", function (e) {
-      const clicked = e.target.closest(".view_button");
-      if (!clicked) return;
-      handler();
-    });
-  };
+
   _addHandlerPDF = function (handler) {
     ctrlBtns.addEventListener("click", function (e) {
       const clicked = e.target.closest(".pdf_button");

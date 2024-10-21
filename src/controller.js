@@ -209,7 +209,7 @@ const init = function () {
   optionsView._addHandlerRangeForm(controlRangeInput);
   optionsView._addHandlerPressForm(controlPressInput);
   adaptorsView._addHandlerAdapt(controlAdapt);
-  adaptorsView._addHandlerScaleStack(controlScaleStack);
+  // adaptorsView._addHandlerScaleStack(controlScaleStack);
   adaptorsView._addHandlerPDF(controlPDF);
   notesView._addHandlerNotesBtn(controlNotesBtn);
   // notesView._addHandlerNotes(controlNotes);
@@ -220,4 +220,8 @@ const init = function () {
 init();
 
 //TEST AREA....................................................
+const testBtn = document.querySelector(".test_button");
+testBtn.addEventListener("click", function () {
+  stackView._prepCrossNotes();
+});
 //.............................................................
