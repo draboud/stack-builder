@@ -219,7 +219,6 @@ class StackView extends View {
   //____________________________________________________________________
   //Check if more than 3 cross comps, if so => use alt cross img and automate note
   _checkCrossLimit = function () {
-    // this._retarget();
     const leftCount =
       this._activeComp.querySelector(".side_left_div").childElementCount;
     const rightCount =
@@ -255,27 +254,9 @@ class StackView extends View {
       this._activeComp.querySelector(".height-div").classList.remove("hide");
       this._activeComp.querySelector(".opts-div").classList.remove("hide");
     }
-    // if (crossNote) crossNote.parentNode.removeChild(crossNote);
     this._arrangeCrossLetters();
   };
-  // if (leftCount > 3 || rightCount > 3) {
-  //   this._activeComp.querySelector(".img").src = COMP_IMG.cross_limit;
-  //   this._activeComp.querySelector(".height-div").classList.add("hide");
-  //   this._activeComp.querySelector(".opts-div").classList.add("hide");
-  //   if (!crossNote) {
-  //     this._activeComp
-  //       .querySelector(".img")
-  //       .insertAdjacentHTML("afterend", crossNoteHTML);
-  //     this._arrangeCrossLetters();
-  //   }
-  // } else {
-  //   this._activeComp.querySelector(".img").src = COMP_IMG.cross;
-  //   this._activeComp.querySelector(".height-div").classList.remove("hide");
-  //   this._activeComp.querySelector(".opts-div").classList.remove("hide");
-  //   if (crossNote) crossNote.parentNode.removeChild(crossNote);
-  //   this._arrangeCrossLetters();
-  // }
-  // };
+
   //____________________________________________________________________
   _arrangeCrossLetters = function () {
     const crossNoteArr = document.querySelectorAll(".cross_note_div");
@@ -307,10 +288,13 @@ class StackView extends View {
       thisCrossNote.sides = [...el.parentNode.querySelectorAll(".img_side")];
       thisCrossNote.leftSrcs = [];
       thisCrossNote.rightSrcs = [];
+      // debugger;
       thisCrossNote.sides.forEach(function (el) {
+        let newNote = el.src.slice(-7).replace(".png", "");
+        if (newNote === "oss") newNote = "(none)";
         el.parentElement.classList.contains("left_comp")
-          ? thisCrossNote.leftSrcs.push(el.src.slice(-7).replace(".png", ""))
-          : thisCrossNote.rightSrcs.push(el.src.slice(-7).replace(".png", ""));
+          ? thisCrossNote.leftSrcs.push(newNote)
+          : thisCrossNote.rightSrcs.push(newNote);
       });
       thisCrossNote.outputStr =
         "NOTE " +

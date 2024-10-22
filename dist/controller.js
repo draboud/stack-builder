@@ -20188,24 +20188,6 @@
       }
       this._arrangeCrossLetters();
     };
-    // if (leftCount > 3 || rightCount > 3) {
-    //   this._activeComp.querySelector(".img").src = COMP_IMG.cross_limit;
-    //   this._activeComp.querySelector(".height-div").classList.add("hide");
-    //   this._activeComp.querySelector(".opts-div").classList.add("hide");
-    //   if (!crossNote) {
-    //     this._activeComp
-    //       .querySelector(".img")
-    //       .insertAdjacentHTML("afterend", crossNoteHTML);
-    //     this._arrangeCrossLetters();
-    //   }
-    // } else {
-    //   this._activeComp.querySelector(".img").src = COMP_IMG.cross;
-    //   this._activeComp.querySelector(".height-div").classList.remove("hide");
-    //   this._activeComp.querySelector(".opts-div").classList.remove("hide");
-    //   if (crossNote) crossNote.parentNode.removeChild(crossNote);
-    //   this._arrangeCrossLetters();
-    // }
-    // };
     //____________________________________________________________________
     _arrangeCrossLetters = function() {
       const crossNoteArr = document.querySelectorAll(".cross_note_div");
@@ -20227,7 +20209,9 @@
         thisCrossNote.leftSrcs = [];
         thisCrossNote.rightSrcs = [];
         thisCrossNote.sides.forEach(function(el2) {
-          el2.parentElement.classList.contains("left_comp") ? thisCrossNote.leftSrcs.push(el2.src.slice(-7).replace(".png", "")) : thisCrossNote.rightSrcs.push(el2.src.slice(-7).replace(".png", ""));
+          let newNote = el2.src.slice(-7).replace(".png", "");
+          if (newNote === "oss") newNote = "(none)";
+          el2.parentElement.classList.contains("left_comp") ? thisCrossNote.leftSrcs.push(newNote) : thisCrossNote.rightSrcs.push(newNote);
         });
         thisCrossNote.outputStr = "NOTE " + thisCrossNote.letter + ": " + thisCrossNote.options + "--LEFT COMPS: " + thisCrossNote.leftSrcs + " RIGHT COMPS: " + thisCrossNote.rightSrcs;
         console.log(thisCrossNote);
