@@ -20118,6 +20118,7 @@
       if (activeSideComp.id.slice(-2) === "-1") {
         activeSideComp.querySelector(".hyd_spacer").classList.add("hide");
         activeSideComp.querySelector(".img_side").src = COMP_IMG.side;
+        this._checkCrossLimit();
         return;
       }
       activeSideComp.parentNode.removeChild(activeSideComp);
@@ -20152,6 +20153,7 @@
           }
         }
       });
+      this._checkCrossLimit();
     };
     //____________________________________________________________________
     //Check if more than 3 cross comps, if so => use alt cross img and automate note
@@ -20163,22 +20165,47 @@
       <div class= "cross_note_div">
       <div class= "cross-note">${LETTERS[0]}</div>
       </div>`;
-      if (leftCount > 3 || rightCount > 3) {
-        this._activeComp.querySelector(".img").src = COMP_IMG.cross_limit;
-        this._activeComp.querySelector(".height-div").classList.add("hide");
-        this._activeComp.querySelector(".opts-div").classList.add("hide");
+      const allActiveSideComps = [
+        ...this._activeComp.querySelectorAll(".left_comp"),
+        ...this._activeComp.querySelectorAll(".right_comp")
+      ];
+      if (!allActiveSideComps.every(
+        (el) => el.querySelector(".img_side").src.includes("blank")
+      )) {
         if (!crossNote) {
           this._activeComp.querySelector(".img").insertAdjacentHTML("afterend", crossNoteHTML);
           this._arrangeCrossLetters();
         }
+      } else if (crossNote) crossNote.parentNode.removeChild(crossNote);
+      if (leftCount > 3 || rightCount > 3) {
+        this._activeComp.querySelector(".img").src = COMP_IMG.cross_limit;
+        this._activeComp.querySelector(".height-div").classList.add("hide");
+        this._activeComp.querySelector(".opts-div").classList.add("hide");
       } else {
         this._activeComp.querySelector(".img").src = COMP_IMG.cross;
         this._activeComp.querySelector(".height-div").classList.remove("hide");
         this._activeComp.querySelector(".opts-div").classList.remove("hide");
-        if (crossNote) crossNote.parentNode.removeChild(crossNote);
-        this._arrangeCrossLetters();
       }
+      this._arrangeCrossLetters();
     };
+    // if (leftCount > 3 || rightCount > 3) {
+    //   this._activeComp.querySelector(".img").src = COMP_IMG.cross_limit;
+    //   this._activeComp.querySelector(".height-div").classList.add("hide");
+    //   this._activeComp.querySelector(".opts-div").classList.add("hide");
+    //   if (!crossNote) {
+    //     this._activeComp
+    //       .querySelector(".img")
+    //       .insertAdjacentHTML("afterend", crossNoteHTML);
+    //     this._arrangeCrossLetters();
+    //   }
+    // } else {
+    //   this._activeComp.querySelector(".img").src = COMP_IMG.cross;
+    //   this._activeComp.querySelector(".height-div").classList.remove("hide");
+    //   this._activeComp.querySelector(".opts-div").classList.remove("hide");
+    //   if (crossNote) crossNote.parentNode.removeChild(crossNote);
+    //   this._arrangeCrossLetters();
+    // }
+    // };
     //____________________________________________________________________
     _arrangeCrossLetters = function() {
       const crossNoteArr = document.querySelectorAll(".cross_note_div");
@@ -28397,6 +28424,7 @@
         break;
       default:
         stackView_default._configComp(compVal);
+        adaptorsView_default._autoAdapt();
     }
     if (stackView_default._sideActiveFlag === false) {
       stackBtnsView_default.toggleCrossBtns("remove");

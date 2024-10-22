@@ -33,6 +33,7 @@ const controlStackBtns = function (arrayEl) {
       break;
     default:
       stackView._configComp(compVal);
+      adaptorsView._autoAdapt();
   }
   if (stackView._sideActiveFlag === false) {
     stackBtnsView.toggleCrossBtns("remove");
