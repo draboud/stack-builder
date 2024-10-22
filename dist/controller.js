@@ -20204,7 +20204,7 @@
         const thisCrossNote = {};
         thisCrossNote.letter = el.parentNode.querySelector(".cross-note").innerHTML;
         thisCrossNote.height = el.parentNode.querySelector(".height-text").innerHTML.slice(0, -1) + '"';
-        thisCrossNote.options = el.parentNode.querySelector(".opts-text").innerHTML.replaceAll("&nbsp", " ").replaceAll(";", " ");
+        thisCrossNote.options = el.parentNode.querySelector(".opts-text").innerHTML.replaceAll(";", " ").replaceAll("&nbsp", "");
         thisCrossNote.sides = [...el.parentNode.querySelectorAll(".img_side")];
         thisCrossNote.leftSrcs = [];
         thisCrossNote.rightSrcs = [];
@@ -20213,7 +20213,7 @@
           if (newNote === "oss") newNote = "(none)";
           el2.parentElement.classList.contains("left_comp") ? thisCrossNote.leftSrcs.push(newNote) : thisCrossNote.rightSrcs.push(newNote);
         });
-        thisCrossNote.outputStr = "NOTE " + thisCrossNote.letter + ": " + thisCrossNote.options + "--LEFT COMPS: " + thisCrossNote.leftSrcs + " RIGHT COMPS: " + thisCrossNote.rightSrcs;
+        thisCrossNote.outputStr = "Note " + thisCrossNote.letter + ": " + thisCrossNote.options + "--(Left Comps): " + thisCrossNote.leftSrcs + " (Right Comps): " + thisCrossNote.rightSrcs;
         console.log(thisCrossNote);
         console.log(thisCrossNote.outputStr);
       });

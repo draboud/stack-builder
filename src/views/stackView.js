@@ -283,8 +283,9 @@ class StackView extends View {
         '"';
       thisCrossNote.options = el.parentNode
         .querySelector(".opts-text")
-        .innerHTML.replaceAll("&nbsp", " ")
-        .replaceAll(";", " ");
+        .innerHTML.replaceAll(";", " ")
+        .replaceAll("&nbsp", "");
+
       thisCrossNote.sides = [...el.parentNode.querySelectorAll(".img_side")];
       thisCrossNote.leftSrcs = [];
       thisCrossNote.rightSrcs = [];
@@ -297,15 +298,15 @@ class StackView extends View {
           : thisCrossNote.rightSrcs.push(newNote);
       });
       thisCrossNote.outputStr =
-        "NOTE " +
+        "Note " +
         thisCrossNote.letter +
         ": " +
         thisCrossNote.options +
         "--" +
-        "LEFT COMPS: " +
+        "(Left Comps): " +
         thisCrossNote.leftSrcs +
         " " +
-        "RIGHT COMPS: " +
+        "(Right Comps): " +
         thisCrossNote.rightSrcs;
 
       console.log(thisCrossNote);
