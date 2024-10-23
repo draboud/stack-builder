@@ -9,6 +9,7 @@ const viewBtn = document.querySelector(".view_button");
 const stackHeight = document.querySelector(".stack-height-text");
 
 class StackView extends View {
+  _finalCrossNotes = "";
   // allCrossNotes = [];
 
   //Clicks for stack components
@@ -299,7 +300,6 @@ class StackView extends View {
           : thisCrossNote.rightSrcs.push(newNote);
       });
       thisCrossNote.outputStr =
-        "Note " +
         thisCrossNote.letter +
         ": " +
         thisCrossNote.options +
@@ -308,11 +308,14 @@ class StackView extends View {
         thisCrossNote.leftSrcs +
         " " +
         "(Right Comps): " +
-        thisCrossNote.rightSrcs;
-
-      console.log(thisCrossNote);
-      console.log(thisCrossNote.outputStr);
+        thisCrossNote.rightSrcs +
+        " " +
+        "(Height): " +
+        thisCrossNote.height;
+      thisCrossNote.outputStr += "\n";
+      allNotesOutput.push(thisCrossNote.outputStr);
     });
+    this._finalCrossNotes = allNotesOutput.reverse().join("");
   };
 }
 export default new StackView();

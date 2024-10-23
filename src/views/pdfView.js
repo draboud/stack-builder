@@ -4,11 +4,21 @@ import jsPDF from "jspdf";
 import { PDF_SETTINGS } from "../config";
 import statsView from "./statsView";
 import adaptorsView from "./adaptorsView";
+import stackBtnsView from "./stackBtnsView";
+import stackView from "./stackView";
 
 class PDFView extends View {
   //_________________________________________________________________________
   //Convert html content to pdf
   _convertToPDF = function (newHeight) {
+    let finalCrossNotes = "";
+    let notesInput = "";
+    if (notesView._notes) notesInput = notesView._notes;
+    // stackView._finalCrossNotes = "";
+    stackView._prepCrossNotes();
+    finalCrossNotes = stackView._finalCrossNotes;
+    notesInput += finalCrossNotes;
+    // debugger;
     // if (!notesView._jobTitle) {
     //   alert("enter a title");
     //   return;
@@ -49,18 +59,18 @@ class PDFView extends View {
     }
     doc.setFontSize(11);
     doc.text(`${statsView._setDate()}`, 570, 40, { align: "right" });
-    if (notesView._notes) {
-      doc.text("NOTES: ", 20, 775, {
+    if (notesInput) {
+      doc.text("NOTES: ", 20, 762, {
         align: "left",
         maxWidth: PDF_SETTINGS.notesMaxWidth,
       });
-      doc.text(notesView._notes, 20, 790, {
+      doc.text(notesInput, 20, 777, {
         align: "left",
         maxWidth: PDF_SETTINGS.notesMaxWidth,
       });
     }
-    doc.text("STACK HEIGHT: ", 20, 735, { align: "left" });
-    doc.text(newHeight.toString() + '"', 20, 750, { align: "left" });
+    doc.text("STACK HEIGHT: ", 20, 727, { align: "left" });
+    doc.text(newHeight.toString() + '"', 20, 742, { align: "left" });
 
     //then descale the stack to allow continuation of editing stack
     // adaptorsView._descaling();

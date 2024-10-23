@@ -253,8 +253,9 @@ const init = function () {
 init();
 
 //TEST AREA....................................................
-const testBtn = document.querySelector(".test_button");
-testBtn.addEventListener("click", function () {
-  stackView._prepCrossNotes();
-});
+// const testBtn = document.querySelector(".test_button");
+// testBtn.addEventListener("click", function () {
+//   stackView._prepCrossNotes();
+// });
+
 //.............................................................

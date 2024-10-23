@@ -19619,7 +19619,8 @@
         const clicked = e2.target.closest(".save_button");
         if (!clicked) return;
         const jobTitleInput = document.querySelector(".job_title_input").value;
-        const notesInput = document.querySelector(".custom_notes_input").value;
+        let notesInput = document.querySelector(".custom_notes_input").value;
+        if (notesInput) notesInput += "\n";
         const jobDisplay = document.querySelector(".job-title-text").innerHTML = "Job Title: " + jobTitleInput;
         handler(jobTitleInput, notesInput);
       });
@@ -19881,6 +19882,7 @@
   var viewBtn = document.querySelector(".view_button");
   var stackHeight = document.querySelector(".stack-height-text");
   var StackView = class extends View {
+    _finalCrossNotes = "";
     // allCrossNotes = [];
     //Clicks for stack components
     _addHandlerCompClick(handler) {
@@ -20110,10 +20112,11 @@
           if (newNote === "oss") newNote = "(none)";
           el2.parentElement.classList.contains("left_comp") ? thisCrossNote.leftSrcs.push(newNote) : thisCrossNote.rightSrcs.push(newNote);
         });
-        thisCrossNote.outputStr = "Note " + thisCrossNote.letter + ": " + thisCrossNote.options + "--(Left Comps): " + thisCrossNote.leftSrcs + " (Right Comps): " + thisCrossNote.rightSrcs;
-        console.log(thisCrossNote);
-        console.log(thisCrossNote.outputStr);
+        thisCrossNote.outputStr = thisCrossNote.letter + ": " + thisCrossNote.options + "--(Left Comps): " + thisCrossNote.leftSrcs + " (Right Comps): " + thisCrossNote.rightSrcs + " (Height): " + thisCrossNote.height;
+        thisCrossNote.outputStr += "\n";
+        allNotesOutput.push(thisCrossNote.outputStr);
       });
+      this._finalCrossNotes = allNotesOutput.reverse().join("");
     };
   };
   var stackView_default = new StackView();
@@ -28359,6 +28362,12 @@
     //_________________________________________________________________________
     //Convert html content to pdf
     _convertToPDF = function(newHeight) {
+      let finalCrossNotes = "";
+      let notesInput = "";
+      if (notesView_default._notes) notesInput = notesView_default._notes;
+      stackView_default._prepCrossNotes();
+      finalCrossNotes = stackView_default._finalCrossNotes;
+      notesInput += finalCrossNotes;
       const elementHTML = document.querySelector(".content_to_print");
       const doc = new jspdf_es_min_default("p", "pt", "a4");
       const img = new Image();
@@ -28393,18 +28402,18 @@
       }
       doc.setFontSize(11);
       doc.text(`${statsView_default._setDate()}`, 570, 40, { align: "right" });
-      if (notesView_default._notes) {
-        doc.text("NOTES: ", 20, 775, {
+      if (notesInput) {
+        doc.text("NOTES: ", 20, 762, {
           align: "left",
           maxWidth: PDF_SETTINGS.notesMaxWidth
         });
-        doc.text(notesView_default._notes, 20, 790, {
+        doc.text(notesInput, 20, 777, {
           align: "left",
           maxWidth: PDF_SETTINGS.notesMaxWidth
         });
       }
-      doc.text("STACK HEIGHT: ", 20, 735, { align: "left" });
-      doc.text(newHeight.toString() + '"', 20, 750, { align: "left" });
+      doc.text("STACK HEIGHT: ", 20, 727, { align: "left" });
+      doc.text(newHeight.toString() + '"', 20, 742, { align: "left" });
     };
   };
   var pdfView_default = new PDFView();
@@ -28585,10 +28594,6 @@
     optionsView_default._addHandlerCrossMiniItem(controlCrossMiniItem);
   };
   init();
-  var testBtn = document.querySelector(".test_button");
-  testBtn.addEventListener("click", function() {
-    stackView_default._prepCrossNotes();
-  });
 })();
 /*! Bundled license information:
 

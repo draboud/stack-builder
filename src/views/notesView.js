@@ -26,7 +26,8 @@ class NotesView extends View {
       const clicked = e.target.closest(".save_button");
       if (!clicked) return;
       const jobTitleInput = document.querySelector(".job_title_input").value;
-      const notesInput = document.querySelector(".custom_notes_input").value;
+      let notesInput = document.querySelector(".custom_notes_input").value;
+      if (notesInput) notesInput += "\n";
       const jobDisplay = (document.querySelector(".job-title-text").innerHTML =
         "Job Title: " + jobTitleInput);
 
