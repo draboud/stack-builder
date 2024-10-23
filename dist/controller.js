@@ -20192,7 +20192,6 @@
         result = (100 - factor * 100) / 100;
         if (result > 0.766) result = 0.766;
       } else result = 0.766;
-      console.log("visHeight: ", visHeight);
       this._allComps.forEach(function(el) {
         el.style.width = $(el).width() * result + "px";
       });

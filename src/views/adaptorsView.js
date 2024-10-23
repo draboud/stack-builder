@@ -88,6 +88,7 @@ class AdaptorsView extends View {
     this._leftArray.forEach((el) => el.classList.remove("active"));
     this._rightArray.forEach((el) => el.classList.remove("active"));
 
+    //use visHeight to check height of stack on screen in px
     const visHeight = $(document.querySelector(".comp-wrapper")).height();
 
     if (visHeight > STACK_MAX) {
@@ -95,8 +96,6 @@ class AdaptorsView extends View {
       result = (100 - factor * 100) / 100;
       if (result > 0.766) result = 0.766;
     } else result = 0.766;
-
-    console.log("visHeight: ", visHeight);
 
     this._allComps.forEach(function (el) {
       el.style.width = $(el).width() * result + "px";
