@@ -179,19 +179,48 @@ controlNotesCloseBtn = function () {
 };
 //____________________________________________________________________
 controlModalBlockout = function (modal) {
-  notesView._modalBlockout.classList.add("hide");
-  notesView._notesForm.classList.add("hide");
-  heightsView._clearAndCloseHeight();
-  optionsView._closeModal();
+  // notesView._modalBlockout.classList.add("hide");
+  // notesView._notesForm.classList.add("hide");
+  // heightsView._clearAndCloseHeight();
+  // optionsView._closeModal();
+  controlHideModals();
 };
 //____________________________________________________________________
-
 controlPDF = function () {
   adaptorsView._newHeight = adaptorsView._scaleStack();
   pdfView._convertToPDF(adaptorsView._newHeight);
   setTimeout(() => {
     adaptorsView._descaling();
   }, 1);
+};
+
+//____________________________________________________________________
+controlToggleCrossMiniMenu = function () {
+  optionsView._crossMiniMenu.classList.toggle("hide");
+  controlShowBlackout();
+};
+//____________________________________________________________________
+controlCrossMiniItem = function (miniItem) {
+  miniItem.classList[1] === "height"
+    ? controlHeight()
+    : controlOptions(miniItem);
+  this.controlToggleCrossMiniMenu();
+};
+//____________________________________________________________________
+controlShowBlackout = function () {
+  notesView._modalBlockout.classList.remove("hide");
+};
+//____________________________________________________________________
+controlHideBlackout = function () {
+  notesView._modalBlockout.classList.add("hide");
+};
+//____________________________________________________________________
+controlHideModals = function () {
+  controlHideBlackout();
+  notesView._notesForm.classList.add("hide");
+  heightsView._clearAndCloseHeight();
+  optionsView._closeModal();
+  optionsView._crossMiniMenu.classList.add("hide");
 };
 //____________________________________________________________________
 
@@ -217,6 +246,9 @@ const init = function () {
   notesView._addHandlerNotesCloseBtn(controlNotesCloseBtn);
   notesView._addHandlerSaveBtn(controlNotes);
   notesView._addHandlerModalBlockout(controlModalBlockout);
+
+  // optionsView._addHandlerCrossNoteBtn(controlCrossNoteBtn);
+  optionsView._addHandlerCrossMiniItem(controlCrossMiniItem);
 };
 init();
 

@@ -19700,134 +19700,6 @@
   };
   var heightsView_default = new HeightsView();
 
-  // src/views/adaptorsView.js
-  var ctrlBtns = document.querySelector(".control_buttons_div");
-  var scalingResult;
-  var AdaptorsView = class extends View {
-    _newHeight;
-    //Add handler to adapt button
-    _addHandlerAdapt = function(handler) {
-      ctrlBtns.addEventListener("click", function(e2) {
-        const clicked = e2.target.closest(".adapt_button");
-        if (!clicked) return;
-        handler();
-      });
-    };
-    _addHandlerPDF = function(handler) {
-      ctrlBtns.addEventListener("click", function(e2) {
-        const clicked = e2.target.closest(".pdf_button");
-        if (!clicked) return;
-        handler();
-      });
-    };
-    //_________________________________________________________________________
-    //Add adaptors to stack
-    _autoAdapt = function() {
-      this._retarget();
-      let numOfOpts = 0;
-      let extArray = [];
-      this._allAdaptors.forEach(function(el) {
-        el.parentNode.removeChild(el);
-      });
-      this._allOptsText.forEach(function(el) {
-        let intArray = "";
-        if (el.classList.contains("hide") || el.classList.contains("second"))
-          return;
-        const onlyBore = el.innerHTML.split('"')[0];
-        numOfOpts += 1;
-        extArray.push(onlyBore);
-      });
-      for (let i3 = 0; i3 < numOfOpts - 1; i3++) {
-        if (extArray[i3] !== extArray[i3 + 1] && !extArray[i3].includes("options") && !extArray[i3 + 1].includes("options")) {
-          const adapterHtml = `
-      <div class="adapt-div">
-        <div class="height-div">
-          <div class="height-text">${COMP_HEIGHTS.adaptor}"</div>
-        </div>
-        <img class="img" src=${COMP_IMG.adaptor}>
-        <div class="adaptor-div">
-          <div class="adaptor-text">${extArray[i3 + 1]}"&nbsp;X&nbsp;${extArray[i3]}"&nbsp;DSA</div>
-        </div>
-      </div>`;
-          this._allComps[i3].insertAdjacentHTML("afterend", adapterHtml);
-        }
-      }
-    };
-    //____________________________________________________________________
-    //Adjust height of stack after certain threshold value, in order to fit on a4 pdf
-    _scaleStack = function() {
-      let stackHeight2 = 0;
-      let newHeight;
-      let factor;
-      let result;
-      this._retarget();
-      stackHeight2 = statsView_default._liveHeightTotal();
-      this._allComps.forEach((el) => el.classList.remove("active"));
-      this._leftArray.forEach((el) => el.classList.remove("active"));
-      this._rightArray.forEach((el) => el.classList.remove("active"));
-      const visHeight = $(document.querySelector(".comp-wrapper")).height();
-      if (visHeight > STACK_MAX) {
-        factor = (visHeight - STACK_MAX) / visHeight;
-        result = (100 - factor * 100) / 100;
-        if (result > 0.766) result = 0.766;
-      } else result = 0.766;
-      console.log("visHeight: ", visHeight);
-      this._allComps.forEach(function(el) {
-        el.style.width = $(el).width() * result + "px";
-      });
-      this._allSpacers.forEach(function(el) {
-        el.style.height = $(el).height() * result + "px";
-      });
-      this._allHydSpacers.forEach(function(el) {
-        el.style.height = $(el).height() * result + "px";
-      });
-      this._allAdaptors.forEach(function(el) {
-        el.style.width = $(el).width() * result + "px";
-      });
-      this._leftArray.forEach(function(el) {
-        el.style.width = $(el).width() * result + "px";
-      });
-      this._rightArray.forEach(function(el) {
-        el.style.width = $(el).width() * result + "px";
-      });
-      if (stackHeight2 > STACK_MAX_FOR_OPTS) {
-        this._allSpacers.forEach(function(el) {
-          el.style.height = "0px";
-        });
-      }
-      scalingResult = result;
-      newHeight = stackHeight2;
-      return newHeight;
-    };
-    //____________________________________________________________________
-    //Undo scaling and reapply 'active' to top comp for continual editing
-    _descaling = function() {
-      this._allComps.forEach(function(el) {
-        el.style.width = $(el).width() / scalingResult + "px";
-      });
-      this._allSpacers.forEach(function(el) {
-        el.style.height = $(el).height() / scalingResult + "px";
-      });
-      this._allHydSpacers.forEach(function(el) {
-        el.style.height = $(el).height() / scalingResult + "px";
-      });
-      this._allAdaptors.forEach(function(el) {
-        el.style.width = $(el).width() / scalingResult + "px";
-      });
-      this._leftArray.forEach(function(el) {
-        el.style.width = $(el).width() / scalingResult + "px";
-      });
-      this._rightArray.forEach(function(el) {
-        el.style.width = $(el).width() / scalingResult + "px";
-      });
-      this._allSpacers.forEach(function(el) {
-        el.style.height = "20px";
-      });
-      this._allComps[0].classList.add("active");
-    };
-  };
-  var adaptorsView_default = new AdaptorsView();
-
   // src/views/optionsView.js
   var OptionsView = class extends View {
     _optsModal = document.querySelector(".options_modal");
@@ -19841,6 +19713,8 @@
     _typeInput = document.querySelector(".type_input");
     _rangeInput = document.querySelector(".range_input");
     _pressInput = document.querySelector(".press_input");
+    _crossMiniMenu = document.querySelector(".cross_mini_menu");
+    _crossMiniItems = document.querySelectorAll(".cross-mini-item");
     _customDiv = document.querySelector(".opt_div.custom");
     _boreFinalValue;
     _typeFinalValue;
@@ -19978,6 +19852,28 @@
       allOpts.forEach((el) => el.firstElementChild.classList.remove("selected"));
       this._secondOptsFlag = false;
     }
+    //____________________________________________________________________
+    //Click event for cross note letter as alternative entry to height/options menus
+    _addHandlerCrossNoteBtn = function() {
+      this._retarget();
+      const crossNoteBtn = this._activeComp.querySelector(".cross_note_div");
+      crossNoteBtn.addEventListener("click", function(e2) {
+        const clicked = e2.target.closest(".cross_note_div");
+        if (!clicked) return;
+        controlToggleCrossMiniMenu();
+      });
+    };
+    //____________________________________________________________________
+    _addHandlerCrossMiniItem = function(handler) {
+      this._crossMiniItems.forEach(
+        (el) => el.addEventListener("click", function(e2) {
+          const clicked = e2.target.closest(".cross-mini-item");
+          if (!clicked) return;
+          handler(clicked);
+        })
+      );
+    };
+    //____________________________________________________________________
   };
   var optionsView_default = new OptionsView();
 
@@ -20174,6 +20070,7 @@
       )) {
         if (!crossNote) {
           this._activeComp.querySelector(".img").insertAdjacentHTML("afterend", crossNoteHTML);
+          optionsView_default._addHandlerCrossNoteBtn();
           this._arrangeCrossLetters();
         }
       } else if (crossNote) crossNote.parentNode.removeChild(crossNote);
@@ -20220,6 +20117,134 @@
     };
   };
   var stackView_default = new StackView();
+
+  // src/views/adaptorsView.js
+  var ctrlBtns = document.querySelector(".control_buttons_div");
+  var scalingResult;
+  var AdaptorsView = class extends View {
+    _newHeight;
+    //Add handler to adapt button
+    _addHandlerAdapt = function(handler) {
+      ctrlBtns.addEventListener("click", function(e2) {
+        const clicked = e2.target.closest(".adapt_button");
+        if (!clicked) return;
+        handler();
+      });
+    };
+    _addHandlerPDF = function(handler) {
+      ctrlBtns.addEventListener("click", function(e2) {
+        const clicked = e2.target.closest(".pdf_button");
+        if (!clicked) return;
+        handler();
+      });
+    };
+    //_________________________________________________________________________
+    //Add adaptors to stack
+    _autoAdapt = function() {
+      this._retarget();
+      let numOfOpts = 0;
+      let extArray = [];
+      this._allAdaptors.forEach(function(el) {
+        el.parentNode.removeChild(el);
+      });
+      this._allOptsText.forEach(function(el) {
+        let intArray = "";
+        if (el.classList.contains("hide") || el.classList.contains("second"))
+          return;
+        const onlyBore = el.innerHTML.split('"')[0];
+        numOfOpts += 1;
+        extArray.push(onlyBore);
+      });
+      for (let i3 = 0; i3 < numOfOpts - 1; i3++) {
+        if (extArray[i3] !== extArray[i3 + 1] && !extArray[i3].includes("options") && !extArray[i3 + 1].includes("options")) {
+          const adapterHtml = `
+      <div class="adapt-div">
+        <div class="height-div">
+          <div class="height-text">${COMP_HEIGHTS.adaptor}"</div>
+        </div>
+        <img class="img" src=${COMP_IMG.adaptor}>
+        <div class="adaptor-div">
+          <div class="adaptor-text">${extArray[i3 + 1]}"&nbsp;X&nbsp;${extArray[i3]}"&nbsp;DSA</div>
+        </div>
+      </div>`;
+          this._allComps[i3].insertAdjacentHTML("afterend", adapterHtml);
+        }
+      }
+    };
+    //____________________________________________________________________
+    //Adjust height of stack after certain threshold value, in order to fit on a4 pdf
+    _scaleStack = function() {
+      let stackHeight2 = 0;
+      let newHeight;
+      let factor;
+      let result;
+      this._retarget();
+      stackHeight2 = statsView_default._liveHeightTotal();
+      this._allComps.forEach((el) => el.classList.remove("active"));
+      this._leftArray.forEach((el) => el.classList.remove("active"));
+      this._rightArray.forEach((el) => el.classList.remove("active"));
+      const visHeight = $(document.querySelector(".comp-wrapper")).height();
+      if (visHeight > STACK_MAX) {
+        factor = (visHeight - STACK_MAX) / visHeight;
+        result = (100 - factor * 100) / 100;
+        if (result > 0.766) result = 0.766;
+      } else result = 0.766;
+      console.log("visHeight: ", visHeight);
+      this._allComps.forEach(function(el) {
+        el.style.width = $(el).width() * result + "px";
+      });
+      this._allSpacers.forEach(function(el) {
+        el.style.height = $(el).height() * result + "px";
+      });
+      this._allHydSpacers.forEach(function(el) {
+        el.style.height = $(el).height() * result + "px";
+      });
+      this._allAdaptors.forEach(function(el) {
+        el.style.width = $(el).width() * result + "px";
+      });
+      this._leftArray.forEach(function(el) {
+        el.style.width = $(el).width() * result + "px";
+      });
+      this._rightArray.forEach(function(el) {
+        el.style.width = $(el).width() * result + "px";
+      });
+      if (stackHeight2 > STACK_MAX_FOR_OPTS) {
+        this._allSpacers.forEach(function(el) {
+          el.style.height = "0px";
+        });
+      }
+      scalingResult = result;
+      newHeight = stackHeight2;
+      return newHeight;
+    };
+    //____________________________________________________________________
+    //Undo scaling and reapply 'active' to top comp for continual editing
+    _descaling = function() {
+      this._allComps.forEach(function(el) {
+        el.style.width = $(el).width() / scalingResult + "px";
+      });
+      this._allSpacers.forEach(function(el) {
+        el.style.height = $(el).height() / scalingResult + "px";
+      });
+      this._allHydSpacers.forEach(function(el) {
+        el.style.height = $(el).height() / scalingResult + "px";
+      });
+      this._allAdaptors.forEach(function(el) {
+        el.style.width = $(el).width() / scalingResult + "px";
+      });
+      this._leftArray.forEach(function(el) {
+        el.style.width = $(el).width() / scalingResult + "px";
+      });
+      this._rightArray.forEach(function(el) {
+        el.style.width = $(el).width() / scalingResult + "px";
+      });
+      this._allSpacers.forEach(function(el) {
+        el.style.height = "20px";
+      });
+      this._allComps[0].classList.add("active");
+    };
+  };
+  var adaptorsView_default = new AdaptorsView();
 
   // node_modules/jspdf/dist/jspdf.es.min.js
   init_typeof();
@@ -28507,10 +28532,7 @@
     notesView_default._modalBlockout.classList.add("hide");
   };
   controlModalBlockout = function(modal) {
-    notesView_default._modalBlockout.classList.add("hide");
-    notesView_default._notesForm.classList.add("hide");
-    heightsView_default._clearAndCloseHeight();
-    optionsView_default._closeModal();
+    controlHideModals();
   };
   controlPDF = function() {
     adaptorsView_default._newHeight = adaptorsView_default._scaleStack();
@@ -28518,6 +28540,27 @@
     setTimeout(() => {
       adaptorsView_default._descaling();
     }, 1);
+  };
+  controlToggleCrossMiniMenu = function() {
+    optionsView_default._crossMiniMenu.classList.toggle("hide");
+    controlShowBlackout();
+  };
+  controlCrossMiniItem = function(miniItem) {
+    miniItem.classList[1] === "height" ? controlHeight() : controlOptions(miniItem);
+    this.controlToggleCrossMiniMenu();
+  };
+  controlShowBlackout = function() {
+    notesView_default._modalBlockout.classList.remove("hide");
+  };
+  controlHideBlackout = function() {
+    notesView_default._modalBlockout.classList.add("hide");
+  };
+  controlHideModals = function() {
+    controlHideBlackout();
+    notesView_default._notesForm.classList.add("hide");
+    heightsView_default._clearAndCloseHeight();
+    optionsView_default._closeModal();
+    optionsView_default._crossMiniMenu.classList.add("hide");
   };
   var init = function() {
     statsView_default._setDate();
@@ -28539,6 +28582,7 @@
     notesView_default._addHandlerNotesCloseBtn(controlNotesCloseBtn);
     notesView_default._addHandlerSaveBtn(controlNotes);
     notesView_default._addHandlerModalBlockout(controlModalBlockout);
+    optionsView_default._addHandlerCrossMiniItem(controlCrossMiniItem);
   };
   init();
   var testBtn = document.querySelector(".test_button");

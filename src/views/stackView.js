@@ -241,6 +241,8 @@ class StackView extends View {
         this._activeComp
           .querySelector(".img")
           .insertAdjacentHTML("afterend", crossNoteHTML);
+
+        optionsView._addHandlerCrossNoteBtn();
         this._arrangeCrossLetters();
       }
     } else if (crossNote) crossNote.parentNode.removeChild(crossNote);
@@ -289,7 +291,6 @@ class StackView extends View {
       thisCrossNote.sides = [...el.parentNode.querySelectorAll(".img_side")];
       thisCrossNote.leftSrcs = [];
       thisCrossNote.rightSrcs = [];
-      // debugger;
       thisCrossNote.sides.forEach(function (el) {
         let newNote = el.src.slice(-7).replace(".png", "");
         if (newNote === "oss") newNote = "(none)";

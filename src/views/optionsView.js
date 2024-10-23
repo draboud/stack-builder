@@ -1,7 +1,7 @@
 import stackView from "./stackView";
 import notesView from "./notesView";
 import View from "./View";
-import adaptorsView from "./adaptorsView";
+// import adaptorsView from "./adaptorsView";
 
 class OptionsView extends View {
   _optsModal = document.querySelector(".options_modal");
@@ -15,6 +15,9 @@ class OptionsView extends View {
   _typeInput = document.querySelector(".type_input");
   _rangeInput = document.querySelector(".range_input");
   _pressInput = document.querySelector(".press_input");
+
+  _crossMiniMenu = document.querySelector(".cross_mini_menu");
+  _crossMiniItems = document.querySelectorAll(".cross-mini-item");
 
   _customDiv = document.querySelector(".opt_div.custom");
 
@@ -175,6 +178,30 @@ class OptionsView extends View {
     allOpts.forEach((el) => el.firstElementChild.classList.remove("selected"));
     this._secondOptsFlag = false;
   }
+  //____________________________________________________________________
+  //Click event for cross note letter as alternative entry to height/options menus
+  _addHandlerCrossNoteBtn = function () {
+    this._retarget();
+    const crossNoteBtn = this._activeComp.querySelector(".cross_note_div");
+
+    crossNoteBtn.addEventListener("click", function (e) {
+      const clicked = e.target.closest(".cross_note_div");
+      if (!clicked) return;
+
+      controlToggleCrossMiniMenu();
+    });
+  };
+  //____________________________________________________________________
+  _addHandlerCrossMiniItem = function (handler) {
+    this._crossMiniItems.forEach((el) =>
+      el.addEventListener("click", function (e) {
+        const clicked = e.target.closest(".cross-mini-item");
+        if (!clicked) return;
+        handler(clicked);
+      })
+    );
+  };
+  //____________________________________________________________________
 }
 
 export default new OptionsView();
