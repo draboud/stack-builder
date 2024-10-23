@@ -3,8 +3,6 @@ import notesView from "./notesView";
 import jsPDF from "jspdf";
 import { PDF_SETTINGS } from "../config";
 import statsView from "./statsView";
-import adaptorsView from "./adaptorsView";
-import stackBtnsView from "./stackBtnsView";
 import stackView from "./stackView";
 
 class PDFView extends View {
@@ -14,11 +12,9 @@ class PDFView extends View {
     let finalCrossNotes = "";
     let notesInput = "";
     if (notesView._notes) notesInput = notesView._notes;
-    // stackView._finalCrossNotes = "";
     stackView._prepCrossNotes();
     finalCrossNotes = stackView._finalCrossNotes;
     notesInput += finalCrossNotes;
-    // debugger;
     // if (!notesView._jobTitle) {
     //   alert("enter a title");
     //   return;
@@ -71,9 +67,6 @@ class PDFView extends View {
     }
     doc.text("STACK HEIGHT: ", 20, 727, { align: "left" });
     doc.text(newHeight.toString() + '"', 20, 742, { align: "left" });
-
-    //then descale the stack to allow continuation of editing stack
-    // adaptorsView._descaling();
   };
 }
 export default new PDFView();

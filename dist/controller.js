@@ -20207,9 +20207,13 @@
       });
       this._leftArray.forEach(function(el) {
         el.style.width = $(el).width() * result + "px";
+        if (el.querySelector(".img_side").src.includes("blank"))
+          el.classList.add("hide");
       });
       this._rightArray.forEach(function(el) {
         el.style.width = $(el).width() * result + "px";
+        if (el.querySelector(".img_side").src.includes("blank"))
+          el.classList.add("hide");
       });
       if (stackHeight2 > STACK_MAX_FOR_OPTS) {
         this._allSpacers.forEach(function(el) {
@@ -28419,7 +28423,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("Cross Notes - Oct 20, 2024");
+  console.log("Cross Notes - Oct 23, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];

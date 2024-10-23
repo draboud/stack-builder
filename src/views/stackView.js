@@ -266,10 +266,7 @@ class StackView extends View {
     for (let i = 0; i < crossNoteArr.length; i++) {
       crossNoteArr[i].querySelector(".cross-note").innerHTML =
         LETTERS[crossNoteArr.length - 1 - i];
-
-      // this.allCrossNotes.push(crossNoteArr[i]);
     }
-    // this._prepCrossNotes(allCrossNotes);
   };
   //____________________________________________________________________
   //Prepare cross comps for PDF notes output

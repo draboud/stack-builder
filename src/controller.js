@@ -8,7 +8,7 @@ import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 import statsView from "./views/statsView.js";
 
-console.log("Cross Notes - Oct 20, 2024");
+console.log("Cross Notes - Oct 23, 2024");
 
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
@@ -179,10 +179,6 @@ controlNotesCloseBtn = function () {
 };
 //____________________________________________________________________
 controlModalBlockout = function (modal) {
-  // notesView._modalBlockout.classList.add("hide");
-  // notesView._notesForm.classList.add("hide");
-  // heightsView._clearAndCloseHeight();
-  // optionsView._closeModal();
   controlHideModals();
 };
 //____________________________________________________________________
@@ -239,23 +235,15 @@ const init = function () {
   optionsView._addHandlerRangeForm(controlRangeInput);
   optionsView._addHandlerPressForm(controlPressInput);
   adaptorsView._addHandlerAdapt(controlAdapt);
-  // adaptorsView._addHandlerScaleStack(controlScaleStack);
   adaptorsView._addHandlerPDF(controlPDF);
   notesView._addHandlerNotesBtn(controlNotesBtn);
-  // notesView._addHandlerNotes(controlNotes);
   notesView._addHandlerNotesCloseBtn(controlNotesCloseBtn);
   notesView._addHandlerSaveBtn(controlNotes);
   notesView._addHandlerModalBlockout(controlModalBlockout);
-
-  // optionsView._addHandlerCrossNoteBtn(controlCrossNoteBtn);
   optionsView._addHandlerCrossMiniItem(controlCrossMiniItem);
 };
 init();
 
 //TEST AREA....................................................
-// const testBtn = document.querySelector(".test_button");
-// testBtn.addEventListener("click", function () {
-//   stackView._prepCrossNotes();
-// });
 
 //.............................................................

@@ -116,10 +116,14 @@ class AdaptorsView extends View {
 
     this._leftArray.forEach(function (el) {
       el.style.width = $(el).width() * result + "px";
+      if (el.querySelector(".img_side").src.includes("blank"))
+        el.classList.add("hide");
     });
 
     this._rightArray.forEach(function (el) {
       el.style.width = $(el).width() * result + "px";
+      if (el.querySelector(".img_side").src.includes("blank"))
+        el.classList.add("hide");
     });
 
     //______________________________________________________________________
