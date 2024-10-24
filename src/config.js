@@ -37,7 +37,7 @@ export const COMP_IMG = {
     "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6e1a63013f513c6d6b_3D-cross.png",
 
   cross_limit:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b3f6ba678f63c4e3435b_cross-limit.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a776323e23acebce2481d_3D-cross-limit.png",
 
   bell_nipple:
     "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a69c604d50a77f5517d85_3D-bell-nipple.png",
