@@ -21,44 +21,44 @@ export const COMP_IMG = {
 
   side: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png",
 
-  spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b6eebe9ad00b35d6612a_spl.png",
+  spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a5fa6e4d52fd0b3de57a9_3D-spl.png",
 
-  man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b6ef9b4d2c8142a7f216_man.png",
+  man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a5fa6725b057559cbf6aa_3D-man.png",
 
-  hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b6ee394953790797f3cb_hyd.png",
+  hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a5fa6f13b04fef09ca675_3D-hyd.png",
 
   adaptor:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b312d2fffcb9a524d767_dsa.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a74027217473126aea363_3D-dsa.png",
 
   single:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b5ea1c06997b0220fcc8_single.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6ec4b8b91a31aa5abe_3D-single.png",
 
   cross:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b3c7f8b23dec7c289076_cross.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6e1a63013f513c6d6b_3D-cross.png",
 
   cross_limit:
     "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b3f6ba678f63c4e3435b_cross-limit.png",
 
   bell_nipple:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b5eac5e2db20f536b96e_bell-nipple.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a69c604d50a77f5517d85_3D-bell-nipple.png",
 
   gate_valve:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b5ea99a5d62431ab9fdd_gate-valve.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6f7172a37aa03166a1_3D-gate-valve.png",
 
   washington:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b5ea1505503c09e8350d_washington.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6e03fa1f13aafbc392_3D-washington.png",
 
   wellhead:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b5ea8583818d4d9a7805_wellhead.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a5fa60fc8656bfb6db500_3D-wellhead.png",
 
   annular:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b5eaf8b23dec7c2a0609_annular.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a68e44adb1f08dc09b296_3D-annular.png",
 
   spool:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b5ea9b4d2c8142a7082a_spool.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6e7e501610bd690378_3D-spool.png",
 
   double:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b27b99a5d62431a90ed2_double.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6ed57c9634eecf5172_3D-double.png",
 };
 
 export const COMP_HEIGHTS = {
