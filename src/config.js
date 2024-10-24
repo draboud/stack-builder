@@ -16,85 +16,49 @@ export const COMP_CLASSES = [
 ];
 
 export const COMP_IMG = {
-  // spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd0316fff7c3bffbb6c781_Cross%20-%20Spool.png",
-
-  // man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf61a2ceb56331d1bc3b_Cross%20-%20Manual.png",
-
-  // hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6711a24a216cf3489112e58e_Cross%20-%20Hydraulic-2.png",
-
-  // annular:
-  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43c4b43469a2e8adef108_annular-lines-s-p-500.png",
-
-  // double:
-  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a607b6e620e8d095cd8_double-lines-s-p-500.png",
-
-  // single:
-  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a600e30348edb10ea25_single-lines-s-p-500.png",
-
-  // cross:
-  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a6185c880cf2c85a7c3_cross-lines-s-p-500.png",
-
-  // spool:
-  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b43a60ad38b5aab5702ba1_spool-lines-s-p-500.png",
-
-  // wellhead:
-  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b434b3ef1b19da5b4282b7_wellhead-lines-s-p-500.png",
-
-  // hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bcdf611491cc6deb154360_Cross%20-%20Hydraulic.png",
-
-  // adaptor:
-  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6706acb871e7eebcfaaa2539_adaptor-lines-s.png",
-
-  // bell_nipple:
-  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6707e33c92c129265e244ade_bell_nipple-lines-s.png",
-
-  // gate_valve:
-  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6707e32d9da98d7a2926a97c_gate_valve-lines-s.png",
-
-  //new-comps.............................................................
   blank:
     "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s-p-500.png",
 
   side: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66bd053ce29208cca039c35e_blank-cross.png",
 
-  spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67169049143f5941f530f550_spl.png",
+  spl: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b6eebe9ad00b35d6612a_spl.png",
 
-  man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67169049599bef43e708a130_man.png",
+  man: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b6ef9b4d2c8142a7f216_man.png",
 
-  hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67168fd00da78f297275477c_hyd.png",
+  hyd: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b6ee394953790797f3cb_hyd.png",
 
   adaptor:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6711472a9b81cf89e9209361_dsa-2.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b312d2fffcb9a524d767_dsa.png",
 
   single:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a63278e75e8411fe6c_single-2.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b5ea1c06997b0220fcc8_single.png",
 
   cross:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a651504ebf148b4cd6_cross-2.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b3c7f8b23dec7c289076_cross.png",
 
   cross_limit:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671568a579848e76035dd2da_cross-limit.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b3f6ba678f63c4e3435b_cross-limit.png",
 
   bell_nipple:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6fcd56570fad07590_bell%20nipple-2.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b5eac5e2db20f536b96e_bell-nipple.png",
 
   gate_valve:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6fcd56570fad0758d_gate%20valve-2.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b5ea99a5d62431ab9fdd_gate-valve.png",
 
   washington:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a6f41e86f336bcb5e2_washington-2.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b5ea1505503c09e8350d_washington.png",
 
   wellhead:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a674e41c46ddf6a523_wellhead-2.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b5ea8583818d4d9a7805_wellhead.png",
 
   annular:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a69b81cf89e91e3c58_annular-2.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b5eaf8b23dec7c2a0609_annular.png",
 
   spool:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671144a693ce93795200daa9_spool-2.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b5ea9b4d2c8142a7082a_spool.png",
 
   double:
-    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/67113e2e31935f629aac8048_double-2.png",
+    "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/6719b27b99a5d62431a90ed2_double.png",
 };
 
 export const COMP_HEIGHTS = {
