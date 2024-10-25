@@ -49,15 +49,15 @@ class PDFView extends View {
       margin: [yDown, 10, 10, 10],
       // margin: [yDown, 0, 0, xValue],
       // margin: [yDown, 0, 0, ],
-      // autoPaging: "text",
+      autoPaging: "text",
       // x: 192,
-      // x: xValue,
       x: xValue,
+      // x: xValue,
       // x: 0,
 
       y: 0,
-      // width: 190, // Target width in the PDF document
-      // windowWidth: 400, // Window width in CSS pixels
+      width: 190, // Target width in the PDF document
+      windowWidth: 200, // Window width in CSS pixels
     });
     doc.addImage(
       img,
