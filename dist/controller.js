@@ -19778,11 +19778,14 @@
         optOutput = optOutput.split("|");
         if (this._boreFinalValue) optOutput[0] = this._boreFinalValue;
         if (this._typeFinalValue) optOutput[1] = this._typeFinalValue;
-        if (this._rangeFinalValue)
-          optOutput[2] = this._rangeFinalValue.replaceAll("-", "&#8209;");
+        if (this._rangeFinalValue) {
+          if (this._rangeFinalValue === "none") optOutput[2] = "DISCARD";
+          else optOutput[2] = this._rangeFinalValue.replaceAll("-", "&#8209;");
+        }
         if (this._pressFinalValue) {
           this._typeOpts.classList.contains("hide") ? optOutput[1] = this._pressFinalValue : optOutput[3] = this._pressFinalValue;
         }
+        if (optOutput[2] === "DISCARD") optOutput.splice(2, 1);
         optOutput.splice(-1, 1);
         optOutput = optOutput.slice(0, 1).concat(
           stackView_default._compFlag.charAt(0).toUpperCase() + stackView_default._compFlag.slice(1),
@@ -19807,6 +19810,14 @@
         (el) => el.firstElementChild.classList.remove("selected")
       );
       selectedText.classList.add("selected");
+      if (selectedText.closest(".modal_column").classList.contains("type") && selectedText.innerHTML === "VBA") {
+        this._rangeOpts.classList.remove("hide");
+        this._rangeOpts.querySelector(".opt_div.custom").classList.remove("selected");
+      } else if (selectedText.closest(".modal_column").classList.contains("type") && selectedText.innerHTML != "VBA") {
+        this._rangeOpts.classList.add("hide");
+        this._rangeFinalValue = "none";
+        this._rangeOpts.querySelector(".opt_div.custom").click();
+      }
     }
     //_________________________________________________________________________
     _resetOptions() {
@@ -20160,7 +20171,7 @@
         </div>
         <img class="img" src=${COMP_IMG.adaptor}>
         <div class="adaptor-div">
-          <div class="adaptor-text">${extArrayPress[i3 + 1]}"&nbsp;X&nbsp;${extArrayPress[i3]}PSI&nbsp;DSA</div>
+          <div class="adaptor-text">${extArrayPress[i3 + 1]}&nbsp;X&nbsp;${extArrayPress[i3]}PSI&nbsp;DSA</div>
         </div>
       </div>`;
           this._allComps[i3].insertAdjacentHTML("afterend", adapterHtml);
@@ -28415,7 +28426,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("DSA-Pressure - Oct 25, 2024");
+  console.log("Range for VBA - Oct 25, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
@@ -28480,7 +28491,6 @@
     if (clicked.classList.contains("second")) optionsView_default._secondOptsFlag = true;
     if (stackView_default._compFlag === "single" || stackView_default._compFlag === "double") {
       optionsView_default._typeOpts.classList.remove("hide");
-      optionsView_default._rangeOpts.classList.remove("hide");
     }
     optionsView_default._optsModal.classList.remove("hide");
     notesView_default._modalBlockout.classList.remove("hide");

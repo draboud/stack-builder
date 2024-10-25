@@ -8,7 +8,7 @@ import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 import statsView from "./views/statsView.js";
 
-console.log("DSA-Pressure - Oct 25, 2024");
+console.log("Range for VBA - Oct 25, 2024");
 
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
@@ -82,7 +82,7 @@ controlOptions = function (clicked) {
   if (clicked.classList.contains("second")) optionsView._secondOptsFlag = true;
   if (stackView._compFlag === "single" || stackView._compFlag === "double") {
     optionsView._typeOpts.classList.remove("hide");
-    optionsView._rangeOpts.classList.remove("hide");
+    // optionsView._rangeOpts.classList.remove("hide");
   }
   optionsView._optsModal.classList.remove("hide");
   notesView._modalBlockout.classList.remove("hide");

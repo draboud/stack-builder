@@ -91,7 +91,7 @@ class AdaptorsView extends View {
         </div>
         <img class="img" src=${COMP_IMG.adaptor}>
         <div class="adaptor-div">
-          <div class="adaptor-text">${extArrayPress[i + 1]}"&nbsp;X&nbsp;${
+          <div class="adaptor-text">${extArrayPress[i + 1]}&nbsp;X&nbsp;${
           extArrayPress[i]
         }PSI&nbsp;DSA</div>
         </div>
