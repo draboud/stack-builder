@@ -8,7 +8,7 @@ import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 import statsView from "./views/statsView.js";
 
-console.log("Range for VBA - Oct 25, 2024");
+console.log("pdf-center-horiz - Oct 25, 2024");
 
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
@@ -245,5 +245,12 @@ const init = function () {
 init();
 
 //TEST AREA....................................................
-
+const testBtn = document.querySelector(".test_button");
+testBtn.addEventListener("click", function () {
+  let stackWidthArr = [];
+  pdfView._retarget();
+  pdfView._allOptsDivs.forEach((el) => stackWidthArr.push($(el).width()));
+  console.log("stackWidthArr: ", stackWidthArr);
+  console.log("largest: ", Math.max(...stackWidthArr));
+});
 //.............................................................

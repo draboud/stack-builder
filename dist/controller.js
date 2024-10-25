@@ -19867,7 +19867,6 @@
   var optionsView_default = new OptionsView();
 
   // src/views/stackView.js
-  var viewBtn = document.querySelector(".view_button");
   var stackHeight = document.querySelector(".stack-height-text");
   var StackView = class extends View {
     _finalCrossNotes = "";
@@ -28376,24 +28375,31 @@
       finalCrossNotes = stackView_default._finalCrossNotes;
       notesInput += finalCrossNotes;
       const elementHTML = document.querySelector(".content_to_print");
+      let stackWidthArr = [];
+      stackView_default._allOptsDivs.forEach((el) => stackWidthArr.push($(el).width()));
+      const stackWidth = Math.max(...stackWidthArr) + $(document.querySelector(".comp-wrapper")).width();
       const doc = new jspdf_es_min_default("p", "pt", "a4");
       const img = new Image();
       const printDivHeight = $(document.querySelector(".comp-wrapper")).height();
       const xOffset = doc.internal.pageSize.getWidth() / 2;
       const yDown = (PDF_SETTINGS.pageHeight - printDivHeight) / 2;
+      const xValue = (doc.internal.pageSize.getWidth() - stackWidth) / 2;
       img.src = PDF_SETTINGS.logoImg;
       doc.html(elementHTML, {
         callback: function(doc2) {
           doc2.save("TSI - Stack Builder.pdf");
         },
         margin: [yDown, 10, 10, 10],
-        autoPaging: "text",
-        x: 192,
-        y: 0,
-        width: 190,
-        // Target width in the PDF document
-        windowWidth: 200
-        // Window width in CSS pixels
+        // margin: [yDown, 0, 0, xValue],
+        // margin: [yDown, 0, 0, ],
+        // autoPaging: "text",
+        // x: 192,
+        // x: xValue,
+        x: xValue,
+        // x: 0,
+        y: 0
+        // width: 190, // Target width in the PDF document
+        // windowWidth: 400, // Window width in CSS pixels
       });
       doc.addImage(
         img,
@@ -28426,7 +28432,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("Range for VBA - Oct 25, 2024");
+  console.log("pdf-center-horiz - Oct 25, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
@@ -28600,6 +28606,14 @@
     optionsView_default._addHandlerCrossMiniItem(controlCrossMiniItem);
   };
   init();
+  var testBtn = document.querySelector(".test_button");
+  testBtn.addEventListener("click", function() {
+    let stackWidthArr = [];
+    pdfView_default._retarget();
+    pdfView_default._allOptsDivs.forEach((el) => stackWidthArr.push($(el).width()));
+    console.log("stackWidthArr: ", stackWidthArr);
+    console.log("largest: ", Math.max(...stackWidthArr));
+  });
 })();
 /*! Bundled license information:
 

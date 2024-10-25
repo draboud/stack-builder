@@ -21,11 +21,23 @@ class PDFView extends View {
     // }
 
     const elementHTML = document.querySelector(".content_to_print");
+    //.................................................
+    let stackWidthArr = [];
+    // stackView._retarget();
+    stackView._allOptsDivs.forEach((el) => stackWidthArr.push($(el).width()));
+    const stackWidth =
+      Math.max(...stackWidthArr) +
+      $(document.querySelector(".comp-wrapper")).width();
+    // debugger;
+    //.................................................
+
     const doc = new jsPDF("p", "pt", "a4");
     const img = new Image();
     const printDivHeight = $(document.querySelector(".comp-wrapper")).height();
     const xOffset = doc.internal.pageSize.getWidth() / 2;
     const yDown = (PDF_SETTINGS.pageHeight - printDivHeight) / 2;
+    // const xValue = (595 - stackWidth) / 2;
+    const xValue = (doc.internal.pageSize.getWidth() - stackWidth) / 2;
 
     img.src = PDF_SETTINGS.logoImg;
 
@@ -35,11 +47,17 @@ class PDFView extends View {
         doc.save("TSI - Stack Builder.pdf");
       },
       margin: [yDown, 10, 10, 10],
-      autoPaging: "text",
-      x: 192,
+      // margin: [yDown, 0, 0, xValue],
+      // margin: [yDown, 0, 0, ],
+      // autoPaging: "text",
+      // x: 192,
+      // x: xValue,
+      x: xValue,
+      // x: 0,
+
       y: 0,
-      width: 190, // Target width in the PDF document
-      windowWidth: 200, // Window width in CSS pixels
+      // width: 190, // Target width in the PDF document
+      // windowWidth: 400, // Window width in CSS pixels
     });
     doc.addImage(
       img,
