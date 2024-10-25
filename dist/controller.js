@@ -20123,20 +20123,23 @@
     _autoAdapt = function() {
       this._retarget();
       let numOfOpts = 0;
-      let extArray = [];
+      let extArrayBore = [];
+      let extArrayPress = [];
       this._allAdaptors.forEach(function(el) {
         el.parentNode.removeChild(el);
       });
       this._allOptsText.forEach(function(el) {
-        let intArray = "";
         if (el.classList.contains("hide") || el.classList.contains("second"))
           return;
         const onlyBore = el.innerHTML.split('"')[0];
         numOfOpts += 1;
-        extArray.push(onlyBore);
+        extArrayBore.push(onlyBore);
+        const onlyPressArr = el.innerHTML.split(";");
+        const onlyPress = onlyPressArr[onlyPressArr.length - 2];
+        extArrayPress.push(onlyPress);
       });
       for (let i3 = 0; i3 < numOfOpts - 1; i3++) {
-        if (extArray[i3] !== extArray[i3 + 1] && !extArray[i3].includes("options") && !extArray[i3 + 1].includes("options")) {
+        if (extArrayBore[i3] !== extArrayBore[i3 + 1] && !extArrayBore[i3].includes("options") && !extArrayBore[i3 + 1].includes("options")) {
           const adapterHtml = `
       <div class="adapt-div">
         <div class="height-div">
@@ -20144,7 +20147,20 @@
         </div>
         <img class="img" src=${COMP_IMG.adaptor}>
         <div class="adaptor-div">
-          <div class="adaptor-text">${extArray[i3 + 1]}"&nbsp;X&nbsp;${extArray[i3]}"&nbsp;DSA</div>
+          <div class="adaptor-text">${extArrayBore[i3 + 1]}"&nbsp;X&nbsp;${extArrayBore[i3]}"&nbsp;DSA</div>
+        </div>
+      </div>`;
+          this._allComps[i3].insertAdjacentHTML("afterend", adapterHtml);
+        }
+        if (extArrayPress[i3] !== extArrayPress[i3 + 1] && !extArrayBore[i3].includes("options") && !extArrayBore[i3 + 1].includes("options")) {
+          const adapterHtml = `
+      <div class="adapt-div">
+        <div class="height-div">
+          <div class="height-text">${COMP_HEIGHTS.adaptor}"</div>
+        </div>
+        <img class="img" src=${COMP_IMG.adaptor}>
+        <div class="adaptor-div">
+          <div class="adaptor-text">${extArrayPress[i3 + 1]}"&nbsp;X&nbsp;${extArrayPress[i3]}PSI&nbsp;DSA</div>
         </div>
       </div>`;
           this._allComps[i3].insertAdjacentHTML("afterend", adapterHtml);
@@ -28399,7 +28415,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("Cross Notes - Oct 23, 2024");
+  console.log("DSA-Pressure - Oct 25, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];

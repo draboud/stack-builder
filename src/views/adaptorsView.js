@@ -38,26 +38,31 @@ class AdaptorsView extends View {
   _autoAdapt = function () {
     this._retarget();
     let numOfOpts = 0;
-    let extArray = [];
+    let extArrayBore = [];
+    let extArrayPress = [];
     this._allAdaptors.forEach(function (el) {
       el.parentNode.removeChild(el);
     });
 
     this._allOptsText.forEach(function (el) {
-      let intArray = "";
+      // let intArray = "";
       if (el.classList.contains("hide") || el.classList.contains("second"))
         return;
 
       const onlyBore = el.innerHTML.split('"')[0];
       numOfOpts += 1;
-      extArray.push(onlyBore);
+      extArrayBore.push(onlyBore);
+
+      const onlyPressArr = el.innerHTML.split(";");
+      const onlyPress = onlyPressArr[onlyPressArr.length - 2];
+      extArrayPress.push(onlyPress);
     });
     for (let i = 0; i < numOfOpts - 1; i++) {
-      // debugger;
+      //Check for bore
       if (
-        extArray[i] !== extArray[i + 1] &&
-        !extArray[i].includes("options") &&
-        !extArray[i + 1].includes("options")
+        extArrayBore[i] !== extArrayBore[i + 1] &&
+        !extArrayBore[i].includes("options") &&
+        !extArrayBore[i + 1].includes("options")
       ) {
         const adapterHtml = `
       <div class="adapt-div">
@@ -66,9 +71,29 @@ class AdaptorsView extends View {
         </div>
         <img class="img" src=${COMP_IMG.adaptor}>
         <div class="adaptor-div">
-          <div class="adaptor-text">${extArray[i + 1]}"&nbsp;X&nbsp;${
-          extArray[i]
+          <div class="adaptor-text">${extArrayBore[i + 1]}"&nbsp;X&nbsp;${
+          extArrayBore[i]
         }"&nbsp;DSA</div>
+        </div>
+      </div>`;
+        this._allComps[i].insertAdjacentHTML("afterend", adapterHtml);
+      }
+      //Check for pressure
+      if (
+        extArrayPress[i] !== extArrayPress[i + 1] &&
+        !extArrayBore[i].includes("options") &&
+        !extArrayBore[i + 1].includes("options")
+      ) {
+        const adapterHtml = `
+      <div class="adapt-div">
+        <div class="height-div">
+          <div class="height-text">${COMP_HEIGHTS.adaptor}"</div>
+        </div>
+        <img class="img" src=${COMP_IMG.adaptor}>
+        <div class="adaptor-div">
+          <div class="adaptor-text">${extArrayPress[i + 1]}"&nbsp;X&nbsp;${
+          extArrayPress[i]
+        }PSI&nbsp;DSA</div>
         </div>
       </div>`;
         this._allComps[i].insertAdjacentHTML("afterend", adapterHtml);

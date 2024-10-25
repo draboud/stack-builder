@@ -8,7 +8,7 @@ import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 import statsView from "./views/statsView.js";
 
-console.log("Cross Notes - Oct 23, 2024");
+console.log("DSA-Pressure - Oct 25, 2024");
 
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
