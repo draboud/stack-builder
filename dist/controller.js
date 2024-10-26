@@ -28429,7 +28429,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("pdf-center-horiz - Oct 25, 2024");
+  console.log("label-input - Oct 25, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
