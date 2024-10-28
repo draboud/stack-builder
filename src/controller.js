@@ -105,10 +105,10 @@ controlLabelInput = function (labelValue) {
     .querySelector(".opt_div.custom")
     .firstElementChild.classList.add("selected");
   //register 'click' on custom option
-  document
-    .querySelector(".modal_column.label")
-    .querySelector(".opt_div.custom")
-    .click();
+  // document
+  //   .querySelector(".modal_column.label")
+  //   .querySelector(".opt_div.custom")
+  //   .click();
 };
 //____________________________________________________________________
 controlBoreInput = function (boreValue) {
@@ -118,10 +118,10 @@ controlBoreInput = function (boreValue) {
     .querySelector(".opt_div.custom")
     .firstElementChild.classList.add("selected");
   //register 'click' on custom option
-  document
-    .querySelector(".modal_column.bore")
-    .querySelector(".opt_div.custom")
-    .click();
+  // document
+  //   .querySelector(".modal_column.bore")
+  //   .querySelector(".opt_div.custom")
+  //   .click();
 };
 //____________________________________________________________________
 controlTypeInput = function (typeValue) {
@@ -132,10 +132,10 @@ controlTypeInput = function (typeValue) {
     .querySelector(".opt_div.custom")
     .firstElementChild.classList.add("selected");
   //register 'click' on custom option
-  document
-    .querySelector(".modal_column.type")
-    .querySelector(".opt_div.custom")
-    .click();
+  // document
+  //   .querySelector(".modal_column.type")
+  //   .querySelector(".opt_div.custom")
+  //   .click();
 };
 //____________________________________________________________________
 controlRangeInput = function (rangeValue) {
@@ -145,10 +145,10 @@ controlRangeInput = function (rangeValue) {
     .querySelector(".opt_div.custom")
     .firstElementChild.classList.add("selected");
   //register 'click' on custom option
-  document
-    .querySelector(".modal_column.range")
-    .querySelector(".opt_div.custom")
-    .click();
+  // document
+  //   .querySelector(".modal_column.range")
+  //   .querySelector(".opt_div.custom")
+  //   .click();
 };
 //____________________________________________________________________
 controlPressInput = function (pressValue) {
@@ -158,10 +158,10 @@ controlPressInput = function (pressValue) {
     .querySelector(".opt_div.custom")
     .firstElementChild.classList.add("selected");
   //register 'click' on custom option
-  document
-    .querySelector(".modal_column.pressure")
-    .querySelector(".opt_div.custom")
-    .click();
+  // document
+  //   .querySelector(".modal_column.pressure")
+  //   .querySelector(".opt_div.custom")
+  //   .click();
 };
 //____________________________________________________________________
 controlAdapt = function () {
@@ -261,10 +261,11 @@ init();
 //TEST AREA....................................................
 const testBtn = document.querySelector(".test_button");
 testBtn.addEventListener("click", function () {
-  let stackWidthArr = [];
-  pdfView._retarget();
-  pdfView._allOptsDivs.forEach((el) => stackWidthArr.push($(el).width()));
-  console.log("stackWidthArr: ", stackWidthArr);
-  console.log("largest: ", Math.max(...stackWidthArr));
+  let myStr = "this is my string";
+  let myArr = ["one", "two", "three", "four", "five"];
+
+  console.log("string slice: ", myStr.slice(1));
+  console.log("array slice: ", myArr.slice(1, 3));
+  console.log("array splice: ", myArr.splice(1, 4));
 });
 //.............................................................

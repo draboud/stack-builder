@@ -19779,11 +19779,7 @@
       this._retarget();
       let optOutput = "";
       const arrExtra = [this._allTypeOptsText, this._allRangeOptsText];
-      let arrUse = [
-        this._allLabelOptsText,
-        this._allBoreOptsText,
-        this._allPressOptsText
-      ];
+      let arrUse = [this._allBoreOptsText, this._allPressOptsText];
       let selectedText = "";
       if (stackView_default._compFlag === "single" || stackView_default._compFlag === "double") {
         arrUse = arrUse.slice(1, 1).concat(arrExtra, arrUse.slice(2));
@@ -19795,6 +19791,7 @@
           selectedText = el.find((el2) => el2.classList.contains("selected"));
           selectedText.innerHTML === "Custom:" ? optOutput += "&nbsp;|" : optOutput += selectedText.innerHTML + "|";
         });
+        debugger;
         optOutput = optOutput.split("|");
         if (this._boreFinalValue) optOutput[0] = this._boreFinalValue;
         if (this._typeFinalValue) optOutput[1] = this._typeFinalValue;
@@ -28529,28 +28526,23 @@
   controlLabelInput = function(labelValue) {
     optionsView_default._labelFinalValue = labelValue + '"';
     document.querySelector(".modal_column.label").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
-    document.querySelector(".modal_column.label").querySelector(".opt_div.custom").click();
   };
   controlBoreInput = function(boreValue) {
     optionsView_default._boreFinalValue = boreValue + '"';
     document.querySelector(".modal_column.bore").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
-    document.querySelector(".modal_column.bore").querySelector(".opt_div.custom").click();
   };
   controlTypeInput = function(typeValue) {
     console.log("custom type set");
     optionsView_default._typeFinalValue = typeValue;
     document.querySelector(".modal_column.type").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
-    document.querySelector(".modal_column.type").querySelector(".opt_div.custom").click();
   };
   controlRangeInput = function(rangeValue) {
     optionsView_default._rangeFinalValue = rangeValue + '"';
     document.querySelector(".modal_column.range").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
-    document.querySelector(".modal_column.range").querySelector(".opt_div.custom").click();
   };
   controlPressInput = function(pressValue) {
     optionsView_default._pressFinalValue = pressValue + "&nbsp;PSI";
     document.querySelector(".modal_column.pressure").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
-    document.querySelector(".modal_column.pressure").querySelector(".opt_div.custom").click();
   };
   controlAdapt = function() {
     adaptorsView_default._autoAdapt();
@@ -28631,11 +28623,11 @@
   init();
   var testBtn = document.querySelector(".test_button");
   testBtn.addEventListener("click", function() {
-    let stackWidthArr = [];
-    pdfView_default._retarget();
-    pdfView_default._allOptsDivs.forEach((el) => stackWidthArr.push($(el).width()));
-    console.log("stackWidthArr: ", stackWidthArr);
-    console.log("largest: ", Math.max(...stackWidthArr));
+    let myStr = "this is my string";
+    let myArr = ["one", "two", "three", "four", "five"];
+    console.log("string slice: ", myStr.slice(1));
+    console.log("array slice: ", myArr.slice(1, 3));
+    console.log("array splice: ", myArr.splice(1, 4));
   });
 })();
 /*! Bundled license information:

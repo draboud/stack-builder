@@ -102,11 +102,7 @@ class OptionsView extends View {
     this._retarget();
     let optOutput = "";
     const arrExtra = [this._allTypeOptsText, this._allRangeOptsText];
-    let arrUse = [
-      this._allLabelOptsText,
-      this._allBoreOptsText,
-      this._allPressOptsText,
-    ];
+    let arrUse = [this._allBoreOptsText, this._allPressOptsText];
     let selectedText = "";
 
     if (stackView._compFlag === "single" || stackView._compFlag === "double") {
@@ -124,7 +120,7 @@ class OptionsView extends View {
           ? (optOutput += "&nbsp;" + "|")
           : (optOutput += selectedText.innerHTML + "|");
       });
-
+      debugger;
       optOutput = optOutput.split("|");
 
       // if (this._labelFinalValue) optOutput[0] = this._labelFinalValue;
@@ -184,7 +180,7 @@ class OptionsView extends View {
       el.firstElementChild.classList.remove("selected")
     );
     selectedText.classList.add("selected");
-
+    // debugger;
     //flyout range option if VBA is selected
     if (
       selectedText.closest(".modal_column").classList.contains("type") &&
