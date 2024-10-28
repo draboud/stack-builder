@@ -98,6 +98,19 @@ controlModalBtn = function () {
   optionsView._closeModal();
 };
 //____________________________________________________________________
+controlLabelInput = function (labelValue) {
+  optionsView._labelFinalValue = labelValue + '"';
+  document
+    .querySelector(".modal_column.label")
+    .querySelector(".opt_div.custom")
+    .firstElementChild.classList.add("selected");
+  //register 'click' on custom option
+  document
+    .querySelector(".modal_column.label")
+    .querySelector(".opt_div.custom")
+    .click();
+};
+//____________________________________________________________________
 controlBoreInput = function (boreValue) {
   optionsView._boreFinalValue = boreValue + '"';
   document
@@ -230,6 +243,7 @@ const init = function () {
   optionsView._addHandlerOptions(controlOptions);
   optionsView._addHandlerModalBtn(controlModalBtn);
   optionsView._addHandlerOptsModal(controlOptsModal);
+  optionsView._addHandlerLabelForm(controlLabelInput);
   optionsView._addHandlerBoreForm(controlBoreInput);
   optionsView._addHandlerTypeForm(controlTypeInput);
   optionsView._addHandlerRangeForm(controlRangeInput);

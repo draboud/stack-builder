@@ -19274,6 +19274,7 @@
     _allSpacers;
     _allHydSpacers;
     _allOptsModalText;
+    _allLabelOptsText;
     _allBoreOptsText;
     _allPressOptsText;
     _allTypeOptsText;
@@ -19310,7 +19311,12 @@
         ...document.querySelectorAll(".range_opt_text"),
         ...document.querySelectorAll(".press_opt_text")
       ];
-      this._allBoreOptsText = [...document.querySelectorAll(".bore_opt_text")];
+      this._allLabelOptsText = this._allLabelOptsText = [
+        ...document.querySelectorAll(".label_opt_text")
+      ];
+      this._allBoreOptsText = this._allBoreOptsText = [
+        ...document.querySelectorAll(".bore_opt_text")
+      ];
       this._allPressOptsText = [...document.querySelectorAll(".press_opt_text")];
       this._allTypeOptsText = [...document.querySelectorAll(".type_opt_text")];
       this._allRangeOptsText = [...document.querySelectorAll(".range_opt_text")];
@@ -19683,6 +19689,7 @@
     _optsModal = document.querySelector(".options_modal");
     _typeOpts = document.querySelector(".modal_column.type");
     _rangeOpts = document.querySelector(".modal_column.range");
+    _labelForm = document.querySelector(".labelForm");
     _boreForm = document.querySelector(".boreForm");
     _typeForm = document.querySelector(".typeForm");
     _rangeForm = document.querySelector(".rangeForm");
@@ -19694,6 +19701,7 @@
     _crossMiniMenu = document.querySelector(".cross_mini_menu");
     _crossMiniItems = document.querySelectorAll(".cross-mini-item");
     _customDiv = document.querySelector(".opt_div.custom");
+    _labelFinalValue;
     _boreFinalValue;
     _typeFinalValue;
     _rangeFinalValue;
@@ -19724,6 +19732,14 @@
         const clicked = e2.target.closest(".modal_close_button");
         if (!clicked) return;
         handler();
+      });
+    }
+    //_________________________________________________________________________
+    _addHandlerLabelForm(handler) {
+      this._labelForm.addEventListener("submit", function(e2) {
+        e2.preventDefault();
+        const labelInputValue = document.querySelector(".label_input").value;
+        handler(labelInputValue);
       });
     }
     //_________________________________________________________________________
@@ -19763,10 +19779,14 @@
       this._retarget();
       let optOutput = "";
       const arrExtra = [this._allTypeOptsText, this._allRangeOptsText];
-      let arrUse = [this._allBoreOptsText, this._allPressOptsText];
+      let arrUse = [
+        this._allLabelOptsText,
+        this._allBoreOptsText,
+        this._allPressOptsText
+      ];
       let selectedText = "";
       if (stackView_default._compFlag === "single" || stackView_default._compFlag === "double") {
-        arrUse = arrUse.slice(0, 1).concat(arrExtra, arrUse.slice(1));
+        arrUse = arrUse.slice(1, 1).concat(arrExtra, arrUse.slice(2));
       }
       const textChild = clicked.firstElementChild;
       this._setActiveOpt(textChild);
@@ -19785,7 +19805,7 @@
         if (this._pressFinalValue) {
           this._typeOpts.classList.contains("hide") ? optOutput[1] = this._pressFinalValue : optOutput[3] = this._pressFinalValue;
         }
-        if (optOutput[2] === "DISCARD") optOutput.splice(2, 1);
+        if (optOutput[3] === "DISCARD") optOutput.splice(2, 1);
         optOutput.splice(-1, 1);
         optOutput = optOutput.slice(0, 1).concat(
           stackView_default._compFlag.charAt(0).toUpperCase() + stackView_default._compFlag.slice(1),
@@ -28506,6 +28526,11 @@
   controlModalBtn = function() {
     optionsView_default._closeModal();
   };
+  controlLabelInput = function(labelValue) {
+    optionsView_default._labelFinalValue = labelValue + '"';
+    document.querySelector(".modal_column.label").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
+    document.querySelector(".modal_column.label").querySelector(".opt_div.custom").click();
+  };
   controlBoreInput = function(boreValue) {
     optionsView_default._boreFinalValue = boreValue + '"';
     document.querySelector(".modal_column.bore").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
@@ -28590,6 +28615,7 @@
     optionsView_default._addHandlerOptions(controlOptions);
     optionsView_default._addHandlerModalBtn(controlModalBtn);
     optionsView_default._addHandlerOptsModal(controlOptsModal);
+    optionsView_default._addHandlerLabelForm(controlLabelInput);
     optionsView_default._addHandlerBoreForm(controlBoreInput);
     optionsView_default._addHandlerTypeForm(controlTypeInput);
     optionsView_default._addHandlerRangeForm(controlRangeInput);

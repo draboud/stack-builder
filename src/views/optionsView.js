@@ -7,6 +7,7 @@ class OptionsView extends View {
   _optsModal = document.querySelector(".options_modal");
   _typeOpts = document.querySelector(".modal_column.type");
   _rangeOpts = document.querySelector(".modal_column.range");
+  _labelForm = document.querySelector(".labelForm");
   _boreForm = document.querySelector(".boreForm");
   _typeForm = document.querySelector(".typeForm");
   _rangeForm = document.querySelector(".rangeForm");
@@ -21,6 +22,7 @@ class OptionsView extends View {
 
   _customDiv = document.querySelector(".opt_div.custom");
 
+  _labelFinalValue;
   _boreFinalValue;
   _typeFinalValue;
   _rangeFinalValue;
@@ -53,6 +55,14 @@ class OptionsView extends View {
       const clicked = e.target.closest(".modal_close_button");
       if (!clicked) return;
       handler();
+    });
+  }
+  //_________________________________________________________________________
+  _addHandlerLabelForm(handler) {
+    this._labelForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const labelInputValue = document.querySelector(".label_input").value;
+      handler(labelInputValue);
     });
   }
   //_________________________________________________________________________
@@ -92,11 +102,15 @@ class OptionsView extends View {
     this._retarget();
     let optOutput = "";
     const arrExtra = [this._allTypeOptsText, this._allRangeOptsText];
-    let arrUse = [this._allBoreOptsText, this._allPressOptsText];
+    let arrUse = [
+      this._allLabelOptsText,
+      this._allBoreOptsText,
+      this._allPressOptsText,
+    ];
     let selectedText = "";
 
     if (stackView._compFlag === "single" || stackView._compFlag === "double") {
-      arrUse = arrUse.slice(0, 1).concat(arrExtra, arrUse.slice(1));
+      arrUse = arrUse.slice(1, 1).concat(arrExtra, arrUse.slice(2));
     }
     const textChild = clicked.firstElementChild;
     this._setActiveOpt(textChild);
@@ -113,6 +127,7 @@ class OptionsView extends View {
 
       optOutput = optOutput.split("|");
 
+      // if (this._labelFinalValue) optOutput[0] = this._labelFinalValue;
       if (this._boreFinalValue) optOutput[0] = this._boreFinalValue;
       if (this._typeFinalValue) optOutput[1] = this._typeFinalValue;
 
@@ -126,7 +141,7 @@ class OptionsView extends View {
           : (optOutput[3] = this._pressFinalValue);
       }
       //removes range element from array if range is empty
-      if (optOutput[2] === "DISCARD") optOutput.splice(2, 1);
+      if (optOutput[3] === "DISCARD") optOutput.splice(2, 1);
 
       optOutput.splice(-1, 1);
 
@@ -137,6 +152,17 @@ class OptionsView extends View {
             stackView._compFlag.slice(1),
           optOutput.slice(1)
         );
+      // optOutput = optOutput
+      //   .slice(0, 1)
+      //   .concat(
+      //     this._labelFinalValue
+      //       ? (this._labelFinalValue.charAt(0).toUpperCase() +
+      //           this._labelFinalValue.slice(1),
+      //         optOutput.slice(1))
+      //       : stackView._compFlag.charAt(0).toUpperCase() +
+      //           stackView._compFlag.slice(1),
+      //     optOutput.slice(1)
+      //   );
       optOutput = optOutput.toString();
       optOutput = optOutput.replaceAll(",", "&nbsp;");
       this._allOptsModalText.forEach((el) => el.classList.remove("selected"));

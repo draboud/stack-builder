@@ -23,6 +23,7 @@ export default class View {
   _allSpacers;
   _allHydSpacers;
   _allOptsModalText;
+  _allLabelOptsText;
   _allBoreOptsText;
   _allPressOptsText;
   _allTypeOptsText;
@@ -64,7 +65,12 @@ export default class View {
       ...document.querySelectorAll(".range_opt_text"),
       ...document.querySelectorAll(".press_opt_text"),
     ];
-    this._allBoreOptsText = [...document.querySelectorAll(".bore_opt_text")];
+    this._allLabelOptsText = this._allLabelOptsText = [
+      ...document.querySelectorAll(".label_opt_text"),
+    ];
+    this._allBoreOptsText = this._allBoreOptsText = [
+      ...document.querySelectorAll(".bore_opt_text"),
+    ];
     this._allPressOptsText = [...document.querySelectorAll(".press_opt_text")];
     this._allTypeOptsText = [...document.querySelectorAll(".type_opt_text")];
     this._allRangeOptsText = [...document.querySelectorAll(".range_opt_text")];
