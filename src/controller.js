@@ -84,6 +84,9 @@ controlOptions = function (clicked) {
     optionsView._typeOpts.classList.remove("hide");
     // optionsView._rangeOpts.classList.remove("hide");
   }
+  optionsView._labelText.innerHTML =
+    stackView._compFlag.charAt(0).toUpperCase() + stackView._compFlag.slice(1);
+
   optionsView._optsModal.classList.remove("hide");
   notesView._modalBlockout.classList.remove("hide");
 };
@@ -99,9 +102,10 @@ controlModalBtn = function () {
 };
 //____________________________________________________________________
 controlLabelInput = function (labelValue) {
-  optionsView._labelFinalValue = labelValue + '"';
+  optionsView._labelFinalValue = labelValue;
+  optionsView._labelText.innerHTML = labelValue;
   document
-    .querySelector(".modal_column.label")
+    .querySelector(".label_column")
     .querySelector(".opt_div.custom")
     .firstElementChild.classList.add("selected");
   //register 'click' on custom option
@@ -118,10 +122,10 @@ controlBoreInput = function (boreValue) {
     .querySelector(".opt_div.custom")
     .firstElementChild.classList.add("selected");
   //register 'click' on custom option
-  // document
-  //   .querySelector(".modal_column.bore")
-  //   .querySelector(".opt_div.custom")
-  //   .click();
+  document
+    .querySelector(".modal_column.bore")
+    .querySelector(".opt_div.custom")
+    .click();
 };
 //____________________________________________________________________
 controlTypeInput = function (typeValue) {
@@ -132,10 +136,10 @@ controlTypeInput = function (typeValue) {
     .querySelector(".opt_div.custom")
     .firstElementChild.classList.add("selected");
   //register 'click' on custom option
-  // document
-  //   .querySelector(".modal_column.type")
-  //   .querySelector(".opt_div.custom")
-  //   .click();
+  document
+    .querySelector(".modal_column.type")
+    .querySelector(".opt_div.custom")
+    .click();
 };
 //____________________________________________________________________
 controlRangeInput = function (rangeValue) {
@@ -145,10 +149,10 @@ controlRangeInput = function (rangeValue) {
     .querySelector(".opt_div.custom")
     .firstElementChild.classList.add("selected");
   //register 'click' on custom option
-  // document
-  //   .querySelector(".modal_column.range")
-  //   .querySelector(".opt_div.custom")
-  //   .click();
+  document
+    .querySelector(".modal_column.range")
+    .querySelector(".opt_div.custom")
+    .click();
 };
 //____________________________________________________________________
 controlPressInput = function (pressValue) {
@@ -158,10 +162,10 @@ controlPressInput = function (pressValue) {
     .querySelector(".opt_div.custom")
     .firstElementChild.classList.add("selected");
   //register 'click' on custom option
-  // document
-  //   .querySelector(".modal_column.pressure")
-  //   .querySelector(".opt_div.custom")
-  //   .click();
+  document
+    .querySelector(".modal_column.pressure")
+    .querySelector(".opt_div.custom")
+    .click();
 };
 //____________________________________________________________________
 controlAdapt = function () {
@@ -266,6 +270,6 @@ testBtn.addEventListener("click", function () {
 
   console.log("string slice: ", myStr.slice(1));
   console.log("array slice: ", myArr.slice(1, 3));
-  console.log("array splice: ", myArr.splice(1, 4));
+  console.log("array splice: ", myArr.splice(1));
 });
 //.............................................................

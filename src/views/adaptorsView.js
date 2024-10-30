@@ -137,7 +137,7 @@ class AdaptorsView extends View {
     this._allAdaptors.forEach(function (el) {
       el.style.width = $(el).width() * result + "px";
     });
-
+    //hide blank side blocks for PDF output
     this._leftArray.forEach(function (el) {
       el.style.width = $(el).width() * result + "px";
       if (el.querySelector(".img_side").src.includes("blank"))
@@ -181,12 +181,17 @@ class AdaptorsView extends View {
       el.style.width = $(el).width() / scalingResult + "px";
     });
 
+    //unhide black side comp blocks to ensure editing is fully back
     this._leftArray.forEach(function (el) {
       el.style.width = $(el).width() / scalingResult + "px";
+      if (el.querySelector(".img_side").src.includes("blank"))
+        el.classList.remove("hide");
     });
 
     this._rightArray.forEach(function (el) {
       el.style.width = $(el).width() / scalingResult + "px";
+      if (el.querySelector(".img_side").src.includes("blank"))
+        el.classList.remove("hide");
     });
 
     this._allSpacers.forEach(function (el) {

@@ -48,12 +48,26 @@ class StackView extends View {
     if (this._activeComp.classList.contains("cross")) {
       this._activeSideComp?.classList.remove("active");
     }
-
+    //keep looking down comp-wrapper to make first non DSA active
     this._compWrapper.firstElementChild.classList.contains("adapt-div")
       ? this._compWrapper.firstElementChild.nextElementSibling.classList.add(
           "active"
         )
       : this._compWrapper.firstElementChild.classList.add("active");
+
+    if (
+      this._compWrapper.firstElementChild.nextElementSibling.classList.contains(
+        "adapt-div"
+      )
+    ) {
+      this._compWrapper.firstElementChild.nextElementSibling.classList.remove(
+        "active"
+      );
+      this._compWrapper.firstElementChild.nextElementSibling.nextElementSibling.classList.add(
+        "active"
+      );
+    }
+
     stackBtnsView.toggleCrossBtns("remove");
   };
   //____________________________________________________________________
