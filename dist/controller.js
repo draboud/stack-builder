@@ -19806,10 +19806,7 @@
         if (optOutput[2] === "DISCARD") optOutput.splice(2, 1);
         optOutput.splice(-1, 1);
         if (this._labelFinalValue) {
-          optOutput = optOutput.slice(0, 1).concat(
-            this._labelFinalValue.charAt(0).toUpperCase() + this._labelFinalValue.slice(1),
-            optOutput.slice(1)
-          );
+          optOutput = optOutput.slice(0, 1).concat(this._labelFinalValue, optOutput.slice(1));
         } else {
           optOutput = optOutput.slice(0, 1).concat(
             stackView_default._compFlag.charAt(0).toUpperCase() + stackView_default._compFlag.slice(1),
@@ -19818,10 +19815,12 @@
         }
         optOutput = optOutput.toString();
         optOutput = optOutput.replaceAll(",", "&nbsp;");
+        optOutput = optOutput.replaceAll("&#8209;", "-");
         this._allOptsModalText.forEach((el) => el.classList.remove("selected"));
         this._activeOptsDiv.querySelector(
           this._secondOptsFlag ? ".opts-text.second" : ".opts-text"
-        ).innerHTML = optOutput;
+        ).innerHTML = this._formatInputs(optOutput);
+        this._formatInputs(optOutput);
         this._resetOptions();
         this._closeModal();
       }
@@ -19846,6 +19845,61 @@
         this._rangeFinalValue = "none";
         this._rangeOpts.querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
       }
+    }
+    //_________________________________________________________________________
+    _formatInputs(inputStr, type) {
+      let finalOutStr;
+      finalOutStr = inputStr.charAt(0).toUpperCase() + inputStr.slice(1).replaceAll(" ", "&nbsp;").replaceAll("-", "&#8209;");
+      if (inputStr.length > 55) {
+        let stringToArr = inputStr.split("&nbsp;");
+        let arrStrings = [];
+        let lineCharTally = 0;
+        let lineBreakArr = [];
+        for (let i3 = 0; i3 < stringToArr.length - 1; i3++) {
+          stringToArr[i3] += " ";
+        }
+        arrStrings = [...stringToArr];
+        stringToArr.forEach(function(el, ind) {
+          lineCharTally += el.length;
+          if (lineCharTally >= 55) {
+            let shiftToAvoidNum = 1;
+            while (!isNaN(
+              Number(
+                stringToArr[ind - shiftToAvoidNum].charAt(
+                  stringToArr[ind - shiftToAvoidNum].length - 2
+                )
+              )
+            )) {
+              shiftToAvoidNum += 1;
+            }
+            lineBreakArr.push(ind - shiftToAvoidNum);
+            lineCharTally = el.length;
+          }
+        });
+        lineBreakArr.forEach(function(el) {
+          arrStrings[el] = stringToArr[el].slice(0, -1);
+          arrStrings[el] += "\n";
+        });
+        finalOutStr = arrStrings.join("").replaceAll(" ", "&nbsp;");
+      }
+      if (type === "bore") {
+        finalOutStr += '"';
+        return finalOutStr;
+      }
+      if (type === "range") {
+        const inputStrSplit = finalOutStr.split("&#8209;");
+        let addInch = [];
+        inputStrSplit.forEach(function(el) {
+          addInch.push(el += '"');
+        });
+        finalOutStr = addInch.join("-");
+        return finalOutStr;
+      }
+      if (type === "pressure") {
+        finalOutStr += "&nbsp;PSI";
+        return finalOutStr;
+      }
+      return finalOutStr;
     }
     //_________________________________________________________________________
     _resetOptions() {
@@ -28431,7 +28485,9 @@
       img.src = PDF_SETTINGS.logoImg;
       doc.html(elementHTML, {
         callback: function(doc2) {
-          doc2.save("TSI - Stack Builder.pdf");
+          doc2.save(
+            notesView_default._jobTitle ? `${notesView_default._jobTitle}` : "TSI-Stack Builder"
+          );
         },
         margin: [yDown, 10, 10, 10],
         autoPaging: "text",
@@ -28450,7 +28506,7 @@
         PDF_SETTINGS.logoX * PDF_SETTINGS.scaleFactor,
         PDF_SETTINGS.logoY * PDF_SETTINGS.scaleFactor
       );
-      doc.setFontSize(15);
+      doc.setFontSize(13);
       if (notesView_default._jobTitle) {
         doc.text(notesView_default._jobTitle, xOffset, 40, { align: "center" });
       }
@@ -28473,7 +28529,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("label-input - Oct 25, 2024");
+  console.log("format-inputs - Oct 30, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
@@ -28552,28 +28608,31 @@
     optionsView_default._closeModal();
   };
   controlLabelInput = function(labelValue) {
-    optionsView_default._labelFinalValue = labelValue;
+    optionsView_default._labelFinalValue = optionsView_default._formatInputs(labelValue);
     optionsView_default._labelText.innerHTML = labelValue;
     document.querySelector(".label_column").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
   };
   controlBoreInput = function(boreValue) {
-    optionsView_default._boreFinalValue = boreValue + '"';
+    optionsView_default._boreFinalValue = optionsView_default._formatInputs(boreValue, "bore");
     document.querySelector(".modal_column.bore").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
     document.querySelector(".modal_column.bore").querySelector(".opt_div.custom").click();
   };
   controlTypeInput = function(typeValue) {
     console.log("custom type set");
-    optionsView_default._typeFinalValue = typeValue;
+    optionsView_default._typeFinalValue = optionsView_default._formatInputs(typeValue, "type");
     document.querySelector(".modal_column.type").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
     document.querySelector(".modal_column.type").querySelector(".opt_div.custom").click();
   };
   controlRangeInput = function(rangeValue) {
-    optionsView_default._rangeFinalValue = rangeValue + '"';
+    optionsView_default._rangeFinalValue = optionsView_default._formatInputs(rangeValue, "range");
     document.querySelector(".modal_column.range").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
     document.querySelector(".modal_column.range").querySelector(".opt_div.custom").click();
   };
   controlPressInput = function(pressValue) {
-    optionsView_default._pressFinalValue = pressValue + "&nbsp;PSI";
+    optionsView_default._pressFinalValue = optionsView_default._formatInputs(
+      pressValue,
+      "pressure"
+    );
     document.querySelector(".modal_column.pressure").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
     document.querySelector(".modal_column.pressure").querySelector(".opt_div.custom").click();
   };
@@ -28603,6 +28662,7 @@
     controlHideModals();
   };
   controlPDF = function() {
+    optionsView_default.optOutput;
     adaptorsView_default._newHeight = adaptorsView_default._scaleStack();
     pdfView_default._convertToPDF(adaptorsView_default._newHeight);
     setTimeout(() => {
@@ -28655,12 +28715,11 @@
   };
   init();
   var testBtn = document.querySelector(".test_button");
+  var testText = document.querySelector(".opts-text-test");
+  var activeDiv = document.querySelector(".comp-div.active");
+  var compText = activeDiv.querySelector(".opts-text");
   testBtn.addEventListener("click", function() {
-    let myStr = "this is my string";
-    let myArr = ["one", "two", "three", "four", "five"];
-    console.log("string slice: ", myStr.slice(1));
-    console.log("array slice: ", myArr.slice(1, 3));
-    console.log("array splice: ", myArr.splice(1));
+    console.log("one two three four five six seven eight nine ten eleven".length);
   });
 })();
 /*! Bundled license information:
