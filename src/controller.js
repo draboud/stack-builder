@@ -8,7 +8,7 @@ import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 import statsView from "./views/statsView.js";
 
-console.log("label-input - Oct 25, 2024");
+console.log("format-inputs - Oct 30, 2024");
 
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
@@ -102,21 +102,17 @@ controlModalBtn = function () {
 };
 //____________________________________________________________________
 controlLabelInput = function (labelValue) {
-  optionsView._labelFinalValue = labelValue;
+  optionsView._labelFinalValue = optionsView._formatInputs(labelValue);
   optionsView._labelText.innerHTML = labelValue;
   document
     .querySelector(".label_column")
     .querySelector(".opt_div.custom")
     .firstElementChild.classList.add("selected");
-  //register 'click' on custom option
-  // document
-  //   .querySelector(".modal_column.label")
-  //   .querySelector(".opt_div.custom")
-  //   .click();
 };
 //____________________________________________________________________
 controlBoreInput = function (boreValue) {
-  optionsView._boreFinalValue = boreValue + '"';
+  optionsView._boreFinalValue = optionsView._formatInputs(boreValue, "bore");
+
   document
     .querySelector(".modal_column.bore")
     .querySelector(".opt_div.custom")
@@ -130,7 +126,7 @@ controlBoreInput = function (boreValue) {
 //____________________________________________________________________
 controlTypeInput = function (typeValue) {
   console.log("custom type set");
-  optionsView._typeFinalValue = typeValue;
+  optionsView._typeFinalValue = optionsView._formatInputs(typeValue, "type");
   document
     .querySelector(".modal_column.type")
     .querySelector(".opt_div.custom")
@@ -143,7 +139,7 @@ controlTypeInput = function (typeValue) {
 };
 //____________________________________________________________________
 controlRangeInput = function (rangeValue) {
-  optionsView._rangeFinalValue = rangeValue + '"';
+  optionsView._rangeFinalValue = optionsView._formatInputs(rangeValue, "range");
   document
     .querySelector(".modal_column.range")
     .querySelector(".opt_div.custom")
@@ -156,7 +152,10 @@ controlRangeInput = function (rangeValue) {
 };
 //____________________________________________________________________
 controlPressInput = function (pressValue) {
-  optionsView._pressFinalValue = pressValue + "&nbsp;PSI";
+  optionsView._pressFinalValue = optionsView._formatInputs(
+    pressValue,
+    "pressure"
+  );
   document
     .querySelector(".modal_column.pressure")
     .querySelector(".opt_div.custom")
@@ -263,13 +262,10 @@ const init = function () {
 init();
 
 //TEST AREA....................................................
-const testBtn = document.querySelector(".test_button");
-testBtn.addEventListener("click", function () {
-  let myStr = "this is my string";
-  let myArr = ["one", "two", "three", "four", "five"];
+// const testBtn = document.querySelector(".test_button");
 
-  console.log("string slice: ", myStr.slice(1));
-  console.log("array slice: ", myArr.slice(1, 3));
-  console.log("array splice: ", myArr.splice(1));
-});
+//.............................................................
+// testBtn.addEventListener("click", function () {
+
+// });
 //.............................................................

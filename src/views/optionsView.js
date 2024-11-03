@@ -142,15 +142,11 @@ class OptionsView extends View {
       if (optOutput[2] === "DISCARD") optOutput.splice(2, 1);
 
       optOutput.splice(-1, 1);
-
+      // debugger;
       if (this._labelFinalValue) {
         optOutput = optOutput
           .slice(0, 1)
-          .concat(
-            this._labelFinalValue.charAt(0).toUpperCase() +
-              this._labelFinalValue.slice(1),
-            optOutput.slice(1)
-          );
+          .concat(this._labelFinalValue, optOutput.slice(1));
       } else {
         optOutput = optOutput
           .slice(0, 1)
@@ -163,12 +159,15 @@ class OptionsView extends View {
 
       optOutput = optOutput.toString();
       optOutput = optOutput.replaceAll(",", "&nbsp;");
+      optOutput = optOutput.replaceAll("-", "&#8209;");
       this._allOptsModalText.forEach((el) => el.classList.remove("selected"));
 
       this._activeOptsDiv.querySelector(
         this._secondOptsFlag ? ".opts-text.second" : ".opts-text"
-      ).innerHTML = optOutput;
+      ).innerHTML = this._formatInputs(optOutput);
 
+      // this._formatInputs(optOutput);
+      debugger;
       this._resetOptions();
       this._closeModal();
     }
@@ -214,6 +213,95 @@ class OptionsView extends View {
     }
   }
   //_________________________________________________________________________
+  _formatInputs(inputStr, type) {
+    let finalOutStr;
+
+    //Capitalize first letter
+    // debugger;
+    finalOutStr =
+      inputStr.charAt(0).toUpperCase() +
+      inputStr.slice(1).replaceAll(" ", "&nbsp;").replaceAll("-", "&#8209;");
+    //Maintain spaces
+    // finalOutStr = inputStr.replaceAll(" ", "&nbsp;");
+    //Maintain dashes
+    // finalOutStr = inputStr.replaceAll("-", "&#8209;");
+    //Limit length
+    //..............................................................
+    if (inputStr.length > 50) {
+      let stringToArr = inputStr.split("&nbsp;");
+      let arrStrings = [];
+      let lineCharTally = 0;
+      let lineBreakArr = [];
+
+      for (let i = 0; i < stringToArr.length - 1; i++) {
+        stringToArr[i] += " ";
+      }
+      arrStrings = [...stringToArr];
+
+      stringToArr.forEach(function (el, ind) {
+        lineCharTally += el.length;
+        if (lineCharTally >= 55) {
+          let shiftToAvoidNum = 1;
+          while (
+            !isNaN(
+              Number(
+                stringToArr[ind - shiftToAvoidNum].charAt(
+                  stringToArr[ind - shiftToAvoidNum].length - 2
+                )
+              )
+            )
+          ) {
+            shiftToAvoidNum += 1;
+          }
+          lineBreakArr.push(ind - shiftToAvoidNum);
+
+          lineCharTally = el.length;
+        }
+      });
+
+      lineBreakArr.forEach(function (el) {
+        arrStrings[el] = stringToArr[el].slice(0, -1);
+        arrStrings[el] += "\n";
+      });
+
+      // console.log("lineBreakArr: ", lineBreakArr);
+      // console.log("stringToArr: ", stringToArr);
+      // console.log("arrStrings: ", arrStrings);
+      finalOutStr = arrStrings
+        .join("")
+        .replaceAll(" ", "&nbsp;")
+        .replaceAll("-", "&#8209;");
+    }
+
+    //..............................................................
+    // Type checks
+    if (type === "bore") {
+      finalOutStr += '"';
+      return finalOutStr;
+    }
+    if (type === "range") {
+      const inputStrSplit = finalOutStr.split("&#8209;");
+      let addInch = [];
+
+      inputStrSplit.forEach(function (el) {
+        addInch.push((el += '"'));
+      });
+      finalOutStr = addInch.join("&#8209;");
+
+      return finalOutStr;
+    }
+    if (type === "pressure") {
+      finalOutStr += "&nbsp;PSI";
+      return finalOutStr;
+    }
+
+    //..............................................................
+    // return formattedInputStr;
+    // debugger;
+    return finalOutStr;
+  }
+  //_________________________________________________________________________
+
   _resetOptions() {
     this._labelFinalValue = "";
     this._boreFinalValue = "";
