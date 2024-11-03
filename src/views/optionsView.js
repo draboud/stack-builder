@@ -168,7 +168,6 @@ class OptionsView extends View {
       this._activeOptsDiv.querySelector(
         this._secondOptsFlag ? ".opts-text.second" : ".opts-text"
       ).innerHTML = optOutput;
-
       this._resetOptions();
       this._closeModal();
     }
