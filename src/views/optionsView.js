@@ -107,7 +107,6 @@ class OptionsView extends View {
     let arrUse = [this._allBoreOptsText, this._allPressOptsText];
     let selectedText = "";
 
-    // debugger;
     if (stackView._compFlag === "single" || stackView._compFlag === "double") {
       // arrUse = arrUse.slice(1, 1).concat(arrExtra, arrUse.slice(2));
       arrUse = arrUse.slice(0, 1).concat(arrExtra, arrUse.slice(1));
@@ -142,7 +141,6 @@ class OptionsView extends View {
       if (optOutput[2] === "DISCARD") optOutput.splice(2, 1);
 
       optOutput.splice(-1, 1);
-      // debugger;
       if (this._labelFinalValue) {
         optOutput = optOutput
           .slice(0, 1)
@@ -156,18 +154,16 @@ class OptionsView extends View {
             optOutput.slice(1)
           );
       }
-
       optOutput = optOutput.toString();
       optOutput = optOutput.replaceAll(",", "&nbsp;");
-      optOutput = optOutput.replaceAll("-", "&#8209;");
+      optOutput = optOutput.replaceAll("&#8209;", "-");
       this._allOptsModalText.forEach((el) => el.classList.remove("selected"));
 
       this._activeOptsDiv.querySelector(
         this._secondOptsFlag ? ".opts-text.second" : ".opts-text"
       ).innerHTML = this._formatInputs(optOutput);
 
-      // this._formatInputs(optOutput);
-      debugger;
+      this._formatInputs(optOutput);
       this._resetOptions();
       this._closeModal();
     }
@@ -216,18 +212,12 @@ class OptionsView extends View {
   _formatInputs(inputStr, type) {
     let finalOutStr;
 
-    //Capitalize first letter
-    // debugger;
     finalOutStr =
       inputStr.charAt(0).toUpperCase() +
       inputStr.slice(1).replaceAll(" ", "&nbsp;").replaceAll("-", "&#8209;");
-    //Maintain spaces
-    // finalOutStr = inputStr.replaceAll(" ", "&nbsp;");
-    //Maintain dashes
-    // finalOutStr = inputStr.replaceAll("-", "&#8209;");
-    //Limit length
+
     //..............................................................
-    if (inputStr.length > 50) {
+    if (inputStr.length > 55) {
       let stringToArr = inputStr.split("&nbsp;");
       let arrStrings = [];
       let lineCharTally = 0;
@@ -263,14 +253,7 @@ class OptionsView extends View {
         arrStrings[el] = stringToArr[el].slice(0, -1);
         arrStrings[el] += "\n";
       });
-
-      // console.log("lineBreakArr: ", lineBreakArr);
-      // console.log("stringToArr: ", stringToArr);
-      // console.log("arrStrings: ", arrStrings);
-      finalOutStr = arrStrings
-        .join("")
-        .replaceAll(" ", "&nbsp;")
-        .replaceAll("-", "&#8209;");
+      finalOutStr = arrStrings.join("").replaceAll(" ", "&nbsp;");
     }
 
     //..............................................................
@@ -286,7 +269,7 @@ class OptionsView extends View {
       inputStrSplit.forEach(function (el) {
         addInch.push((el += '"'));
       });
-      finalOutStr = addInch.join("&#8209;");
+      finalOutStr = addInch.join("-");
 
       return finalOutStr;
     }
@@ -296,8 +279,6 @@ class OptionsView extends View {
     }
 
     //..............................................................
-    // return formattedInputStr;
-    // debugger;
     return finalOutStr;
   }
   //_________________________________________________________________________

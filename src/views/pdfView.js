@@ -41,7 +41,9 @@ class PDFView extends View {
     doc.html(elementHTML, {
       callback: function (doc) {
         // Save the PDF
-        doc.save("TSI - Stack Builder.pdf");
+        doc.save(
+          notesView._jobTitle ? `${notesView._jobTitle}` : "TSI-Stack Builder"
+        );
       },
       margin: [yDown, 10, 10, 10],
       autoPaging: "text",
@@ -58,7 +60,7 @@ class PDFView extends View {
       PDF_SETTINGS.logoX * PDF_SETTINGS.scaleFactor,
       PDF_SETTINGS.logoY * PDF_SETTINGS.scaleFactor
     );
-    doc.setFontSize(15);
+    doc.setFontSize(13);
     if (notesView._jobTitle) {
       doc.text(notesView._jobTitle, xOffset, 40, { align: "center" });
     }

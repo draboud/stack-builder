@@ -199,6 +199,7 @@ controlModalBlockout = function (modal) {
 };
 //____________________________________________________________________
 controlPDF = function () {
+  optionsView.optOutput;
   adaptorsView._newHeight = adaptorsView._scaleStack();
   pdfView._convertToPDF(adaptorsView._newHeight);
   setTimeout(() => {
@@ -262,10 +263,17 @@ const init = function () {
 init();
 
 //TEST AREA....................................................
-// const testBtn = document.querySelector(".test_button");
+const testBtn = document.querySelector(".test_button");
+const testText = document.querySelector(".opts-text-test");
+const activeDiv = document.querySelector(".comp-div.active");
+const compText = activeDiv.querySelector(".opts-text");
 
 //.............................................................
-// testBtn.addEventListener("click", function () {
-
-// });
+testBtn.addEventListener("click", function () {
+  // testText.innerHTML = "hi-there";
+  // debugger;
+  // compText.innerHTML = "hello-again";
+  // compText.innerHTML = testText.innerHTML.replace("-", "&#8209;");
+  console.log("one two three four five six seven eight nine ten eleven".length);
+});
 //.............................................................

@@ -19815,12 +19815,12 @@
         }
         optOutput = optOutput.toString();
         optOutput = optOutput.replaceAll(",", "&nbsp;");
-        optOutput = optOutput.replaceAll("-", "&#8209;");
+        optOutput = optOutput.replaceAll("&#8209;", "-");
         this._allOptsModalText.forEach((el) => el.classList.remove("selected"));
         this._activeOptsDiv.querySelector(
           this._secondOptsFlag ? ".opts-text.second" : ".opts-text"
         ).innerHTML = this._formatInputs(optOutput);
-        debugger;
+        this._formatInputs(optOutput);
         this._resetOptions();
         this._closeModal();
       }
@@ -19850,7 +19850,7 @@
     _formatInputs(inputStr, type) {
       let finalOutStr;
       finalOutStr = inputStr.charAt(0).toUpperCase() + inputStr.slice(1).replaceAll(" ", "&nbsp;").replaceAll("-", "&#8209;");
-      if (inputStr.length > 50) {
+      if (inputStr.length > 55) {
         let stringToArr = inputStr.split("&nbsp;");
         let arrStrings = [];
         let lineCharTally = 0;
@@ -19880,7 +19880,7 @@
           arrStrings[el] = stringToArr[el].slice(0, -1);
           arrStrings[el] += "\n";
         });
-        finalOutStr = arrStrings.join("").replaceAll(" ", "&nbsp;").replaceAll("-", "&#8209;");
+        finalOutStr = arrStrings.join("").replaceAll(" ", "&nbsp;");
       }
       if (type === "bore") {
         finalOutStr += '"';
@@ -19892,7 +19892,7 @@
         inputStrSplit.forEach(function(el) {
           addInch.push(el += '"');
         });
-        finalOutStr = addInch.join("&#8209;");
+        finalOutStr = addInch.join("-");
         return finalOutStr;
       }
       if (type === "pressure") {
@@ -28485,7 +28485,9 @@
       img.src = PDF_SETTINGS.logoImg;
       doc.html(elementHTML, {
         callback: function(doc2) {
-          doc2.save("TSI - Stack Builder.pdf");
+          doc2.save(
+            notesView_default._jobTitle ? `${notesView_default._jobTitle}` : "TSI-Stack Builder"
+          );
         },
         margin: [yDown, 10, 10, 10],
         autoPaging: "text",
@@ -28504,7 +28506,7 @@
         PDF_SETTINGS.logoX * PDF_SETTINGS.scaleFactor,
         PDF_SETTINGS.logoY * PDF_SETTINGS.scaleFactor
       );
-      doc.setFontSize(15);
+      doc.setFontSize(13);
       if (notesView_default._jobTitle) {
         doc.text(notesView_default._jobTitle, xOffset, 40, { align: "center" });
       }
@@ -28660,6 +28662,7 @@
     controlHideModals();
   };
   controlPDF = function() {
+    optionsView_default.optOutput;
     adaptorsView_default._newHeight = adaptorsView_default._scaleStack();
     pdfView_default._convertToPDF(adaptorsView_default._newHeight);
     setTimeout(() => {
@@ -28711,6 +28714,13 @@
     optionsView_default._addHandlerCrossMiniItem(controlCrossMiniItem);
   };
   init();
+  var testBtn = document.querySelector(".test_button");
+  var testText = document.querySelector(".opts-text-test");
+  var activeDiv = document.querySelector(".comp-div.active");
+  var compText = activeDiv.querySelector(".opts-text");
+  testBtn.addEventListener("click", function() {
+    console.log("one two three four five six seven eight nine ten eleven".length);
+  });
 })();
 /*! Bundled license information:
 
