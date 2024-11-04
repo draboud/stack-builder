@@ -21,6 +21,8 @@ class OptionsView extends View {
 
   _crossMiniMenu = document.querySelector(".cross_mini_menu");
   _crossMiniItems = document.querySelectorAll(".cross-mini-item");
+  _adaptMiniMenu = document.querySelector(".adapt_mini_menu");
+  _adaptMiniItems = document.querySelectorAll(".adapt-mini-item");
 
   _customDiv = document.querySelector(".opt_div.custom");
 
@@ -161,13 +163,9 @@ class OptionsView extends View {
 
       this._activeOptsDiv.querySelector(
         this._secondOptsFlag ? ".opts-text.second" : ".opts-text"
-<<<<<<< HEAD
-      ).innerHTML = optOutput;
-=======
       ).innerHTML = this._formatInputs(optOutput);
 
       this._formatInputs(optOutput);
->>>>>>> format-inputs
       this._resetOptions();
       this._closeModal();
     }
@@ -329,6 +327,16 @@ class OptionsView extends View {
     this._crossMiniItems.forEach((el) =>
       el.addEventListener("click", function (e) {
         const clicked = e.target.closest(".cross-mini-item");
+        if (!clicked) return;
+        handler(clicked);
+      })
+    );
+  };
+  //____________________________________________________________________
+  _addHandlerAdaptMiniItem = function (handler) {
+    this._adaptMiniItems.forEach((el) =>
+      el.addEventListener("click", function (e) {
+        const clicked = e.target.closest(".adapt-mini-item");
         if (!clicked) return;
         handler(clicked);
       })

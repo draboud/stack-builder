@@ -8,7 +8,7 @@ import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 import statsView from "./views/statsView.js";
 
-console.log("format-inputs - Oct 30, 2024");
+console.log("adapt-config Nov 3, 2024");
 
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
@@ -22,6 +22,7 @@ const controlStackBtns = function (arrayEl) {
     case "minus":
       stackView._delComp();
       adaptorsView._autoAdapt();
+      adaptorsView._addHandlerAdaptors(controlAdapt);
       stackView._arrangeCrossLetters();
       break;
     case "spl":
@@ -34,6 +35,7 @@ const controlStackBtns = function (arrayEl) {
     default:
       stackView._configComp(compVal);
       adaptorsView._autoAdapt();
+      adaptorsView._addHandlerAdaptors(controlAdapt);
   }
   if (stackView._sideActiveFlag === false) {
     stackBtnsView.toggleCrossBtns("remove");
@@ -94,6 +96,7 @@ controlOptions = function (clicked) {
 controlOptsModal = function (clicked) {
   optionsView._setOptsText(clicked);
   adaptorsView._autoAdapt();
+  adaptorsView._addHandlerAdaptors(controlAdapt);
   statsView._liveHeightTotal();
 };
 //____________________________________________________________________
@@ -167,9 +170,10 @@ controlPressInput = function (pressValue) {
     .click();
 };
 //____________________________________________________________________
-controlAdapt = function () {
-  adaptorsView._autoAdapt();
-  statsView._liveHeightTotal();
+controlAdapt = function (clicked) {
+  adaptorsView._clickedAdaptor = clicked;
+  optionsView._adaptMiniMenu.classList.toggle("hide");
+  controlShowBlackout();
 };
 //____________________________________________________________________
 controlScaleStack = function () {
@@ -213,11 +217,21 @@ controlToggleCrossMiniMenu = function () {
   controlShowBlackout();
 };
 //____________________________________________________________________
+controlToggleAdaptMiniMenu = function () {
+  optionsView._adaptMiniMenu.classList.toggle("hide");
+  controlHideBlackout();
+};
+//____________________________________________________________________
 controlCrossMiniItem = function (miniItem) {
   miniItem.classList[1] === "height"
     ? controlHeight()
     : controlOptions(miniItem);
   this.controlToggleCrossMiniMenu();
+};
+//____________________________________________________________________
+controlAdaptMiniItem = function (miniItem) {
+  adaptorsView._configAdaptor(miniItem.classList[1]);
+  this.controlToggleAdaptMiniMenu();
 };
 //____________________________________________________________________
 controlShowBlackout = function () {
@@ -252,13 +266,14 @@ const init = function () {
   optionsView._addHandlerTypeForm(controlTypeInput);
   optionsView._addHandlerRangeForm(controlRangeInput);
   optionsView._addHandlerPressForm(controlPressInput);
-  adaptorsView._addHandlerAdapt(controlAdapt);
+  // adaptorsView._addHandlerAdaptors(controlAdapt);
   adaptorsView._addHandlerPDF(controlPDF);
   notesView._addHandlerNotesBtn(controlNotesBtn);
   notesView._addHandlerNotesCloseBtn(controlNotesCloseBtn);
   notesView._addHandlerSaveBtn(controlNotes);
   notesView._addHandlerModalBlockout(controlModalBlockout);
   optionsView._addHandlerCrossMiniItem(controlCrossMiniItem);
+  optionsView._addHandlerAdaptMiniItem(controlAdaptMiniItem);
 };
 init();
 
@@ -270,10 +285,6 @@ const compText = activeDiv.querySelector(".opts-text");
 
 //.............................................................
 testBtn.addEventListener("click", function () {
-  // testText.innerHTML = "hi-there";
-  // debugger;
-  // compText.innerHTML = "hello-again";
-  // compText.innerHTML = testText.innerHTML.replace("-", "&#8209;");
-  console.log("one two three four five six seven eight nine ten eleven".length);
+  // adaptorsView._addHandlerAdaptors();
 });
 //.............................................................

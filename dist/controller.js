@@ -19702,6 +19702,8 @@
     _pressInput = document.querySelector(".press_input");
     _crossMiniMenu = document.querySelector(".cross_mini_menu");
     _crossMiniItems = document.querySelectorAll(".cross-mini-item");
+    _adaptMiniMenu = document.querySelector(".adapt_mini_menu");
+    _adaptMiniItems = document.querySelectorAll(".adapt-mini-item");
     _customDiv = document.querySelector(".opt_div.custom");
     _labelFinalValue;
     _boreFinalValue;
@@ -19941,6 +19943,16 @@
       this._crossMiniItems.forEach(
         (el) => el.addEventListener("click", function(e2) {
           const clicked = e2.target.closest(".cross-mini-item");
+          if (!clicked) return;
+          handler(clicked);
+        })
+      );
+    };
+    //____________________________________________________________________
+    _addHandlerAdaptMiniItem = function(handler) {
+      this._adaptMiniItems.forEach(
+        (el) => el.addEventListener("click", function(e2) {
+          const clicked = e2.target.closest(".adapt-mini-item");
           if (!clicked) return;
           handler(clicked);
         })
@@ -20207,14 +20219,20 @@
   var scalingResult;
   var AdaptorsView = class extends View {
     _newHeight;
+    _clickedAdaptor;
+    //_________________________________________________________________________
     //Add handler to adapt button
-    _addHandlerAdapt = function(handler) {
-      ctrlBtns.addEventListener("click", function(e2) {
-        const clicked = e2.target.closest(".adapt_button");
-        if (!clicked) return;
-        handler();
+    _addHandlerAdaptors = function(handler) {
+      this._retarget();
+      this._allAdaptors.forEach(function(el) {
+        el.addEventListener("click", function(e2) {
+          const clicked = e2.target.closest(".adapt-div");
+          if (!clicked) return;
+          handler(clicked);
+        });
       });
     };
+    //_________________________________________________________________________
     _addHandlerPDF = function(handler) {
       ctrlBtns.addEventListener("click", function(e2) {
         const clicked = e2.target.closest(".pdf_button");
@@ -20349,6 +20367,13 @@
         el.style.height = "20px";
       });
       this._allComps[0].classList.add("active");
+    };
+    //____________________________________________________________________
+    //Config adaptor to either 'DSA' or 'Crossover'
+    _configAdaptor = function(miniItem) {
+      let optToArr = this._clickedAdaptor.querySelector(".adaptor-text").innerHTML.split("&nbsp;");
+      optToArr[optToArr.length - 1] = miniItem.toUpperCase();
+      this._clickedAdaptor.querySelector(".adaptor-text").innerHTML = optToArr.join("&nbsp;");
     };
   };
   var adaptorsView_default = new AdaptorsView();
@@ -28529,7 +28554,7 @@
   var pdfView_default = new PDFView();
 
   // src/controller.js
-  console.log("format-inputs - Oct 30, 2024");
+  console.log("adapt-config Nov 3, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
@@ -28541,6 +28566,7 @@
       case "minus":
         stackView_default._delComp();
         adaptorsView_default._autoAdapt();
+        adaptorsView_default._addHandlerAdaptors(controlAdapt);
         stackView_default._arrangeCrossLetters();
         break;
       case "spl":
@@ -28553,6 +28579,7 @@
       default:
         stackView_default._configComp(compVal);
         adaptorsView_default._autoAdapt();
+        adaptorsView_default._addHandlerAdaptors(controlAdapt);
     }
     if (stackView_default._sideActiveFlag === false) {
       stackBtnsView_default.toggleCrossBtns("remove");
@@ -28602,6 +28629,7 @@
   controlOptsModal = function(clicked) {
     optionsView_default._setOptsText(clicked);
     adaptorsView_default._autoAdapt();
+    adaptorsView_default._addHandlerAdaptors(controlAdapt);
     statsView_default._liveHeightTotal();
   };
   controlModalBtn = function() {
@@ -28636,9 +28664,10 @@
     document.querySelector(".modal_column.pressure").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
     document.querySelector(".modal_column.pressure").querySelector(".opt_div.custom").click();
   };
-  controlAdapt = function() {
-    adaptorsView_default._autoAdapt();
-    statsView_default._liveHeightTotal();
+  controlAdapt = function(clicked) {
+    adaptorsView_default._clickedAdaptor = clicked;
+    optionsView_default._adaptMiniMenu.classList.toggle("hide");
+    controlShowBlackout();
   };
   controlScaleStack = function() {
     adaptorsView_default._newHeight = adaptorsView_default._scaleStack();
@@ -28673,9 +28702,17 @@
     optionsView_default._crossMiniMenu.classList.toggle("hide");
     controlShowBlackout();
   };
+  controlToggleAdaptMiniMenu = function() {
+    optionsView_default._adaptMiniMenu.classList.toggle("hide");
+    controlHideBlackout();
+  };
   controlCrossMiniItem = function(miniItem) {
     miniItem.classList[1] === "height" ? controlHeight() : controlOptions(miniItem);
     this.controlToggleCrossMiniMenu();
+  };
+  controlAdaptMiniItem = function(miniItem) {
+    adaptorsView_default._configAdaptor(miniItem.classList[1]);
+    this.controlToggleAdaptMiniMenu();
   };
   controlShowBlackout = function() {
     notesView_default._modalBlockout.classList.remove("hide");
@@ -28705,13 +28742,13 @@
     optionsView_default._addHandlerTypeForm(controlTypeInput);
     optionsView_default._addHandlerRangeForm(controlRangeInput);
     optionsView_default._addHandlerPressForm(controlPressInput);
-    adaptorsView_default._addHandlerAdapt(controlAdapt);
     adaptorsView_default._addHandlerPDF(controlPDF);
     notesView_default._addHandlerNotesBtn(controlNotesBtn);
     notesView_default._addHandlerNotesCloseBtn(controlNotesCloseBtn);
     notesView_default._addHandlerSaveBtn(controlNotes);
     notesView_default._addHandlerModalBlockout(controlModalBlockout);
     optionsView_default._addHandlerCrossMiniItem(controlCrossMiniItem);
+    optionsView_default._addHandlerAdaptMiniItem(controlAdaptMiniItem);
   };
   init();
   var testBtn = document.querySelector(".test_button");
@@ -28719,7 +28756,6 @@
   var activeDiv = document.querySelector(".comp-div.active");
   var compText = activeDiv.querySelector(".opts-text");
   testBtn.addEventListener("click", function() {
-    console.log("one two three four five six seven eight nine ten eleven".length);
   });
 })();
 /*! Bundled license information:
