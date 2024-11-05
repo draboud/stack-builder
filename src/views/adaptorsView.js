@@ -9,22 +9,27 @@ import {
 import optionsView from "./optionsView";
 import heightsView from "./heightsView";
 import statsView from "./statsView";
+import stackView from "./stackView";
 
 const ctrlBtns = document.querySelector(".control_buttons_div");
 let scalingResult;
 
 class AdaptorsView extends View {
   _newHeight;
-
+  _clickedAdaptor;
+  //_________________________________________________________________________
   //Add handler to adapt button
-  _addHandlerAdapt = function (handler) {
-    ctrlBtns.addEventListener("click", function (e) {
-      const clicked = e.target.closest(".adapt_button");
-      if (!clicked) return;
-      handler();
+  _addHandlerAdaptors = function (handler) {
+    this._retarget();
+    this._allAdaptors.forEach(function (el) {
+      el.addEventListener("click", function (e) {
+        const clicked = e.target.closest(".adapt-div");
+        if (!clicked) return;
+        handler(clicked);
+      });
     });
   };
-
+  //_________________________________________________________________________
   _addHandlerPDF = function (handler) {
     ctrlBtns.addEventListener("click", function (e) {
       const clicked = e.target.closest(".pdf_button");
@@ -32,7 +37,6 @@ class AdaptorsView extends View {
       handler();
     });
   };
-
   //_________________________________________________________________________
   //Add adaptors to stack
   _autoAdapt = function () {
@@ -99,6 +103,7 @@ class AdaptorsView extends View {
         this._allComps[i].insertAdjacentHTML("afterend", adapterHtml);
       }
     }
+    // this._addHandlerAdaptors();
   };
   //____________________________________________________________________
   //Adjust height of stack after certain threshold value, in order to fit on a4 pdf
@@ -199,6 +204,17 @@ class AdaptorsView extends View {
     });
 
     this._allComps[0].classList.add("active");
+  };
+  //____________________________________________________________________
+  //Config adaptor to either 'DSA' or 'Crossover'
+  _configAdaptor = function (miniItem) {
+    // console.log(this._clickedAdaptor);
+    let optToArr = this._clickedAdaptor
+      .querySelector(".adaptor-text")
+      .innerHTML.split("&nbsp;");
+    optToArr[optToArr.length - 1] = miniItem.toUpperCase();
+    this._clickedAdaptor.querySelector(".adaptor-text").innerHTML =
+      optToArr.join("&nbsp;");
   };
 }
 
