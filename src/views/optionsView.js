@@ -103,6 +103,10 @@ class OptionsView extends View {
   }
   //_________________________________________________________________________
   _setOptsText(clicked) {
+    let currentColumn;
+    let newText;
+    //..........................................................................
+
     this._retarget();
     let optOutput = "";
     const arrExtra = [this._allTypeOptsText, this._allRangeOptsText];
@@ -118,12 +122,31 @@ class OptionsView extends View {
     if (
       arrUse.every((el) => el.find((el2) => el2.classList.contains("selected")))
     ) {
+      let testObj = {};
+
       arrUse.forEach(function (el) {
         selectedText = el.find((el2) => el2.classList.contains("selected"));
+        //create a spaceholder in array to store user entered value
         selectedText.innerHTML === "Custom:"
           ? (optOutput += "&nbsp;" + "|")
           : (optOutput += selectedText.innerHTML + "|");
+
+        //..........................................................................
+        currentColumn = selectedText
+          .closest(".modal_column")
+          .className.split(" ")[1];
+        newText = selectedText.innerHTML.split("_")[0];
+
+        if (newText === "Custom:") {
+          newText = document.querySelector(`.${currentColumn}_input`).value;
+        }
+
+        testObj[currentColumn] = newText;
+
+        //..........................................................................
       });
+      console.log("testObj: ", testObj);
+
       optOutput = optOutput.split("|");
 
       if (this._boreFinalValue) optOutput[0] = this._boreFinalValue;
@@ -140,7 +163,6 @@ class OptionsView extends View {
       }
       //removes range element from array if range is empty
       if (optOutput[2] === "DISCARD") optOutput.splice(2, 1);
-
       optOutput.splice(-1, 1);
       if (this._labelFinalValue) {
         optOutput = optOutput

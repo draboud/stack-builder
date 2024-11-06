@@ -59,6 +59,37 @@ export const COMP_IMG = {
 
   double:
     "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6ed57c9634eecf5172_3D-double.png",
+
+  //lightHeight comps:................................................
+  // adaptor:
+  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672be0deab94fee2605702d7_lightHeight-dsa.png",
+
+  // washington:
+  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672be0de193241ec190d4a29_lightHeight-washington.png",
+
+  // annular:
+  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672be0de76270bb9c890bcb8_lightHeight-annular.png",
+
+  // spool:
+  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672be0de576b643d58f31667_lightHeight-spool.png",
+
+  // cross:
+  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672be0dd147aeef9be7c81f3_lightHeight-cross.png",
+
+  // gate_valve:
+  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672be0ddd564641923a85eff_lightHeight-gate-valve.png",
+
+  // bell_nipple:
+  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672be0ddf4d2ff7923163bf2_lightHeight-bell-nipple.png",
+
+  // single:
+  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672be0dd1e897bf8299810ea_lightHeight-single.png",
+
+  // double:
+  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672be0dde2fd1a5cae043dcd_lightHeight-double.png",
+
+  // wellhead:
+  //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672ac180c317d9b254527e4d_test-wellhead.png",
 };
 
 export const COMP_HEIGHTS = {

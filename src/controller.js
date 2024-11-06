@@ -306,9 +306,9 @@ testBtn.addEventListener("click", function () {
   const myObj = {
     label: "tester manester",
     bore: "14 7/16",
-    type: "Shear",
-    range: "4 1/2-7",
-    press: "10K",
+    type: "VBA",
+    range: `4 1/2"-7"`,
+    press: "3K&nbsp;PSI",
   };
 
   heldLabel = myObj.label;
@@ -396,7 +396,6 @@ optSaveBtn.addEventListener("click", function () {
     const inputLable = heldLabel
       .closest(".label_column")
       .querySelector(".label_input").placeholder;
-
     controlLabelInput(inputLable);
   }
 
@@ -406,7 +405,7 @@ optSaveBtn.addEventListener("click", function () {
       .closest(".modal_column")
       .querySelector(".bore_input").placeholder;
 
-    controlBoreInput(inputBore);
+    controlBoreInput(inputBore, "bore");
   }
   heldBore.innerHTML.replace('"', "");
   heldBore.closest(".opt_div").click();
@@ -416,7 +415,7 @@ optSaveBtn.addEventListener("click", function () {
     const inputType = heldType
       .closest(".modal_column")
       .querySelector(".type_input").placeholder;
-    controlTypeInput(inputType);
+    controlTypeInput(inputType, "type");
   }
   heldType.closest(".opt_div").click();
 
@@ -425,7 +424,7 @@ optSaveBtn.addEventListener("click", function () {
     const inputRange = heldRange
       .closest(".modal_column")
       .querySelector(".range_input").placeholder;
-    controlRangeInput(inputRange);
+    controlRangeInput(inputRange, "range");
   }
   heldRange.closest(".opt_div").click();
 
@@ -434,7 +433,7 @@ optSaveBtn.addEventListener("click", function () {
     const inputPress = heldPress
       .closest(".modal_column")
       .querySelector(".press_input").placeholder;
-    controlPressInput(inputPress);
+    controlPressInput(inputPress, "pressure");
   }
   heldPress.closest(".opt_div").click();
 });

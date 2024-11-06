@@ -19356,6 +19356,27 @@
     annular: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a68e44adb1f08dc09b296_3D-annular.png",
     spool: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6e7e501610bd690378_3D-spool.png",
     double: "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/671a6c6ed57c9634eecf5172_3D-double.png"
+    //lightHeight comps:................................................
+    // adaptor:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672be0deab94fee2605702d7_lightHeight-dsa.png",
+    // washington:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672be0de193241ec190d4a29_lightHeight-washington.png",
+    // annular:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672be0de76270bb9c890bcb8_lightHeight-annular.png",
+    // spool:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672be0de576b643d58f31667_lightHeight-spool.png",
+    // cross:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672be0dd147aeef9be7c81f3_lightHeight-cross.png",
+    // gate_valve:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672be0ddd564641923a85eff_lightHeight-gate-valve.png",
+    // bell_nipple:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672be0ddf4d2ff7923163bf2_lightHeight-bell-nipple.png",
+    // single:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672be0dd1e897bf8299810ea_lightHeight-single.png",
+    // double:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672be0dde2fd1a5cae043dcd_lightHeight-double.png",
+    // wellhead:
+    //   "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/672ac180c317d9b254527e4d_test-wellhead.png",
   };
   var COMP_HEIGHTS = {
     wellhead: 27,
@@ -19781,6 +19802,8 @@
     }
     //_________________________________________________________________________
     _setOptsText(clicked) {
+      let currentColumn;
+      let newText;
       this._retarget();
       let optOutput = "";
       const arrExtra = [this._allTypeOptsText, this._allRangeOptsText];
@@ -19792,10 +19815,18 @@
       const textChild = clicked.firstElementChild;
       this._setActiveOpt(textChild);
       if (arrUse.every((el) => el.find((el2) => el2.classList.contains("selected")))) {
+        let testObj = {};
         arrUse.forEach(function(el) {
           selectedText = el.find((el2) => el2.classList.contains("selected"));
           selectedText.innerHTML === "Custom:" ? optOutput += "&nbsp;|" : optOutput += selectedText.innerHTML + "|";
+          currentColumn = selectedText.closest(".modal_column").className.split(" ")[1];
+          newText = selectedText.innerHTML.split("_")[0];
+          if (newText === "Custom:") {
+            newText = document.querySelector(`.${currentColumn}_input`).value;
+          }
+          testObj[currentColumn] = newText;
         });
+        console.log("testObj: ", testObj);
         optOutput = optOutput.split("|");
         if (this._boreFinalValue) optOutput[0] = this._boreFinalValue;
         if (this._typeFinalValue) optOutput[1] = this._typeFinalValue;
@@ -28774,9 +28805,9 @@
     const myObj = {
       label: "tester manester",
       bore: "14 7/16",
-      type: "Shear",
-      range: "4 1/2-7",
-      press: "10K"
+      type: "VBA",
+      range: `4 1/2"-7"`,
+      press: "3K&nbsp;PSI"
     };
     heldLabel = myObj.label;
     if (heldLabel) {
@@ -28834,26 +28865,26 @@
     heldBore.classList.remove("held");
     if (heldBore.innerHTML === "Custom:") {
       const inputBore = heldBore.closest(".modal_column").querySelector(".bore_input").placeholder;
-      controlBoreInput(inputBore);
+      controlBoreInput(inputBore, "bore");
     }
     heldBore.innerHTML.replace('"', "");
     heldBore.closest(".opt_div").click();
     heldType.classList.remove("held");
     if (heldType.innerHTML === "Custom:") {
       const inputType = heldType.closest(".modal_column").querySelector(".type_input").placeholder;
-      controlTypeInput(inputType);
+      controlTypeInput(inputType, "type");
     }
     heldType.closest(".opt_div").click();
     heldRange.classList.remove("held");
     if (heldRange.innerHTML === "Custom:") {
       const inputRange = heldRange.closest(".modal_column").querySelector(".range_input").placeholder;
-      controlRangeInput(inputRange);
+      controlRangeInput(inputRange, "range");
     }
     heldRange.closest(".opt_div").click();
     heldPress.classList.remove("held");
     if (heldPress.innerHTML === "Custom:") {
       const inputPress = heldPress.closest(".modal_column").querySelector(".press_input").placeholder;
-      controlPressInput(inputPress);
+      controlPressInput(inputPress, "pressure");
     }
     heldPress.closest(".opt_div").click();
   });
