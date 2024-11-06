@@ -282,158 +282,153 @@ init();
 //TEST AREA....................................................
 
 const testBtn = document.querySelector(".test_button");
-const optSaveBtn = document.querySelector(".save_button.opts");
+// const optSaveBtn = document.querySelector(".save_button.opts");
 
-const label = document.querySelector(".label_opt_text");
-const allBores = [...document.querySelectorAll(".bore_opt_text")];
-const allTypes = [...document.querySelectorAll(".type_opt_text")];
-const allRanges = [...document.querySelectorAll(".range_opt_text")];
-const allPressures = [...document.querySelectorAll(".press_opt_text")];
+// const label = document.querySelector(".label_opt_text");
+// const allBores = [...document.querySelectorAll(".bore_opt_text")];
+// const allTypes = [...document.querySelectorAll(".type_opt_text")];
+// const allRanges = [...document.querySelectorAll(".range_opt_text")];
+// const allPressures = [...document.querySelectorAll(".press_opt_text")];
 
-let labelInput = document.querySelector(".label_input");
-let boreInput = document.querySelector(".bore_input");
-let typeInput = document.querySelector(".type_input");
-let rangeInput = document.querySelector(".range_input");
-let pressInput = document.querySelector(".press_input");
+// let labelInput = document.querySelector(".label_input");
+// let boreInput = document.querySelector(".bore_input");
+// let typeInput = document.querySelector(".type_input");
+// let rangeInput = document.querySelector(".range_input");
+// let pressInput = document.querySelector(".press_input");
 
-let heldLabel = "";
-let heldBore = "";
-let heldType = "";
-let heldRange = "";
-let heldPress = "";
+// let heldLabel = "";
+// let heldBore = "";
+// let heldType = "";
+// let heldRange = "";
+// let heldPress = "";
 //.............................................................
 testBtn.addEventListener("click", function () {
-  const myObj = {
-    label: "tester manester",
-    bore: '11&nbsp;1/16"',
-    type: "VBA",
-    range: `2 7/8\"-3 1/2\"`,
-    press: "3K&nbsp;PSI",
-  };
-
-  heldLabel = myObj.label;
-  if (heldLabel) {
-    labelInput.placeholder = label.innerHTML = myObj.label;
-    document
-      .querySelector(".label_column")
-      .querySelector(".opt_div.custom")
-      .firstElementChild.classList.add("held");
-    heldLabel = document
-      .querySelector(".label_column")
-      .querySelector(".opt_div.custom").firstElementChild;
-  }
-
-  heldBore = allBores.find((el) => el.innerHTML === myObj.bore);
-  if (heldBore) {
-    heldBore.classList.add("held");
-  } else {
-    boreInput.placeholder = myObj.bore;
-    document
-      .querySelector(".modal_column.bore")
-      .querySelector(".opt_div.custom")
-      .firstElementChild.classList.add("held");
-    heldBore = document
-      .querySelector(".modal_column.bore")
-      .querySelector(".opt_div.custom").firstElementChild;
-  }
-
-  heldType = allTypes.find((el) => el.innerHTML === myObj.type);
-  if (heldType) {
-    heldType.classList.add("held");
-  } else {
-    typeInput.placeholder = myObj.type;
-    document
-      .querySelector(".modal_column.type")
-      .querySelector(".opt_div.custom")
-      .firstElementChild.classList.add("held");
-    heldType = document
-      .querySelector(".modal_column.type")
-      .querySelector(".opt_div.custom").firstElementChild;
-  }
-
-  heldRange = allRanges.find((el) => el.innerHTML === myObj.range);
-  if (heldRange) {
-    heldRange.classList.add("held");
-  } else {
-    rangeInput.placeholder = myObj.range;
-    document
-      .querySelector(".modal_column.range")
-      .querySelector(".opt_div.custom")
-      .firstElementChild.classList.add("held");
-    heldRange = document
-      .querySelector(".modal_column.range")
-      .querySelector(".opt_div.custom").firstElementChild;
-  }
-
-  heldPress = allPressures.find((el) => el.innerHTML === myObj.press);
-  if (heldPress) {
-    heldPress.classList.add("held");
-  } else {
-    pressInput.placeholder = myObj.press;
-    document
-      .querySelector(".modal_column.press")
-      .querySelector(".opt_div.custom")
-      .firstElementChild.classList.add("held");
-    heldPress = document
-      .querySelector(".modal_column.press")
-      .querySelector(".opt_div.custom").firstElementChild;
-  }
+  // const myObj = {
+  //   label: "tester manester",
+  //   bore: '11&nbsp;1/16"',
+  //   type: "VBA",
+  //   range: `2 7/8\"-3 1/2\"`,
+  //   press: "3K&nbsp;PSI",
+  // };
+  // heldLabel = myObj.label;
+  // if (heldLabel) {
+  //   labelInput.placeholder = label.innerHTML = myObj.label;
+  //   document
+  //     .querySelector(".label_column")
+  //     .querySelector(".opt_div.custom")
+  //     .firstElementChild.classList.add("held");
+  //   heldLabel = document
+  //     .querySelector(".label_column")
+  //     .querySelector(".opt_div.custom").firstElementChild;
+  // }
+  // heldBore = allBores.find((el) => el.innerHTML === myObj.bore);
+  // if (heldBore) {
+  //   heldBore.classList.add("held");
+  // } else {
+  //   boreInput.placeholder = myObj.bore;
+  //   document
+  //     .querySelector(".modal_column.bore")
+  //     .querySelector(".opt_div.custom")
+  //     .firstElementChild.classList.add("held");
+  //   heldBore = document
+  //     .querySelector(".modal_column.bore")
+  //     .querySelector(".opt_div.custom").firstElementChild;
+  // }
+  // heldType = allTypes.find((el) => el.innerHTML === myObj.type);
+  // if (heldType) {
+  //   heldType.classList.add("held");
+  // } else {
+  //   typeInput.placeholder = myObj.type;
+  //   document
+  //     .querySelector(".modal_column.type")
+  //     .querySelector(".opt_div.custom")
+  //     .firstElementChild.classList.add("held");
+  //   heldType = document
+  //     .querySelector(".modal_column.type")
+  //     .querySelector(".opt_div.custom").firstElementChild;
+  // }
+  // heldRange = allRanges.find((el) => el.innerHTML === myObj.range);
+  // if (heldRange) {
+  //   heldRange.classList.add("held");
+  // } else {
+  //   rangeInput.placeholder = myObj.range;
+  //   document
+  //     .querySelector(".modal_column.range")
+  //     .querySelector(".opt_div.custom")
+  //     .firstElementChild.classList.add("held");
+  //   heldRange = document
+  //     .querySelector(".modal_column.range")
+  //     .querySelector(".opt_div.custom").firstElementChild;
+  // }
+  // heldPress = allPressures.find((el) => el.innerHTML === myObj.press);
+  // if (heldPress) {
+  //   heldPress.classList.add("held");
+  // } else {
+  //   pressInput.placeholder = myObj.press;
+  //   document
+  //     .querySelector(".modal_column.press")
+  //     .querySelector(".opt_div.custom")
+  //     .firstElementChild.classList.add("held");
+  //   heldPress = document
+  //     .querySelector(".modal_column.press")
+  //     .querySelector(".opt_div.custom").firstElementChild;
+  // }
 });
 //.............................................................
-optSaveBtn.addEventListener("click", function () {
-  console.log("bore: ", heldBore);
-  console.log("type: ", heldType);
-  console.log("range: ", heldRange);
-  console.log("press: ", heldPress);
+// optSaveBtn.addEventListener("click", function () {
+//   console.log("bore: ", heldBore);
+//   console.log("type: ", heldType);
+//   console.log("range: ", heldRange);
+//   console.log("press: ", heldPress);
 
-  allBores.forEach((el) => el.classList.remove("selected"));
-  allTypes.forEach((el) => el.classList.remove("selected"));
-  allRanges.forEach((el) => el.classList.remove("selected"));
-  allPressures.forEach((el) => el.classList.remove("selected"));
+//   allBores.forEach((el) => el.classList.remove("selected"));
+//   allTypes.forEach((el) => el.classList.remove("selected"));
+//   allRanges.forEach((el) => el.classList.remove("selected"));
+//   allPressures.forEach((el) => el.classList.remove("selected"));
 
-  heldLabel.classList.remove("held");
-  if (heldLabel.innerHTML === "Custom:") {
-    const inputLable = heldLabel
-      .closest(".label_column")
-      .querySelector(".label_input").placeholder;
-    controlLabelInput(inputLable);
-  }
+//   heldLabel.classList.remove("held");
+//   if (heldLabel.innerHTML === "Custom:") {
+//     const inputLable = heldLabel
+//       .closest(".label_column")
+//       .querySelector(".label_input").placeholder;
+//     controlLabelInput(inputLable);
+//   }
 
-  heldBore.classList.remove("held");
-  if (heldBore.innerHTML === "Custom:") {
-    const inputBore = heldBore
-      .closest(".modal_column")
-      .querySelector(".bore_input").placeholder;
+//   heldBore.classList.remove("held");
+//   if (heldBore.innerHTML === "Custom:") {
+//     const inputBore = heldBore
+//       .closest(".modal_column")
+//       .querySelector(".bore_input").placeholder;
 
-    controlBoreInput(inputBore, "bore");
-  }
-  heldBore.innerHTML.replace('"', "");
-  heldBore.closest(".opt_div").click();
+//     controlBoreInput(inputBore, "bore");
+//   }
+//   heldBore.innerHTML.replace('"', "");
+//   heldBore.closest(".opt_div").click();
 
-  heldType.classList.remove("held");
-  if (heldType.innerHTML === "Custom:") {
-    const inputType = heldType
-      .closest(".modal_column")
-      .querySelector(".type_input").placeholder;
-    controlTypeInput(inputType, "type");
-  }
-  heldType.closest(".opt_div").click();
+//   heldType.classList.remove("held");
+//   if (heldType.innerHTML === "Custom:") {
+//     const inputType = heldType
+//       .closest(".modal_column")
+//       .querySelector(".type_input").placeholder;
+//     controlTypeInput(inputType, "type");
+//   }
+//   heldType.closest(".opt_div").click();
 
-  heldRange.classList.remove("held");
-  if (heldRange.innerHTML === "Custom:") {
-    const inputRange = heldRange
-      .closest(".modal_column")
-      .querySelector(".range_input").placeholder;
-    controlRangeInput(inputRange, "range");
-  }
-  heldRange.closest(".opt_div").click();
+//   heldRange.classList.remove("held");
+//   if (heldRange.innerHTML === "Custom:") {
+//     const inputRange = heldRange
+//       .closest(".modal_column")
+//       .querySelector(".range_input").placeholder;
+//     controlRangeInput(inputRange, "range");
+//   }
+//   heldRange.closest(".opt_div").click();
 
-  heldPress.classList.remove("held");
-  if (heldPress.innerHTML === "Custom:") {
-    const inputPress = heldPress
-      .closest(".modal_column")
-      .querySelector(".press_input").placeholder;
-    controlPressInput(inputPress, "pressure");
-  }
-  heldPress.closest(".opt_div").click();
-});
+//   heldPress.classList.remove("held");
+//   if (heldPress.innerHTML === "Custom:") {
+//     const inputPress = heldPress
+//       .closest(".modal_column")
+//       .querySelector(".press_input").placeholder;
+//     controlPressInput(inputPress, "pressure");
+//   }
+//   heldPress.closest(".opt_div").click();
+// });

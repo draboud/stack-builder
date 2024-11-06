@@ -143,9 +143,13 @@ class OptionsView extends View {
 
         testObj[currentColumn] = newText;
       });
-      if (this._labelFinalValue) testObj.lable = this._labelFinalValue;
+      if (this._labelFinalValue) {
+        testObj.lable = this._labelFinalValue;
+      } else
+        testObj.lable = document.querySelector(".label_opt_text").innerHTML;
       testObj.id = this._activeComp.id;
       console.log("testObj: ", testObj);
+
       //........................................................................
 
       optOutput = optOutput.split("|");
