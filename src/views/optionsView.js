@@ -115,7 +115,6 @@ class OptionsView extends View {
     }
     const textChild = clicked.firstElementChild;
     this._setActiveOpt(textChild);
-
     if (
       arrUse.every((el) => el.find((el2) => el2.classList.contains("selected")))
     ) {

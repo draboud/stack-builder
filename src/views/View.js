@@ -29,6 +29,8 @@ export default class View {
   _allTypeOptsText;
   _allRangeOptsText;
 
+  _clickedComp;
+
   _retarget(side) {
     this._allComps = [...document.querySelectorAll(".comp-div")];
     this._allCompImgs = document.querySelectorAll(".img");
