@@ -131,7 +131,7 @@ class OptionsView extends View {
           ? (optOutput += "&nbsp;" + "|")
           : (optOutput += selectedText.innerHTML + "|");
 
-        //..........................................................................
+        //........................................................................
         currentColumn = selectedText
           .closest(".modal_column")
           .className.split(" ")[1];
@@ -142,10 +142,11 @@ class OptionsView extends View {
         }
 
         testObj[currentColumn] = newText;
-
-        //..........................................................................
       });
+      if (this._labelFinalValue) testObj.lable = this._labelFinalValue;
+      testObj.id = this._activeComp.id;
       console.log("testObj: ", testObj);
+      //........................................................................
 
       optOutput = optOutput.split("|");
 

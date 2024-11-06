@@ -19826,6 +19826,8 @@
           }
           testObj[currentColumn] = newText;
         });
+        if (this._labelFinalValue) testObj.lable = this._labelFinalValue;
+        testObj.id = this._activeComp.id;
         console.log("testObj: ", testObj);
         optOutput = optOutput.split("|");
         if (this._boreFinalValue) optOutput[0] = this._boreFinalValue;
@@ -28694,8 +28696,8 @@
       pressValue,
       "pressure"
     );
-    document.querySelector(".modal_column.pressure").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
-    document.querySelector(".modal_column.pressure").querySelector(".opt_div.custom").click();
+    document.querySelector(".modal_column.press").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
+    document.querySelector(".modal_column.press").querySelector(".opt_div.custom").click();
   };
   controlAdapt = function(clicked) {
     adaptorsView_default._clickedAdaptor = clicked;
@@ -28804,9 +28806,9 @@
   testBtn.addEventListener("click", function() {
     const myObj = {
       label: "tester manester",
-      bore: "14 7/16",
+      bore: '11&nbsp;1/16"',
       type: "VBA",
-      range: `4 1/2"-7"`,
+      range: `2 7/8"-3 1/2"`,
       press: "3K&nbsp;PSI"
     };
     heldLabel = myObj.label;
@@ -28844,8 +28846,8 @@
       heldPress.classList.add("held");
     } else {
       pressInput.placeholder = myObj.press;
-      document.querySelector(".modal_column.pressure").querySelector(".opt_div.custom").firstElementChild.classList.add("held");
-      heldPress = document.querySelector(".modal_column.pressure").querySelector(".opt_div.custom").firstElementChild;
+      document.querySelector(".modal_column.press").querySelector(".opt_div.custom").firstElementChild.classList.add("held");
+      heldPress = document.querySelector(".modal_column.press").querySelector(".opt_div.custom").firstElementChild;
     }
   });
   optSaveBtn.addEventListener("click", function() {

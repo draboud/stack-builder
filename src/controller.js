@@ -162,12 +162,12 @@ controlPressInput = function (pressValue) {
     "pressure"
   );
   document
-    .querySelector(".modal_column.pressure")
+    .querySelector(".modal_column.press")
     .querySelector(".opt_div.custom")
     .firstElementChild.classList.add("selected");
   //register 'click' on custom option
   document
-    .querySelector(".modal_column.pressure")
+    .querySelector(".modal_column.press")
     .querySelector(".opt_div.custom")
     .click();
 };
@@ -305,9 +305,9 @@ let heldPress = "";
 testBtn.addEventListener("click", function () {
   const myObj = {
     label: "tester manester",
-    bore: "14 7/16",
+    bore: '11&nbsp;1/16"',
     type: "VBA",
-    range: `4 1/2"-7"`,
+    range: `2 7/8\"-3 1/2\"`,
     press: "3K&nbsp;PSI",
   };
 
@@ -371,11 +371,11 @@ testBtn.addEventListener("click", function () {
   } else {
     pressInput.placeholder = myObj.press;
     document
-      .querySelector(".modal_column.pressure")
+      .querySelector(".modal_column.press")
       .querySelector(".opt_div.custom")
       .firstElementChild.classList.add("held");
     heldPress = document
-      .querySelector(".modal_column.pressure")
+      .querySelector(".modal_column.press")
       .querySelector(".opt_div.custom").firstElementChild;
   }
 });
