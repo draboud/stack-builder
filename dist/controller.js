@@ -19707,6 +19707,9 @@
   var heightsView_default = new HeightsView();
 
   // src/views/optionsView.js
+  var extractObj = {};
+  var currentColumn;
+  var newText;
   var OptionsView = class extends View {
     _optsModal = document.querySelector(".options_modal");
     _typeOpts = document.querySelector(".modal_column.type");
@@ -19802,8 +19805,6 @@
     }
     //_________________________________________________________________________
     _setOptsText(clicked) {
-      let currentColumn;
-      let newText;
       this._retarget();
       let optOutput = "";
       const arrExtra = [this._allTypeOptsText, this._allRangeOptsText];
@@ -19815,7 +19816,7 @@
       const textChild = clicked.firstElementChild;
       this._setActiveOpt(textChild);
       if (arrUse.every((el) => el.find((el2) => el2.classList.contains("selected")))) {
-        let testObj = {};
+        extractObj = {};
         arrUse.forEach(function(el) {
           selectedText = el.find((el2) => el2.classList.contains("selected"));
           selectedText.innerHTML === "Custom:" ? optOutput += "&nbsp;|" : optOutput += selectedText.innerHTML + "|";
@@ -19824,14 +19825,14 @@
           if (newText === "Custom:") {
             newText = document.querySelector(`.${currentColumn}_input`).value;
           }
-          testObj[currentColumn] = newText;
+          extractObj[currentColumn] = newText;
         });
         if (this._labelFinalValue) {
-          testObj.lable = this._labelFinalValue;
+          extractObj.label = this._labelFinalValue;
         } else
-          testObj.lable = document.querySelector(".label_opt_text").innerHTML;
-        testObj.id = this._activeComp.id;
-        console.log("testObj: ", testObj);
+          extractObj.label = document.querySelector(".label_opt_text").innerHTML;
+        extractObj.id = this._activeComp.id;
+        console.log("extractObj: ", extractObj);
         optOutput = optOutput.split("|");
         if (this._boreFinalValue) optOutput[0] = this._boreFinalValue;
         if (this._typeFinalValue) optOutput[1] = this._typeFinalValue;

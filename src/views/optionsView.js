@@ -2,6 +2,9 @@ import stackView from "./stackView";
 import notesView from "./notesView";
 import View from "./View";
 // import adaptorsView from "./adaptorsView";
+let extractObj = {};
+let currentColumn;
+let newText;
 
 class OptionsView extends View {
   _optsModal = document.querySelector(".options_modal");
@@ -103,8 +106,8 @@ class OptionsView extends View {
   }
   //_________________________________________________________________________
   _setOptsText(clicked) {
-    let currentColumn;
-    let newText;
+    // let currentColumn;
+    // let newText;
     //..........................................................................
 
     this._retarget();
@@ -122,7 +125,7 @@ class OptionsView extends View {
     if (
       arrUse.every((el) => el.find((el2) => el2.classList.contains("selected")))
     ) {
-      let testObj = {};
+      extractObj = {};
 
       arrUse.forEach(function (el) {
         selectedText = el.find((el2) => el2.classList.contains("selected"));
@@ -132,6 +135,7 @@ class OptionsView extends View {
           : (optOutput += selectedText.innerHTML + "|");
 
         //........................................................................
+        //this sectioned-off code extracts data for options object (save opts)
         currentColumn = selectedText
           .closest(".modal_column")
           .className.split(" ")[1];
@@ -141,14 +145,14 @@ class OptionsView extends View {
           newText = document.querySelector(`.${currentColumn}_input`).value;
         }
 
-        testObj[currentColumn] = newText;
+        extractObj[currentColumn] = newText;
       });
       if (this._labelFinalValue) {
-        testObj.lable = this._labelFinalValue;
+        extractObj.label = this._labelFinalValue;
       } else
-        testObj.lable = document.querySelector(".label_opt_text").innerHTML;
-      testObj.id = this._activeComp.id;
-      console.log("testObj: ", testObj);
+        extractObj.label = document.querySelector(".label_opt_text").innerHTML;
+      extractObj.id = this._activeComp.id;
+      console.log("extractObj: ", extractObj);
 
       //........................................................................
 
