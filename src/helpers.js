@@ -1,14 +1,31 @@
 import stackView from "./views/stackView";
 import stackBtnsView from "./views/stackBtnsView";
+
+let compIdCounterContinual = 2;
 //________________________________________________________________________
 //ID main comps
-export const setIds = function () {
+// export const setIds = function () {
+//   stackView._retarget();
+//   let compIdCounter = stackView._allComps.length;
+//   stackView._allComps.forEach(function (el, i) {
+//     el.id = "c-" + compIdCounter;
+//     compIdCounter -= 1;
+//   });
+//   //if no active cross elements, turn off cross comp buttons
+//   stackView._allSideComps.forEach(function (el) {
+//     el.classList.contains("active")
+//       ? (sideActiveFlag = true)
+//       : (sideActiveFlag = false);
+//   });
+// };
+//________________________________________________________________________
+//ID main comps - id numbers do not reset, only count up with more comps
+export const setIdsContinual = function () {
   stackView._retarget();
-  let compIdCounter = stackView._allComps.length;
-  stackView._allComps.forEach(function (el, i) {
-    el.id = "c-" + compIdCounter;
-    compIdCounter -= 1;
-  });
+
+  stackView._activeComp.id = "c-" + compIdCounterContinual;
+  compIdCounterContinual += 1;
+
   //if no active cross elements, turn off cross comp buttons
   stackView._allSideComps.forEach(function (el) {
     el.classList.contains("active")
@@ -16,7 +33,6 @@ export const setIds = function () {
       : (sideActiveFlag = false);
   });
 };
-
 //_________________________________________________________________________
 //ID cross comps
 export const setIdsSides = function () {

@@ -9570,11 +9570,11 @@
       };
       var getterFor = function(TYPE) {
         return function(it2) {
-          var state;
-          if (!isObject(it2) || (state = get(it2)).type !== TYPE) {
+          var state2;
+          if (!isObject(it2) || (state2 = get(it2)).type !== TYPE) {
             throw new TypeError2("Incompatible receiver, " + TYPE + " required");
           }
-          return state;
+          return state2;
         };
       };
       if (NATIVE_WEAK_MAP || shared.state) {
@@ -9665,9 +9665,9 @@
           } else if (value.prototype) value.prototype = void 0;
         } catch (error) {
         }
-        var state = enforceInternalState(value);
-        if (!hasOwn(state, "source")) {
-          state.source = join(TEMPLATE, typeof name == "string" ? name : "");
+        var state2 = enforceInternalState(value);
+        if (!hasOwn(state2, "source")) {
+          state2.source = join(TEMPLATE, typeof name == "string" ? name : "");
         }
         return value;
       };
@@ -10741,9 +10741,9 @@
         var then;
         return isObject(it2) && isCallable(then = it2.then) ? then : false;
       };
-      var callReaction = function(reaction, state) {
-        var value = state.value;
-        var ok = state.state === FULFILLED;
+      var callReaction = function(reaction, state2) {
+        var value = state2.value;
+        var ok = state2.state === FULFILLED;
         var handler = ok ? reaction.ok : reaction.fail;
         var resolve = reaction.resolve;
         var reject = reaction.reject;
@@ -10752,8 +10752,8 @@
         try {
           if (handler) {
             if (!ok) {
-              if (state.rejection === UNHANDLED) onHandleUnhandled(state);
-              state.rejection = HANDLED;
+              if (state2.rejection === UNHANDLED) onHandleUnhandled(state2);
+              state2.rejection = HANDLED;
             }
             if (handler === true) result = value;
             else {
@@ -10775,17 +10775,17 @@
           reject(error);
         }
       };
-      var notify = function(state, isReject) {
-        if (state.notified) return;
-        state.notified = true;
+      var notify = function(state2, isReject) {
+        if (state2.notified) return;
+        state2.notified = true;
         microtask(function() {
-          var reactions = state.reactions;
+          var reactions = state2.reactions;
           var reaction;
           while (reaction = reactions.get()) {
-            callReaction(reaction, state);
+            callReaction(reaction, state2);
           }
-          state.notified = false;
-          if (isReject && !state.rejection) onUnhandled(state);
+          state2.notified = false;
+          if (isReject && !state2.rejection) onUnhandled(state2);
         });
       };
       var dispatchEvent = function(name, promise, reason) {
@@ -10800,11 +10800,11 @@
         if (!NATIVE_PROMISE_REJECTION_EVENT && (handler = globalThis2["on" + name])) handler(event);
         else if (name === UNHANDLED_REJECTION) hostReportErrors("Unhandled promise rejection", reason);
       };
-      var onUnhandled = function(state) {
+      var onUnhandled = function(state2) {
         call(task, globalThis2, function() {
-          var promise = state.facade;
-          var value = state.value;
-          var IS_UNHANDLED = isUnhandled(state);
+          var promise = state2.facade;
+          var value = state2.value;
+          var IS_UNHANDLED = isUnhandled(state2);
           var result;
           if (IS_UNHANDLED) {
             result = perform(function() {
@@ -10812,41 +10812,41 @@
                 process2.emit("unhandledRejection", value, promise);
               } else dispatchEvent(UNHANDLED_REJECTION, promise, value);
             });
-            state.rejection = IS_NODE || isUnhandled(state) ? UNHANDLED : HANDLED;
+            state2.rejection = IS_NODE || isUnhandled(state2) ? UNHANDLED : HANDLED;
             if (result.error) throw result.value;
           }
         });
       };
-      var isUnhandled = function(state) {
-        return state.rejection !== HANDLED && !state.parent;
+      var isUnhandled = function(state2) {
+        return state2.rejection !== HANDLED && !state2.parent;
       };
-      var onHandleUnhandled = function(state) {
+      var onHandleUnhandled = function(state2) {
         call(task, globalThis2, function() {
-          var promise = state.facade;
+          var promise = state2.facade;
           if (IS_NODE) {
             process2.emit("rejectionHandled", promise);
-          } else dispatchEvent(REJECTION_HANDLED, promise, state.value);
+          } else dispatchEvent(REJECTION_HANDLED, promise, state2.value);
         });
       };
-      var bind = function(fn, state, unwrap) {
+      var bind = function(fn, state2, unwrap) {
         return function(value) {
-          fn(state, value, unwrap);
+          fn(state2, value, unwrap);
         };
       };
-      var internalReject = function(state, value, unwrap) {
-        if (state.done) return;
-        state.done = true;
-        if (unwrap) state = unwrap;
-        state.value = value;
-        state.state = REJECTED;
-        notify(state, true);
+      var internalReject = function(state2, value, unwrap) {
+        if (state2.done) return;
+        state2.done = true;
+        if (unwrap) state2 = unwrap;
+        state2.value = value;
+        state2.state = REJECTED;
+        notify(state2, true);
       };
-      var internalResolve = function(state, value, unwrap) {
-        if (state.done) return;
-        state.done = true;
-        if (unwrap) state = unwrap;
+      var internalResolve = function(state2, value, unwrap) {
+        if (state2.done) return;
+        state2.done = true;
+        if (unwrap) state2 = unwrap;
         try {
-          if (state.facade === value) throw new TypeError2("Promise can't be resolved itself");
+          if (state2.facade === value) throw new TypeError2("Promise can't be resolved itself");
           var then = isThenable(value);
           if (then) {
             microtask(function() {
@@ -10855,20 +10855,20 @@
                 call(
                   then,
                   value,
-                  bind(internalResolve, wrapper, state),
-                  bind(internalReject, wrapper, state)
+                  bind(internalResolve, wrapper, state2),
+                  bind(internalReject, wrapper, state2)
                 );
               } catch (error) {
-                internalReject(wrapper, error, state);
+                internalReject(wrapper, error, state2);
               }
             });
           } else {
-            state.value = value;
-            state.state = FULFILLED;
-            notify(state, false);
+            state2.value = value;
+            state2.state = FULFILLED;
+            notify(state2, false);
           }
         } catch (error) {
-          internalReject({ done: false }, error, state);
+          internalReject({ done: false }, error, state2);
         }
       };
       if (FORCED_PROMISE_CONSTRUCTOR) {
@@ -10876,11 +10876,11 @@
           anInstance(this, PromisePrototype);
           aCallable(executor);
           call(Internal, this);
-          var state = getInternalPromiseState(this);
+          var state2 = getInternalPromiseState(this);
           try {
-            executor(bind(internalResolve, state), bind(internalReject, state));
+            executor(bind(internalResolve, state2), bind(internalReject, state2));
           } catch (error) {
-            internalReject(state, error);
+            internalReject(state2, error);
           }
         };
         PromisePrototype = PromiseConstructor.prototype;
@@ -10897,24 +10897,24 @@
           });
         };
         Internal.prototype = defineBuiltIn(PromisePrototype, "then", function then(onFulfilled, onRejected) {
-          var state = getInternalPromiseState(this);
+          var state2 = getInternalPromiseState(this);
           var reaction = newPromiseCapability(speciesConstructor(this, PromiseConstructor));
-          state.parent = true;
+          state2.parent = true;
           reaction.ok = isCallable(onFulfilled) ? onFulfilled : true;
           reaction.fail = isCallable(onRejected) && onRejected;
           reaction.domain = IS_NODE ? process2.domain : void 0;
-          if (state.state === PENDING) state.reactions.add(reaction);
+          if (state2.state === PENDING) state2.reactions.add(reaction);
           else microtask(function() {
-            callReaction(reaction, state);
+            callReaction(reaction, state2);
           });
           return reaction.promise;
         });
         OwnPromiseCapability = function() {
           var promise = new Internal();
-          var state = getInternalPromiseState(promise);
+          var state2 = getInternalPromiseState(promise);
           this.promise = promise;
-          this.resolve = bind(internalResolve, state);
-          this.reject = bind(internalReject, state);
+          this.resolve = bind(internalResolve, state2);
+          this.reject = bind(internalReject, state2);
         };
         newPromiseCapabilityModule.f = newPromiseCapability = function(C2) {
           return C2 === PromiseConstructor || C2 === PromiseWrapper ? new OwnPromiseCapability(C2) : newGenericPromiseCapability(C2);
@@ -11586,9 +11586,9 @@
       if (PATCH) {
         patchedExec = function exec(string) {
           var re2 = this;
-          var state = getInternalState(re2);
+          var state2 = getInternalState(re2);
           var str = toString(string);
-          var raw = state.raw;
+          var raw = state2.raw;
           var result, reCopy, lastIndex, match, i3, object, group;
           if (raw) {
             raw.lastIndex = re2.lastIndex;
@@ -11596,7 +11596,7 @@
             re2.lastIndex = raw.lastIndex;
             return result;
           }
-          var groups = state.groups;
+          var groups = state2.groups;
           var sticky = UNSUPPORTED_Y && re2.sticky;
           var flags = call(regexpFlags, re2);
           var source = re2.source;
@@ -12356,14 +12356,14 @@
           // kind
         });
       }, function() {
-        var state = getInternalState(this);
-        var target = state.target;
-        var index2 = state.index++;
+        var state2 = getInternalState(this);
+        var target = state2.target;
+        var index2 = state2.index++;
         if (!target || index2 >= target.length) {
-          state.target = void 0;
+          state2.target = void 0;
           return createIterResultObject(void 0, true);
         }
-        switch (state.kind) {
+        switch (state2.kind) {
           case "keys":
             return createIterResultObject(index2, false);
           case "values":
@@ -19508,13 +19508,11 @@
   var stackBtnsView_default = new StackBtnsView();
 
   // src/helpers.js
-  var setIds = function() {
+  var compIdCounterContinual = 2;
+  var setIdsContinual = function() {
     stackView_default._retarget();
-    let compIdCounter = stackView_default._allComps.length;
-    stackView_default._allComps.forEach(function(el, i3) {
-      el.id = "c-" + compIdCounter;
-      compIdCounter -= 1;
-    });
+    stackView_default._activeComp.id = "c-" + compIdCounterContinual;
+    compIdCounterContinual += 1;
     stackView_default._allSideComps.forEach(function(el) {
       el.classList.contains("active") ? sideActiveFlag = true : sideActiveFlag = false;
     });
@@ -19707,7 +19705,6 @@
   var heightsView_default = new HeightsView();
 
   // src/views/optionsView.js
-  var extractObj = {};
   var currentColumn;
   var newText;
   var OptionsView = class extends View {
@@ -19736,6 +19733,8 @@
     _rangeFinalValue;
     _pressFinalValue;
     _secondOptsFlag;
+    _finishedSettingOpts;
+    extractObj = {};
     //Option clicks assigned to opts text
     _addHandlerOptions(handler) {
       this._retarget();
@@ -19805,6 +19804,7 @@
     }
     //_________________________________________________________________________
     _setOptsText(clicked) {
+      this._finishedSettingOpts = false;
       this._retarget();
       let optOutput = "";
       const arrExtra = [this._allTypeOptsText, this._allRangeOptsText];
@@ -19816,7 +19816,7 @@
       const textChild = clicked.firstElementChild;
       this._setActiveOpt(textChild);
       if (arrUse.every((el) => el.find((el2) => el2.classList.contains("selected")))) {
-        extractObj = {};
+        this.extractObj = {};
         arrUse.forEach(function(el) {
           selectedText = el.find((el2) => el2.classList.contains("selected"));
           selectedText.innerHTML === "Custom:" ? optOutput += "&nbsp;|" : optOutput += selectedText.innerHTML + "|";
@@ -19825,14 +19825,13 @@
           if (newText === "Custom:") {
             newText = document.querySelector(`.${currentColumn}_input`).value;
           }
-          extractObj[currentColumn] = newText;
-        });
+          this.extractObj[currentColumn] = newText;
+        }, this);
         if (this._labelFinalValue) {
-          extractObj.label = this._labelFinalValue;
+          this.extractObj.label = this._labelFinalValue;
         } else
-          extractObj.label = document.querySelector(".label_opt_text").innerHTML;
-        extractObj.id = this._activeComp.id;
-        console.log("extractObj: ", extractObj);
+          this.extractObj.label = document.querySelector(".label_opt_text").innerHTML;
+        this._secondOptsFlag ? this.extractObj.id = this._activeComp.id + "B" : this.extractObj.id = this._activeComp.id;
         optOutput = optOutput.split("|");
         if (this._boreFinalValue) optOutput[0] = this._boreFinalValue;
         if (this._typeFinalValue) optOutput[1] = this._typeFinalValue;
@@ -19862,7 +19861,7 @@
         ).innerHTML = this._formatInputs(optOutput);
         this._formatInputs(optOutput);
         this._resetOptions();
-        this._closeModal();
+        this._finishedSettingOpts = true;
       }
     }
     //_________________________________________________________________________
@@ -20043,7 +20042,7 @@
       this._compWrapper.firstElementChild.classList.contains("adapt-div") ? this._compWrapper.firstElementChild.nextElementSibling.classList.add(
         "active"
       ) : this._compWrapper.firstElementChild.classList.add("active");
-      if (this._compWrapper.firstElementChild.nextElementSibling.classList.contains(
+      if (this._compWrapper.firstElementChild.nextElementSibling?.classList.contains(
         "adapt-div"
       )) {
         this._compWrapper.firstElementChild.nextElementSibling.classList.remove(
@@ -28591,17 +28590,29 @@
   };
   var pdfView_default = new PDFView();
 
+  // src/model.js
+  var state = [];
+  var removeOptsObject = function(activeId, firstCompFlag) {
+    let indexed = state.indexOf(state.find((el) => el.id === activeId));
+    if (indexed != -1) state.splice(indexed, 1);
+  };
+
   // src/controller.js
-  console.log("save-opts Nov 4, 2024");
+  console.log("preserve-orig-id Nov 6, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
+    let firstCompFlag = false;
     const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
     stackView_default._compFlag = compVal;
     switch (compVal) {
       case "plus":
         stackView_default._addComp();
+        setIdsContinual();
         break;
       case "minus":
+        if (stackView_default._activeComp.id != "c-1") {
+          removeOptsObject(stackView_default._activeComp.id, firstCompFlag);
+        }
         stackView_default._delComp();
         adaptorsView_default._autoAdapt();
         adaptorsView_default._addHandlerAdaptors(controlAdapt);
@@ -28615,6 +28626,7 @@
         }
         break;
       default:
+        removeOptsObject(stackView_default._activeComp, firstCompFlag);
         stackView_default._configComp(compVal);
         adaptorsView_default._autoAdapt();
         adaptorsView_default._addHandlerAdaptors(controlAdapt);
@@ -28622,7 +28634,6 @@
     if (stackView_default._sideActiveFlag === false) {
       stackBtnsView_default.toggleCrossBtns("remove");
     }
-    setIds();
     setIdsSides();
     heightsView_default._addCompHeight(compVal);
     statsView_default._liveHeightTotal();
@@ -28667,12 +28678,18 @@
   };
   controlOptsModal = function(clicked) {
     optionsView_default._setOptsText(clicked);
+    if (optionsView_default._finishedSettingOpts) {
+      controlModalBtn();
+    }
+  };
+  controlModalBtn = function() {
+    removeOptsObject(optionsView_default.extractObj.id);
+    state.push(optionsView_default.extractObj);
+    console.log("state from controller: ", state);
+    optionsView_default._closeModal();
     adaptorsView_default._autoAdapt();
     adaptorsView_default._addHandlerAdaptors(controlAdapt);
     statsView_default._liveHeightTotal();
-  };
-  controlModalBtn = function() {
-    optionsView_default._closeModal();
   };
   controlLabelInput = function(labelValue) {
     optionsView_default._labelFinalValue = optionsView_default._formatInputs(labelValue);
@@ -28792,6 +28809,7 @@
   init();
   var testBtn = document.querySelector(".test_button");
   testBtn.addEventListener("click", function() {
+    console.log("model.state: ", state);
   });
 })();
 /*! Bundled license information:

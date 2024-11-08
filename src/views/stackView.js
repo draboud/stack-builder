@@ -56,7 +56,7 @@ class StackView extends View {
       : this._compWrapper.firstElementChild.classList.add("active");
 
     if (
-      this._compWrapper.firstElementChild.nextElementSibling.classList.contains(
+      this._compWrapper.firstElementChild.nextElementSibling?.classList.contains(
         "adapt-div"
       )
     ) {

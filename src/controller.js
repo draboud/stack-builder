@@ -1,25 +1,32 @@
 import stackView from "./views/stackView.js";
 import heightsView from "./views/heightsView.js";
 import stackBtnsView from "./views/stackBtnsView.js";
-import { setIds, setIdsSides } from "./helpers.js";
+import { setIdsContinual, setIdsSides } from "./helpers.js";
 import optionsView from "./views/optionsView.js";
 import adaptorsView from "./views/adaptorsView.js";
 import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 import statsView from "./views/statsView.js";
-
-console.log("save-opts Nov 4, 2024");
+import * as model from "./model.js";
+console.log("preserve-orig-id Nov 6, 2024");
 
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
   stackView._retarget();
+  let firstCompFlag = false;
   const compVal = arrayEl.attributes.class.nodeValue.split(" ")[1];
   stackView._compFlag = compVal;
   switch (compVal) {
     case "plus":
       stackView._addComp();
+      setIdsContinual();
       break;
     case "minus":
+      //don't delete opts of base comp:
+      if (stackView._activeComp.id != "c-1") {
+        model.removeOptsObject(stackView._activeComp.id, firstCompFlag);
+      }
+
       stackView._delComp();
       adaptorsView._autoAdapt();
       adaptorsView._addHandlerAdaptors(controlAdapt);
@@ -33,6 +40,7 @@ const controlStackBtns = function (arrayEl) {
       }
       break;
     default:
+      model.removeOptsObject(stackView._activeComp, firstCompFlag);
       stackView._configComp(compVal);
       adaptorsView._autoAdapt();
       adaptorsView._addHandlerAdaptors(controlAdapt);
@@ -40,7 +48,7 @@ const controlStackBtns = function (arrayEl) {
   if (stackView._sideActiveFlag === false) {
     stackBtnsView.toggleCrossBtns("remove");
   }
-  setIds();
+  // setIds(); //ensures ids keep counting up, rather than resetting
   setIdsSides();
   heightsView._addCompHeight(compVal);
   statsView._liveHeightTotal();
@@ -97,13 +105,19 @@ controlOptions = function (clicked) {
 //____________________________________________________________________
 controlOptsModal = function (clicked) {
   optionsView._setOptsText(clicked);
-  adaptorsView._autoAdapt();
-  adaptorsView._addHandlerAdaptors(controlAdapt);
-  statsView._liveHeightTotal();
+  if (optionsView._finishedSettingOpts) {
+    controlModalBtn();
+  }
 };
 //____________________________________________________________________
 controlModalBtn = function () {
+  model.removeOptsObject(optionsView.extractObj.id);
+  model.state.push(optionsView.extractObj);
+  console.log("state from controller: ", model.state);
   optionsView._closeModal();
+  adaptorsView._autoAdapt();
+  adaptorsView._addHandlerAdaptors(controlAdapt);
+  statsView._liveHeightTotal();
 };
 //____________________________________________________________________
 controlLabelInput = function (labelValue) {
@@ -280,155 +294,21 @@ const init = function () {
 init();
 
 //TEST AREA....................................................
-
 const testBtn = document.querySelector(".test_button");
-// const optSaveBtn = document.querySelector(".save_button.opts");
 
-// const label = document.querySelector(".label_opt_text");
-// const allBores = [...document.querySelectorAll(".bore_opt_text")];
-// const allTypes = [...document.querySelectorAll(".type_opt_text")];
-// const allRanges = [...document.querySelectorAll(".range_opt_text")];
-// const allPressures = [...document.querySelectorAll(".press_opt_text")];
+// let optObj1 = { label: "wellhead", bore: '1"', pressure: "5K PSI", id: "A" };
+// let optObj2 = { label: "spool", bore: '2"', pressure: "6K PSI", id: "B" };
+// let optObj3 = { label: "spool", bore: '3"', pressure: "7K PSI", id: "C" };
 
-// let labelInput = document.querySelector(".label_input");
-// let boreInput = document.querySelector(".bore_input");
-// let typeInput = document.querySelector(".type_input");
-// let rangeInput = document.querySelector(".range_input");
-// let pressInput = document.querySelector(".press_input");
+// model.state.push(optObj1, optObj2, optObj3);
 
-// let heldLabel = "";
-// let heldBore = "";
-// let heldType = "";
-// let heldRange = "";
-// let heldPress = "";
-//.............................................................
 testBtn.addEventListener("click", function () {
-  // const myObj = {
-  //   label: "tester manester",
-  //   bore: '11&nbsp;1/16"',
-  //   type: "VBA",
-  //   range: `2 7/8\"-3 1/2\"`,
-  //   press: "3K&nbsp;PSI",
-  // };
-  // heldLabel = myObj.label;
-  // if (heldLabel) {
-  //   labelInput.placeholder = label.innerHTML = myObj.label;
-  //   document
-  //     .querySelector(".label_column")
-  //     .querySelector(".opt_div.custom")
-  //     .firstElementChild.classList.add("held");
-  //   heldLabel = document
-  //     .querySelector(".label_column")
-  //     .querySelector(".opt_div.custom").firstElementChild;
-  // }
-  // heldBore = allBores.find((el) => el.innerHTML === myObj.bore);
-  // if (heldBore) {
-  //   heldBore.classList.add("held");
-  // } else {
-  //   boreInput.placeholder = myObj.bore;
-  //   document
-  //     .querySelector(".modal_column.bore")
-  //     .querySelector(".opt_div.custom")
-  //     .firstElementChild.classList.add("held");
-  //   heldBore = document
-  //     .querySelector(".modal_column.bore")
-  //     .querySelector(".opt_div.custom").firstElementChild;
-  // }
-  // heldType = allTypes.find((el) => el.innerHTML === myObj.type);
-  // if (heldType) {
-  //   heldType.classList.add("held");
-  // } else {
-  //   typeInput.placeholder = myObj.type;
-  //   document
-  //     .querySelector(".modal_column.type")
-  //     .querySelector(".opt_div.custom")
-  //     .firstElementChild.classList.add("held");
-  //   heldType = document
-  //     .querySelector(".modal_column.type")
-  //     .querySelector(".opt_div.custom").firstElementChild;
-  // }
-  // heldRange = allRanges.find((el) => el.innerHTML === myObj.range);
-  // if (heldRange) {
-  //   heldRange.classList.add("held");
-  // } else {
-  //   rangeInput.placeholder = myObj.range;
-  //   document
-  //     .querySelector(".modal_column.range")
-  //     .querySelector(".opt_div.custom")
-  //     .firstElementChild.classList.add("held");
-  //   heldRange = document
-  //     .querySelector(".modal_column.range")
-  //     .querySelector(".opt_div.custom").firstElementChild;
-  // }
-  // heldPress = allPressures.find((el) => el.innerHTML === myObj.press);
-  // if (heldPress) {
-  //   heldPress.classList.add("held");
-  // } else {
-  //   pressInput.placeholder = myObj.press;
-  //   document
-  //     .querySelector(".modal_column.press")
-  //     .querySelector(".opt_div.custom")
-  //     .firstElementChild.classList.add("held");
-  //   heldPress = document
-  //     .querySelector(".modal_column.press")
-  //     .querySelector(".opt_div.custom").firstElementChild;
-  // }
+  // let activeId = optionsView._activeComp.id;
+  // console.log("active id: ", activeId);
+  // let indexed = model.state.indexOf(
+  //   model.state.find((el) => el.id === activeId)
+  // );
+  // model.state.splice(indexed, 1);
+  console.log("model.state: ", model.state);
 });
 //.............................................................
-// optSaveBtn.addEventListener("click", function () {
-//   console.log("bore: ", heldBore);
-//   console.log("type: ", heldType);
-//   console.log("range: ", heldRange);
-//   console.log("press: ", heldPress);
-
-//   allBores.forEach((el) => el.classList.remove("selected"));
-//   allTypes.forEach((el) => el.classList.remove("selected"));
-//   allRanges.forEach((el) => el.classList.remove("selected"));
-//   allPressures.forEach((el) => el.classList.remove("selected"));
-
-//   heldLabel.classList.remove("held");
-//   if (heldLabel.innerHTML === "Custom:") {
-//     const inputLable = heldLabel
-//       .closest(".label_column")
-//       .querySelector(".label_input").placeholder;
-//     controlLabelInput(inputLable);
-//   }
-
-//   heldBore.classList.remove("held");
-//   if (heldBore.innerHTML === "Custom:") {
-//     const inputBore = heldBore
-//       .closest(".modal_column")
-//       .querySelector(".bore_input").placeholder;
-
-//     controlBoreInput(inputBore, "bore");
-//   }
-//   heldBore.innerHTML.replace('"', "");
-//   heldBore.closest(".opt_div").click();
-
-//   heldType.classList.remove("held");
-//   if (heldType.innerHTML === "Custom:") {
-//     const inputType = heldType
-//       .closest(".modal_column")
-//       .querySelector(".type_input").placeholder;
-//     controlTypeInput(inputType, "type");
-//   }
-//   heldType.closest(".opt_div").click();
-
-//   heldRange.classList.remove("held");
-//   if (heldRange.innerHTML === "Custom:") {
-//     const inputRange = heldRange
-//       .closest(".modal_column")
-//       .querySelector(".range_input").placeholder;
-//     controlRangeInput(inputRange, "range");
-//   }
-//   heldRange.closest(".opt_div").click();
-
-//   heldPress.classList.remove("held");
-//   if (heldPress.innerHTML === "Custom:") {
-//     const inputPress = heldPress
-//       .closest(".modal_column")
-//       .querySelector(".press_input").placeholder;
-//     controlPressInput(inputPress, "pressure");
-//   }
-//   heldPress.closest(".opt_div").click();
-// });

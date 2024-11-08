@@ -1,8 +1,9 @@
 import stackView from "./stackView";
 import notesView from "./notesView";
 import View from "./View";
+
 // import adaptorsView from "./adaptorsView";
-let extractObj = {};
+// let extractObj = {};
 let currentColumn;
 let newText;
 
@@ -36,6 +37,9 @@ class OptionsView extends View {
   _pressFinalValue;
 
   _secondOptsFlag;
+  _finishedSettingOpts;
+
+  extractObj = {};
 
   //Option clicks assigned to opts text
   _addHandlerOptions(handler) {
@@ -106,10 +110,8 @@ class OptionsView extends View {
   }
   //_________________________________________________________________________
   _setOptsText(clicked) {
-    // let currentColumn;
-    // let newText;
+    this._finishedSettingOpts = false;
     //..........................................................................
-
     this._retarget();
     let optOutput = "";
     const arrExtra = [this._allTypeOptsText, this._allRangeOptsText];
@@ -117,7 +119,6 @@ class OptionsView extends View {
     let selectedText = "";
 
     if (stackView._compFlag === "single" || stackView._compFlag === "double") {
-      // arrUse = arrUse.slice(1, 1).concat(arrExtra, arrUse.slice(2));
       arrUse = arrUse.slice(0, 1).concat(arrExtra, arrUse.slice(1));
     }
     const textChild = clicked.firstElementChild;
@@ -125,7 +126,7 @@ class OptionsView extends View {
     if (
       arrUse.every((el) => el.find((el2) => el2.classList.contains("selected")))
     ) {
-      extractObj = {};
+      this.extractObj = {};
 
       arrUse.forEach(function (el) {
         selectedText = el.find((el2) => el2.classList.contains("selected"));
@@ -144,16 +145,16 @@ class OptionsView extends View {
         if (newText === "Custom:") {
           newText = document.querySelector(`.${currentColumn}_input`).value;
         }
-
-        extractObj[currentColumn] = newText;
-      });
+        this.extractObj[currentColumn] = newText;
+      }, this);
       if (this._labelFinalValue) {
-        extractObj.label = this._labelFinalValue;
+        this.extractObj.label = this._labelFinalValue;
       } else
-        extractObj.label = document.querySelector(".label_opt_text").innerHTML;
-      extractObj.id = this._activeComp.id;
-      console.log("extractObj: ", extractObj);
-
+        this.extractObj.label =
+          document.querySelector(".label_opt_text").innerHTML;
+      this._secondOptsFlag
+        ? (this.extractObj.id = this._activeComp.id + "B")
+        : (this.extractObj.id = this._activeComp.id);
       //........................................................................
 
       optOutput = optOutput.split("|");
@@ -197,7 +198,8 @@ class OptionsView extends View {
 
       this._formatInputs(optOutput);
       this._resetOptions();
-      this._closeModal();
+      // this._closeModal();
+      this._finishedSettingOpts = true;
     }
   }
   //_________________________________________________________________________
