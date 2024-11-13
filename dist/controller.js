@@ -19816,7 +19816,6 @@
       const textChild = clicked.firstElementChild;
       this._setActiveOpt(textChild);
       if (arrUse.every((el) => el.find((el2) => el2.classList.contains("selected")))) {
-        this.extractObj = {};
         arrUse.forEach(function(el) {
           selectedText = el.find((el2) => el2.classList.contains("selected"));
           selectedText.innerHTML === "Custom:" ? optOutput += "&nbsp;|" : optOutput += selectedText.innerHTML + "|";
@@ -19869,9 +19868,10 @@
       const allColumnOpts = [
         ...selectedText.closest(".modal_column").querySelectorAll(".opt_div")
       ];
-      allColumnOpts.forEach(
-        (el) => el.firstElementChild.classList.remove("selected")
-      );
+      allColumnOpts.forEach(function(el) {
+        el.firstElementChild.classList.remove("selected");
+        el.firstElementChild.classList.remove("held");
+      });
       selectedText.classList.add("selected");
       if (!selectedText.closest(".opt_div").classList.contains("custom")) {
         selectedText.closest(".modal_column").querySelector(`.${selectedText.className.split("_")[0]}_input`).value = "";
@@ -19955,13 +19955,15 @@
       this._typeOpts.classList.add("hide");
       this._rangeOpts.classList.add("hide");
       this._secondOptsFlag = false;
+      const allOpts = [...document.querySelectorAll(".opt_div")];
+      allOpts.forEach(function(el) {
+        el.firstElementChild.classList.remove("selected", "held");
+      });
     }
     //_________________________________________________________________________
     _closeModal() {
       this._optsModal.classList.add("hide");
       notesView_default._modalBlockout.classList.add("hide");
-      const allOpts = [...document.querySelectorAll(".opt_div")];
-      allOpts.forEach((el) => el.firstElementChild.classList.remove("selected"));
       this._secondOptsFlag = false;
     }
     //____________________________________________________________________
@@ -19994,6 +19996,25 @@
           handler(clicked);
         })
       );
+    };
+    //____________________________________________________________________
+    _getOptsObj = function(stateObj) {
+      [
+        this._allBoreOptsText,
+        this._allTypeOptsText,
+        this._allRangeOptsText,
+        this._allPressOptsText
+      ].forEach((el) => el.forEach((el2) => el2.classList.remove("held")));
+      if (this._allBoreOptsText.find((el) => el.innerHTML === stateObj.bore)) {
+        this._allBoreOptsText.find((el) => el.innerHTML === stateObj.bore).classList.add("held");
+      } else {
+        document.querySelector(".modal_column.bore").querySelector(".opt_div.custom").firstElementChild.classList.add("held");
+      }
+      if (this._allPressOptsText.find((el) => el.innerHTML === stateObj.press)) {
+        this._allPressOptsText.find((el) => el.innerHTML === stateObj.press).classList.add("held");
+      } else {
+        document.querySelector(".modal_column.press").querySelector(".opt_div.custom").firstElementChild.classList.add("held");
+      }
     };
     //____________________________________________________________________
   };
@@ -28626,7 +28647,7 @@
         }
         break;
       default:
-        removeOptsObject(stackView_default._activeComp, firstCompFlag);
+        removeOptsObject(stackView_default._activeComp.id, firstCompFlag);
         stackView_default._configComp(compVal);
         adaptorsView_default._autoAdapt();
         adaptorsView_default._addHandlerAdaptors(controlAdapt);
@@ -28672,6 +28693,10 @@
       optionsView_default._typeOpts.classList.remove("hide");
     }
     optionsView_default._labelText.innerHTML = stackView_default._compFlag.charAt(0).toUpperCase() + stackView_default._compFlag.slice(1);
+    if (state.find((el) => el.id === stackView_default._activeComp.id))
+      optionsView_default._getOptsObj(
+        state.find((el) => el.id === stackView_default._activeComp.id)
+      );
     optionsView_default._optsModal.classList.remove("hide");
     notesView_default._modalBlockout.classList.remove("hide");
     stackView_default._clickedComp = clicked;
@@ -28685,7 +28710,7 @@
   controlModalBtn = function() {
     removeOptsObject(optionsView_default.extractObj.id);
     state.push(optionsView_default.extractObj);
-    console.log("state from controller: ", state);
+    optionsView_default.extractObj = {};
     optionsView_default._closeModal();
     adaptorsView_default._autoAdapt();
     adaptorsView_default._addHandlerAdaptors(controlAdapt);
@@ -28782,6 +28807,7 @@
     heightsView_default._clearAndCloseHeight();
     optionsView_default._closeModal();
     optionsView_default._crossMiniMenu.classList.add("hide");
+    optionsView_default._adaptMiniMenu.classList.add("hide");
   };
   var init = function() {
     statsView_default._setDate();

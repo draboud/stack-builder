@@ -126,7 +126,7 @@ class OptionsView extends View {
     if (
       arrUse.every((el) => el.find((el2) => el2.classList.contains("selected")))
     ) {
-      this.extractObj = {};
+      // this.extractObj = {};
 
       arrUse.forEach(function (el) {
         selectedText = el.find((el2) => el2.classList.contains("selected"));
@@ -207,9 +207,10 @@ class OptionsView extends View {
     const allColumnOpts = [
       ...selectedText.closest(".modal_column").querySelectorAll(".opt_div"),
     ];
-    allColumnOpts.forEach((el) =>
-      el.firstElementChild.classList.remove("selected")
-    );
+    allColumnOpts.forEach(function (el) {
+      el.firstElementChild.classList.remove("selected");
+      el.firstElementChild.classList.remove("held");
+    });
     selectedText.classList.add("selected");
 
     //if selecting a default from list, clear potential input from custom entry
@@ -332,13 +333,16 @@ class OptionsView extends View {
     this._typeOpts.classList.add("hide");
     this._rangeOpts.classList.add("hide");
     this._secondOptsFlag = false;
+
+    const allOpts = [...document.querySelectorAll(".opt_div")];
+    allOpts.forEach(function (el) {
+      el.firstElementChild.classList.remove("selected", "held");
+    });
   }
   //_________________________________________________________________________
   _closeModal() {
     this._optsModal.classList.add("hide");
     notesView._modalBlockout.classList.add("hide");
-    const allOpts = [...document.querySelectorAll(".opt_div")];
-    allOpts.forEach((el) => el.firstElementChild.classList.remove("selected"));
     this._secondOptsFlag = false;
   }
   //____________________________________________________________________
@@ -373,6 +377,40 @@ class OptionsView extends View {
         handler(clicked);
       })
     );
+  };
+  //____________________________________________________________________
+  _getOptsObj = function (stateObj) {
+    //remove all previous 'held' classes in the modal
+    [
+      this._allBoreOptsText,
+      this._allTypeOptsText,
+      this._allRangeOptsText,
+      this._allPressOptsText,
+    ].forEach((el) => el.forEach((el2) => el2.classList.remove("held")));
+
+    //if menu item matches, highlight it. If not, highlight 'Custom:'
+    //Highlight matching Bore
+    if (this._allBoreOptsText.find((el) => el.innerHTML === stateObj.bore)) {
+      this._allBoreOptsText
+        .find((el) => el.innerHTML === stateObj.bore)
+        .classList.add("held");
+    } else {
+      document
+        .querySelector(".modal_column.bore")
+        .querySelector(".opt_div.custom")
+        .firstElementChild.classList.add("held");
+    }
+    //Highlight matching Press
+    if (this._allPressOptsText.find((el) => el.innerHTML === stateObj.press)) {
+      this._allPressOptsText
+        .find((el) => el.innerHTML === stateObj.press)
+        .classList.add("held");
+    } else {
+      document
+        .querySelector(".modal_column.press")
+        .querySelector(".opt_div.custom")
+        .firstElementChild.classList.add("held");
+    }
   };
   //____________________________________________________________________
 }

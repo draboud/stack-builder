@@ -40,7 +40,7 @@ const controlStackBtns = function (arrayEl) {
       }
       break;
     default:
-      model.removeOptsObject(stackView._activeComp, firstCompFlag);
+      model.removeOptsObject(stackView._activeComp.id, firstCompFlag);
       stackView._configComp(compVal);
       adaptorsView._autoAdapt();
       adaptorsView._addHandlerAdaptors(controlAdapt);
@@ -92,11 +92,15 @@ controlOptions = function (clicked) {
   if (clicked.classList.contains("second")) optionsView._secondOptsFlag = true;
   if (stackView._compFlag === "single" || stackView._compFlag === "double") {
     optionsView._typeOpts.classList.remove("hide");
-    // optionsView._rangeOpts.classList.remove("hide");
   }
   optionsView._labelText.innerHTML =
     stackView._compFlag.charAt(0).toUpperCase() + stackView._compFlag.slice(1);
-
+  //......................................................
+  if (model.state.find((el) => el.id === stackView._activeComp.id))
+    optionsView._getOptsObj(
+      model.state.find((el) => el.id === stackView._activeComp.id)
+    );
+  //......................................................
   optionsView._optsModal.classList.remove("hide");
   notesView._modalBlockout.classList.remove("hide");
 
@@ -113,7 +117,7 @@ controlOptsModal = function (clicked) {
 controlModalBtn = function () {
   model.removeOptsObject(optionsView.extractObj.id);
   model.state.push(optionsView.extractObj);
-  console.log("state from controller: ", model.state);
+  optionsView.extractObj = {};
   optionsView._closeModal();
   adaptorsView._autoAdapt();
   adaptorsView._addHandlerAdaptors(controlAdapt);
@@ -264,6 +268,7 @@ controlHideModals = function () {
   heightsView._clearAndCloseHeight();
   optionsView._closeModal();
   optionsView._crossMiniMenu.classList.add("hide");
+  optionsView._adaptMiniMenu.classList.add("hide");
 };
 //____________________________________________________________________
 
