@@ -236,7 +236,6 @@ class OptionsView extends View {
     ) {
       this._rangeOpts.classList.add("hide");
       this._rangeFinalValue = "none";
-      // this._rangeOpts.querySelector(".opt_div.custom").click();
 
       this._rangeOpts
         .querySelector(".opt_div.custom")
@@ -389,27 +388,57 @@ class OptionsView extends View {
     ].forEach((el) => el.forEach((el2) => el2.classList.remove("held")));
 
     //if menu item matches, highlight it. If not, highlight 'Custom:'
-    //Highlight matching Bore
+    //Highlight matching Bore..................................................
     if (this._allBoreOptsText.find((el) => el.innerHTML === stateObj.bore)) {
       this._allBoreOptsText
         .find((el) => el.innerHTML === stateObj.bore)
         .classList.add("held");
+      document.querySelector(".bore_input").placeholder = "bore";
     } else {
       document
         .querySelector(".modal_column.bore")
         .querySelector(".opt_div.custom")
         .firstElementChild.classList.add("held");
+      document.querySelector(".bore_input").placeholder = stateObj.bore;
     }
-    //Highlight matching Press
+    //Highlight matching Type.................................................
+    if (this._allTypeOptsText.find((el) => el.innerHTML === stateObj.type)) {
+      this._allTypeOptsText
+        .find((el) => el.innerHTML === stateObj.type)
+        .classList.add("held");
+      document.querySelector(".type_input").placeholder = "type";
+    } else {
+      document
+        .querySelector(".modal_column.type")
+        .querySelector(".opt_div.custom")
+        .firstElementChild.classList.add("held");
+      document.querySelector(".type_input").placeholder = stateObj.type;
+    }
+    //Highlight matching Range.................................................
+    if (this._allRangeOptsText.find((el) => el.innerHTML === stateObj.range)) {
+      this._allRangeOptsText
+        .find((el) => el.innerHTML === stateObj.range)
+        .classList.add("held");
+      document.querySelector(".range_input").placeholder = "range";
+    } else {
+      document
+        .querySelector(".modal_column.range")
+        .querySelector(".opt_div.custom")
+        .firstElementChild.classList.add("held");
+      document.querySelector(".range_input").placeholder = stateObj.range;
+    }
+    //Highlight matching Press.................................................
     if (this._allPressOptsText.find((el) => el.innerHTML === stateObj.press)) {
       this._allPressOptsText
         .find((el) => el.innerHTML === stateObj.press)
         .classList.add("held");
+      document.querySelector(".press_input").placeholder = "press";
     } else {
       document
         .querySelector(".modal_column.press")
         .querySelector(".opt_div.custom")
         .firstElementChild.classList.add("held");
+      document.querySelector(".press_input").placeholder = stateObj.press;
     }
   };
   //____________________________________________________________________

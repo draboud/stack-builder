@@ -96,13 +96,28 @@ controlOptions = function (clicked) {
   optionsView._labelText.innerHTML =
     stackView._compFlag.charAt(0).toUpperCase() + stackView._compFlag.slice(1);
   //......................................................
-  if (model.state.find((el) => el.id === stackView._activeComp.id))
+  if (model.state.find((el) => el.id === stackView._activeComp.id)) {
     optionsView._getOptsObj(
       model.state.find((el) => el.id === stackView._activeComp.id)
     );
+  }
+  if (optionsView._secondOptsFlag) {
+    if (model.state.find((el) => el.id === stackView._activeComp.id + "B")) {
+      optionsView._getOptsObj(
+        model.state.find((el) => el.id === stackView._activeComp.id + "B")
+      );
+    }
+  }
   //......................................................
   optionsView._optsModal.classList.remove("hide");
   notesView._modalBlockout.classList.remove("hide");
+
+  //if 'VBA' is held from options obj, open up range column
+  const typeVBA = optionsView._allTypeOptsText.find(
+    (el) => el.innerHTML === "VBA"
+  );
+  if (typeVBA.classList.contains("held"))
+    optionsView._rangeOpts.classList.remove("hide");
 
   stackView._clickedComp = clicked;
 };
@@ -148,7 +163,6 @@ controlBoreInput = function (boreValue) {
 };
 //____________________________________________________________________
 controlTypeInput = function (typeValue) {
-  console.log("custom type set");
   optionsView._typeFinalValue = optionsView._formatInputs(typeValue, "type");
   document
     .querySelector(".modal_column.type")

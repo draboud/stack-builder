@@ -20007,13 +20007,31 @@
       ].forEach((el) => el.forEach((el2) => el2.classList.remove("held")));
       if (this._allBoreOptsText.find((el) => el.innerHTML === stateObj.bore)) {
         this._allBoreOptsText.find((el) => el.innerHTML === stateObj.bore).classList.add("held");
+        document.querySelector(".bore_input").placeholder = "bore";
       } else {
         document.querySelector(".modal_column.bore").querySelector(".opt_div.custom").firstElementChild.classList.add("held");
+        document.querySelector(".bore_input").placeholder = stateObj.bore;
+      }
+      if (this._allTypeOptsText.find((el) => el.innerHTML === stateObj.type)) {
+        this._allTypeOptsText.find((el) => el.innerHTML === stateObj.type).classList.add("held");
+        document.querySelector(".type_input").placeholder = "type";
+      } else {
+        document.querySelector(".modal_column.type").querySelector(".opt_div.custom").firstElementChild.classList.add("held");
+        document.querySelector(".type_input").placeholder = stateObj.type;
+      }
+      if (this._allRangeOptsText.find((el) => el.innerHTML === stateObj.range)) {
+        this._allRangeOptsText.find((el) => el.innerHTML === stateObj.range).classList.add("held");
+        document.querySelector(".range_input").placeholder = "range";
+      } else {
+        document.querySelector(".modal_column.range").querySelector(".opt_div.custom").firstElementChild.classList.add("held");
+        document.querySelector(".range_input").placeholder = stateObj.range;
       }
       if (this._allPressOptsText.find((el) => el.innerHTML === stateObj.press)) {
         this._allPressOptsText.find((el) => el.innerHTML === stateObj.press).classList.add("held");
+        document.querySelector(".press_input").placeholder = "press";
       } else {
         document.querySelector(".modal_column.press").querySelector(".opt_div.custom").firstElementChild.classList.add("held");
+        document.querySelector(".press_input").placeholder = stateObj.press;
       }
     };
     //____________________________________________________________________
@@ -28693,12 +28711,25 @@
       optionsView_default._typeOpts.classList.remove("hide");
     }
     optionsView_default._labelText.innerHTML = stackView_default._compFlag.charAt(0).toUpperCase() + stackView_default._compFlag.slice(1);
-    if (state.find((el) => el.id === stackView_default._activeComp.id))
+    if (state.find((el) => el.id === stackView_default._activeComp.id)) {
       optionsView_default._getOptsObj(
         state.find((el) => el.id === stackView_default._activeComp.id)
       );
+    }
+    if (optionsView_default._secondOptsFlag) {
+      if (state.find((el) => el.id === stackView_default._activeComp.id + "B")) {
+        optionsView_default._getOptsObj(
+          state.find((el) => el.id === stackView_default._activeComp.id + "B")
+        );
+      }
+    }
     optionsView_default._optsModal.classList.remove("hide");
     notesView_default._modalBlockout.classList.remove("hide");
+    const typeVBA = optionsView_default._allTypeOptsText.find(
+      (el) => el.innerHTML === "VBA"
+    );
+    if (typeVBA.classList.contains("held"))
+      optionsView_default._rangeOpts.classList.remove("hide");
     stackView_default._clickedComp = clicked;
   };
   controlOptsModal = function(clicked) {
@@ -28727,7 +28758,6 @@
     document.querySelector(".modal_column.bore").querySelector(".opt_div.custom").click();
   };
   controlTypeInput = function(typeValue) {
-    console.log("custom type set");
     optionsView_default._typeFinalValue = optionsView_default._formatInputs(typeValue, "type");
     document.querySelector(".modal_column.type").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
     document.querySelector(".modal_column.type").querySelector(".opt_div.custom").click();
