@@ -8,7 +8,7 @@ import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 import statsView from "./views/statsView.js";
 import * as model from "./model.js";
-console.log("preserve-orig-id Nov 6, 2024");
+console.log("objs-to-modal2 Nov 12, 2024");
 
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
