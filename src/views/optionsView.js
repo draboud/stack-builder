@@ -41,6 +41,8 @@ class OptionsView extends View {
 
   extractObj = {};
 
+  _reviseBtn = document.querySelector(".revise_button");
+
   //Option clicks assigned to opts text
   _addHandlerOptions(handler) {
     this._retarget();
@@ -106,6 +108,14 @@ class OptionsView extends View {
       e.preventDefault();
       const pressInputValue = document.querySelector(".press_input").value;
       handler(pressInputValue);
+    });
+  }
+  //_________________________________________________________________________
+  _addHandlerReviseBtn(handler) {
+    this._reviseBtn.addEventListener("click", function (e) {
+      const clicked = e.target.closest(".revise_button");
+      if (!clicked) return;
+      handler();
     });
   }
   //_________________________________________________________________________
@@ -440,6 +450,10 @@ class OptionsView extends View {
         .firstElementChild.classList.add("held");
       document.querySelector(".press_input").placeholder = stateObj.press;
     }
+  };
+  //____________________________________________________________________
+  _reviseOpts = function (stateObj) {
+    console.log("revised!");
   };
   //____________________________________________________________________
 }

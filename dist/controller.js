@@ -19735,6 +19735,7 @@
     _secondOptsFlag;
     _finishedSettingOpts;
     extractObj = {};
+    _reviseBtn = document.querySelector(".revise_button");
     //Option clicks assigned to opts text
     _addHandlerOptions(handler) {
       this._retarget();
@@ -19800,6 +19801,14 @@
         e2.preventDefault();
         const pressInputValue = document.querySelector(".press_input").value;
         handler(pressInputValue);
+      });
+    }
+    //_________________________________________________________________________
+    _addHandlerReviseBtn(handler) {
+      this._reviseBtn.addEventListener("click", function(e2) {
+        const clicked = e2.target.closest(".revise_button");
+        if (!clicked) return;
+        handler();
       });
     }
     //_________________________________________________________________________
@@ -20033,6 +20042,10 @@
         document.querySelector(".modal_column.press").querySelector(".opt_div.custom").firstElementChild.classList.add("held");
         document.querySelector(".press_input").placeholder = stateObj.press;
       }
+    };
+    //____________________________________________________________________
+    _reviseOpts = function(stateObj) {
+      console.log("revised!");
     };
     //____________________________________________________________________
   };
@@ -28666,6 +28679,7 @@
         break;
       default:
         removeOptsObject(stackView_default._activeComp.id, firstCompFlag);
+        removeOptsObject(stackView_default._activeComp.id + "B", firstCompFlag);
         stackView_default._configComp(compVal);
         adaptorsView_default._autoAdapt();
         adaptorsView_default._addHandlerAdaptors(controlAdapt);
@@ -28715,14 +28729,15 @@
       optionsView_default._getOptsObj(
         state.find((el) => el.id === stackView_default._activeComp.id)
       );
-    }
-    if (optionsView_default._secondOptsFlag) {
+      optionsView_default._reviseBtn.classList.remove("hide");
+    } else if (optionsView_default._secondOptsFlag) {
       if (state.find((el) => el.id === stackView_default._activeComp.id + "B")) {
         optionsView_default._getOptsObj(
           state.find((el) => el.id === stackView_default._activeComp.id + "B")
         );
-      }
-    }
+        optionsView_default._reviseBtn.classList.remove("hide");
+      } else optionsView_default._reviseBtn.classList.add("hide");
+    } else optionsView_default._reviseBtn.classList.add("hide");
     optionsView_default._optsModal.classList.remove("hide");
     notesView_default._modalBlockout.classList.remove("hide");
     const typeVBA = optionsView_default._allTypeOptsText.find(
@@ -28743,6 +28758,7 @@
     state.push(optionsView_default.extractObj);
     optionsView_default.extractObj = {};
     optionsView_default._closeModal();
+    optionsView_default._reviseBtn.classList.add("hide");
     adaptorsView_default._autoAdapt();
     adaptorsView_default._addHandlerAdaptors(controlAdapt);
     statsView_default._liveHeightTotal();
@@ -28839,6 +28855,9 @@
     optionsView_default._crossMiniMenu.classList.add("hide");
     optionsView_default._adaptMiniMenu.classList.add("hide");
   };
+  controlReviseBtn = function() {
+    optionsView_default._reviseOpts;
+  };
   var init = function() {
     statsView_default._setDate();
     stackBtnsView_default._addHandlerStackBtns(controlStackBtns);
@@ -28861,6 +28880,7 @@
     notesView_default._addHandlerModalBlockout(controlModalBlockout);
     optionsView_default._addHandlerCrossMiniItem(controlCrossMiniItem);
     optionsView_default._addHandlerAdaptMiniItem(controlAdaptMiniItem);
+    optionsView_default._addHandlerReviseBtn(controlReviseBtn);
   };
   init();
   var testBtn = document.querySelector(".test_button");

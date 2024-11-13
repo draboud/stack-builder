@@ -41,6 +41,8 @@ const controlStackBtns = function (arrayEl) {
       break;
     default:
       model.removeOptsObject(stackView._activeComp.id, firstCompFlag);
+      model.removeOptsObject(stackView._activeComp.id + "B", firstCompFlag);
+      // optionsView._reviseBtn.classList.add("hide");
       stackView._configComp(compVal);
       adaptorsView._autoAdapt();
       adaptorsView._addHandlerAdaptors(controlAdapt);
@@ -100,14 +102,16 @@ controlOptions = function (clicked) {
     optionsView._getOptsObj(
       model.state.find((el) => el.id === stackView._activeComp.id)
     );
-  }
-  if (optionsView._secondOptsFlag) {
+    optionsView._reviseBtn.classList.remove("hide");
+  } else if (optionsView._secondOptsFlag) {
     if (model.state.find((el) => el.id === stackView._activeComp.id + "B")) {
       optionsView._getOptsObj(
         model.state.find((el) => el.id === stackView._activeComp.id + "B")
       );
-    }
-  }
+      optionsView._reviseBtn.classList.remove("hide");
+    } else optionsView._reviseBtn.classList.add("hide");
+  } else optionsView._reviseBtn.classList.add("hide");
+
   //......................................................
   optionsView._optsModal.classList.remove("hide");
   notesView._modalBlockout.classList.remove("hide");
@@ -131,9 +135,11 @@ controlOptsModal = function (clicked) {
 //____________________________________________________________________
 controlModalBtn = function () {
   model.removeOptsObject(optionsView.extractObj.id);
+  // model.removeOptsObject(stackView._activeComp.id + "B", firstCompFlag);
   model.state.push(optionsView.extractObj);
   optionsView.extractObj = {};
   optionsView._closeModal();
+  optionsView._reviseBtn.classList.add("hide");
   adaptorsView._autoAdapt();
   adaptorsView._addHandlerAdaptors(controlAdapt);
   statsView._liveHeightTotal();
@@ -285,6 +291,10 @@ controlHideModals = function () {
   optionsView._adaptMiniMenu.classList.add("hide");
 };
 //____________________________________________________________________
+controlReviseBtn = function () {
+  optionsView._reviseOpts;
+};
+//____________________________________________________________________
 
 const init = function () {
   statsView._setDate();
@@ -309,6 +319,7 @@ const init = function () {
   notesView._addHandlerModalBlockout(controlModalBlockout);
   optionsView._addHandlerCrossMiniItem(controlCrossMiniItem);
   optionsView._addHandlerAdaptMiniItem(controlAdaptMiniItem);
+  optionsView._addHandlerReviseBtn(controlReviseBtn);
 };
 init();
 
