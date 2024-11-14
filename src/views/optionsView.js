@@ -225,10 +225,11 @@ class OptionsView extends View {
 
     //if selecting a default from list, clear potential input from custom entry
     if (!selectedText.closest(".opt_div").classList.contains("custom")) {
-      selectedText
-        .closest(".modal_column")
-        .querySelector(`.${selectedText.className.split("_")[0]}_input`).value =
-        "";
+      const columnInput = document.querySelector(
+        `.${selectedText.className.split("_")[0]}_input`
+      );
+      columnInput.value = "";
+      columnInput.placeholder = `${columnInput.className.split("_")[0]}`;
     }
 
     //flyout range option if VBA is selected
@@ -338,6 +339,12 @@ class OptionsView extends View {
     this._typeInput.value = "";
     this._rangeInput.value = "";
     this._pressInput.value = "";
+
+    // this._labelInput.placeholder = "label";
+    // this._boreInput.placeholder = "bore";
+    // this._typeInput.placeholder = "type";
+    // this._rangeInput.placeholder = "range";
+    // this._pressureInput.placeholder = "pressure";
 
     this._typeOpts.classList.add("hide");
     this._rangeOpts.classList.add("hide");

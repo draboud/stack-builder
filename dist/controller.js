@@ -19883,7 +19883,11 @@
       });
       selectedText.classList.add("selected");
       if (!selectedText.closest(".opt_div").classList.contains("custom")) {
-        selectedText.closest(".modal_column").querySelector(`.${selectedText.className.split("_")[0]}_input`).value = "";
+        const columnInput = document.querySelector(
+          `.${selectedText.className.split("_")[0]}_input`
+        );
+        columnInput.value = "";
+        columnInput.placeholder = `${columnInput.className.split("_")[0]}`;
       }
       if (selectedText.closest(".modal_column").classList.contains("type") && selectedText.innerHTML === "VBA") {
         this._rangeOpts.classList.remove("hide");
@@ -28725,18 +28729,18 @@
       optionsView_default._typeOpts.classList.remove("hide");
     }
     optionsView_default._labelText.innerHTML = stackView_default._compFlag.charAt(0).toUpperCase() + stackView_default._compFlag.slice(1);
-    if (state.find((el) => el.id === stackView_default._activeComp.id)) {
+    if (state.find((el) => el.id === stackView_default._activeComp.id) && !optionsView_default._secondOptsFlag) {
       optionsView_default._getOptsObj(
         state.find((el) => el.id === stackView_default._activeComp.id)
       );
       optionsView_default._reviseBtn.classList.remove("hide");
-    } else if (optionsView_default._secondOptsFlag) {
+    } else if (state.find((el) => el.id === stackView_default._activeComp.id) && optionsView_default._secondOptsFlag) {
       if (state.find((el) => el.id === stackView_default._activeComp.id + "B")) {
         optionsView_default._getOptsObj(
           state.find((el) => el.id === stackView_default._activeComp.id + "B")
         );
-        optionsView_default._reviseBtn.classList.remove("hide");
-      } else optionsView_default._reviseBtn.classList.add("hide");
+      }
+      optionsView_default._reviseBtn.classList.remove("hide");
     } else optionsView_default._reviseBtn.classList.add("hide");
     optionsView_default._optsModal.classList.remove("hide");
     notesView_default._modalBlockout.classList.remove("hide");

@@ -98,20 +98,27 @@ controlOptions = function (clicked) {
   optionsView._labelText.innerHTML =
     stackView._compFlag.charAt(0).toUpperCase() + stackView._compFlag.slice(1);
   //......................................................
-  if (model.state.find((el) => el.id === stackView._activeComp.id)) {
+  //if matching id and not a double second
+  if (
+    model.state.find((el) => el.id === stackView._activeComp.id) &&
+    !optionsView._secondOptsFlag
+  ) {
     optionsView._getOptsObj(
       model.state.find((el) => el.id === stackView._activeComp.id)
     );
     optionsView._reviseBtn.classList.remove("hide");
-  } else if (optionsView._secondOptsFlag) {
+    //if matching id but is a double second
+  } else if (
+    model.state.find((el) => el.id === stackView._activeComp.id) &&
+    optionsView._secondOptsFlag
+  ) {
     if (model.state.find((el) => el.id === stackView._activeComp.id + "B")) {
       optionsView._getOptsObj(
         model.state.find((el) => el.id === stackView._activeComp.id + "B")
       );
-      optionsView._reviseBtn.classList.remove("hide");
-    } else optionsView._reviseBtn.classList.add("hide");
+    }
+    optionsView._reviseBtn.classList.remove("hide");
   } else optionsView._reviseBtn.classList.add("hide");
-
   //......................................................
   optionsView._optsModal.classList.remove("hide");
   notesView._modalBlockout.classList.remove("hide");
