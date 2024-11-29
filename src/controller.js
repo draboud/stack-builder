@@ -8,7 +8,8 @@ import notesView from "./views/notesView.js";
 import pdfView from "./views/pdfView.js";
 import statsView from "./views/statsView.js";
 import * as model from "./model.js";
-console.log("objs-to-modal2 Nov 12, 2024");
+
+console.log("objs-to-modal2 Nov 29, 2024");
 
 //____________________________________________________________________
 const controlStackBtns = function (arrayEl) {
@@ -90,6 +91,7 @@ controlHeightModal = function () {
 };
 //____________________________________________________________________
 controlOptions = function (clicked) {
+  // debugger;
   optionsView._retarget();
   if (clicked.classList.contains("second")) optionsView._secondOptsFlag = true;
   if (stackView._compFlag === "single" || stackView._compFlag === "double") {
@@ -109,7 +111,7 @@ controlOptions = function (clicked) {
     optionsView._reviseBtn.classList.remove("hide");
     //if matching id but is a double second
   } else if (
-    model.state.find((el) => el.id === stackView._activeComp.id) &&
+    model.state.find((el) => el.id === stackView._activeComp.id + "B") &&
     optionsView._secondOptsFlag
   ) {
     if (model.state.find((el) => el.id === stackView._activeComp.id + "B")) {
@@ -153,16 +155,25 @@ controlModalBtn = function () {
 };
 //____________________________________________________________________
 controlLabelInput = function (labelValue) {
-  optionsView._labelFinalValue = optionsView._formatInputs(labelValue);
+  // optionsView._labelFinalValue = optionsView._formatInputs(labelValue);
+  // optionsView._finalValue.label = optionsView._formatInputs(labelValue);
+  optionsView._finalValue.label = labelValue;
+
   optionsView._labelText.innerHTML = labelValue;
   document
     .querySelector(".label_column")
     .querySelector(".opt_div.custom")
     .firstElementChild.classList.add("selected");
+
+  document
+    .querySelector(".label_column")
+    .querySelector(".opt_div.custom")
+    .click();
 };
 //____________________________________________________________________
 controlBoreInput = function (boreValue) {
-  optionsView._boreFinalValue = optionsView._formatInputs(boreValue, "bore");
+  // optionsView._boreFinalValue = optionsView._formatInputs(boreValue, "bore");
+  optionsView._finalValue.bore = optionsView._formatInputs(boreValue, "bore");
 
   document
     .querySelector(".modal_column.bore")
@@ -176,7 +187,9 @@ controlBoreInput = function (boreValue) {
 };
 //____________________________________________________________________
 controlTypeInput = function (typeValue) {
-  optionsView._typeFinalValue = optionsView._formatInputs(typeValue, "type");
+  // optionsView._typeFinalValue = optionsView._formatInputs(typeValue, "type");
+  optionsView._finalValue.type = optionsView._formatInputs(typeValue, "type");
+
   document
     .querySelector(".modal_column.type")
     .querySelector(".opt_div.custom")
@@ -189,7 +202,12 @@ controlTypeInput = function (typeValue) {
 };
 //____________________________________________________________________
 controlRangeInput = function (rangeValue) {
-  optionsView._rangeFinalValue = optionsView._formatInputs(rangeValue, "range");
+  // optionsView._rangeFinalValue = optionsView._formatInputs(rangeValue, "range");
+  optionsView._finalValue.range = optionsView._formatInputs(
+    rangeValue,
+    "range"
+  );
+
   document
     .querySelector(".modal_column.range")
     .querySelector(".opt_div.custom")
@@ -202,10 +220,15 @@ controlRangeInput = function (rangeValue) {
 };
 //____________________________________________________________________
 controlPressInput = function (pressValue) {
-  optionsView._pressFinalValue = optionsView._formatInputs(
+  // optionsView._pressFinalValue = optionsView._formatInputs(
+  //   pressValue,
+  //   "pressure"
+  // );
+  optionsView._finalValue.press = optionsView._formatInputs(
     pressValue,
-    "pressure"
+    "press"
   );
+
   document
     .querySelector(".modal_column.press")
     .querySelector(".opt_div.custom")
@@ -250,11 +273,15 @@ controlModalBlockout = function (modal) {
 };
 //____________________________________________________________________
 controlPDF = function () {
-  optionsView.optOutput;
+  optionsView.optOutput; //?
+  stackView._fadeOutEmptyDivs();
   adaptorsView._newHeight = adaptorsView._scaleStack();
   pdfView._convertToPDF(adaptorsView._newHeight);
   setTimeout(() => {
     adaptorsView._descaling();
+  }, 1);
+  setTimeout(() => {
+    stackView._fadeInEmptyDivs();
   }, 1);
 };
 
@@ -299,7 +326,8 @@ controlHideModals = function () {
 };
 //____________________________________________________________________
 controlReviseBtn = function () {
-  optionsView._reviseOpts;
+  // optionsView._reviseOpts(optionsView._compFlag);
+  optionsView._reviseOpts(model.state);
 };
 //____________________________________________________________________
 
@@ -332,20 +360,12 @@ init();
 
 //TEST AREA....................................................
 const testBtn = document.querySelector(".test_button");
-
-// let optObj1 = { label: "wellhead", bore: '1"', pressure: "5K PSI", id: "A" };
-// let optObj2 = { label: "spool", bore: '2"', pressure: "6K PSI", id: "B" };
-// let optObj3 = { label: "spool", bore: '3"', pressure: "7K PSI", id: "C" };
-
-// model.state.push(optObj1, optObj2, optObj3);
-
+// let myObj = {};
 testBtn.addEventListener("click", function () {
-  // let activeId = optionsView._activeComp.id;
-  // console.log("active id: ", activeId);
-  // let indexed = model.state.indexOf(
-  //   model.state.find((el) => el.id === activeId)
-  // );
-  // model.state.splice(indexed, 1);
+  // myObj.flag = false;
+  // if (myObj.flag) {
+  //   console.log("true");
+  // } else console.log("false");
   console.log("model.state: ", model.state);
 });
 //.............................................................

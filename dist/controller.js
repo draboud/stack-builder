@@ -19727,12 +19727,14 @@
     _adaptMiniMenu = document.querySelector(".adapt_mini_menu");
     _adaptMiniItems = document.querySelectorAll(".adapt-mini-item");
     _customDiv = document.querySelector(".opt_div.custom");
-    _labelFinalValue;
-    _boreFinalValue;
-    _typeFinalValue;
-    _rangeFinalValue;
-    _pressFinalValue;
+    // _labelFinalValue;
+    // _boreFinalValue;
+    // _typeFinalValue;
+    // _rangeFinalValue;
+    // _pressFinalValue;
+    _finalValue = {};
     _secondOptsFlag;
+    _rangeOpenFlag = false;
     _finishedSettingOpts;
     extractObj = {};
     _reviseBtn = document.querySelector(".revise_button");
@@ -19835,25 +19837,31 @@
           }
           this.extractObj[currentColumn] = newText;
         }, this);
-        if (this._labelFinalValue) {
-          this.extractObj.label = this._labelFinalValue;
-        } else
+        if (this._finalValue.label) {
+          this.extractObj.label = this._finalValue.label.replaceAll(
+            "&nbsp;",
+            " "
+          );
+          this.extractObj.labelFlag = true;
+        } else {
           this.extractObj.label = document.querySelector(".label_opt_text").innerHTML;
+          this.extractObj.labelFlag = false;
+        }
         this._secondOptsFlag ? this.extractObj.id = this._activeComp.id + "B" : this.extractObj.id = this._activeComp.id;
         optOutput = optOutput.split("|");
-        if (this._boreFinalValue) optOutput[0] = this._boreFinalValue;
-        if (this._typeFinalValue) optOutput[1] = this._typeFinalValue;
-        if (this._rangeFinalValue) {
-          if (this._rangeFinalValue === "none") optOutput[2] = "DISCARD";
-          else optOutput[2] = this._rangeFinalValue.replaceAll("-", "&#8209;");
+        if (this._finalValue.bore) optOutput[0] = this._finalValue.bore;
+        if (this._finalValue.type) optOutput[1] = this._finalValue.type;
+        if (this._finalValue.range) {
+          if (this._finalValue.range === "none") optOutput[2] = "DISCARD";
+          else optOutput[2] = this._finalValue.range.replaceAll("-", "&#8209;");
         }
-        if (this._pressFinalValue) {
-          this._typeOpts.classList.contains("hide") ? optOutput[1] = this._pressFinalValue : optOutput[3] = this._pressFinalValue;
+        if (this._finalValue.press) {
+          this._typeOpts.classList.contains("hide") ? optOutput[1] = this._finalValue.press : optOutput[3] = this._finalValue.press;
         }
         if (optOutput[2] === "DISCARD") optOutput.splice(2, 1);
         optOutput.splice(-1, 1);
-        if (this._labelFinalValue) {
-          optOutput = optOutput.slice(0, 1).concat(this._labelFinalValue, optOutput.slice(1));
+        if (this._finalValue.label) {
+          optOutput = optOutput.slice(0, 1).concat(this._finalValue.label, optOutput.slice(1));
         } else {
           optOutput = optOutput.slice(0, 1).concat(
             stackView_default._compFlag.charAt(0).toUpperCase() + stackView_default._compFlag.slice(1),
@@ -19874,14 +19882,22 @@
     }
     //_________________________________________________________________________
     _setActiveOpt(selectedText) {
-      const allColumnOpts = [
-        ...selectedText.closest(".modal_column").querySelectorAll(".opt_div")
-      ];
-      allColumnOpts.forEach(function(el) {
-        el.firstElementChild.classList.remove("selected");
-        el.firstElementChild.classList.remove("held");
-      });
+      if (selectedText.className.includes("label")) {
+        document.querySelector(".label_column").querySelector(".opt_div.custom").querySelector(".label_opt_text").classList.remove("held");
+        return;
+      } else {
+        const allColumnOpts = [
+          ...selectedText.closest(".modal_column").querySelectorAll(".opt_div")
+        ];
+        allColumnOpts.forEach(function(el) {
+          el.firstElementChild.classList.remove("selected");
+          el.firstElementChild.classList.remove("held");
+        });
+      }
       selectedText.classList.add("selected");
+      if (selectedText.closest(".modal_column").classList.contains("range")) {
+        this._rangeOpenFlag = true;
+      }
       if (!selectedText.closest(".opt_div").classList.contains("custom")) {
         const columnInput = document.querySelector(
           `.${selectedText.className.split("_")[0]}_input`
@@ -19889,19 +19905,31 @@
         columnInput.value = "";
         columnInput.placeholder = `${columnInput.className.split("_")[0]}`;
       }
-      if (selectedText.closest(".modal_column").classList.contains("type") && selectedText.innerHTML === "VBA") {
+      if (selectedText.closest(".modal_column").classList.contains("type") && selectedText.innerHTML === "VBA" && !this._rangeOpenFlag) {
         this._rangeOpts.classList.remove("hide");
-        this._rangeOpts.querySelector(".opt_div.custom").firstElementChild.classList.remove("selected");
+        this._allRangeOptsText.forEach((el) => el.classList.remove("selected"));
+        this._rangeOpenFlag = true;
+        if (!stateObj.range) {
+          this._rangeOpts.querySelector(".opt_div.custom").firstElementChild.classList.remove("selected", "held");
+          this._finalValue.range = "";
+        }
       } else if (selectedText.closest(".modal_column").classList.contains("type") && selectedText.innerHTML != "VBA") {
         this._rangeOpts.classList.add("hide");
-        this._rangeFinalValue = "none";
+        this._finalValue.range = "none";
+        this._rangeOpenFlag = false;
+        this._allRangeOptsText.forEach(
+          (el) => el.classList.remove("held", "selected")
+        );
+        this._rangeInput.value = "";
         this._rangeOpts.querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
       }
     }
     //_________________________________________________________________________
     _formatInputs(inputStr, type) {
       let finalOutStr;
-      finalOutStr = inputStr.charAt(0).toUpperCase() + inputStr.slice(1).replaceAll(" ", "&nbsp;").replaceAll("-", "&#8209;");
+      finalOutStr = // inputStr.charAt(0).toUpperCase() +
+      // inputStr.slice(1).replaceAll(" ", "&nbsp;").replaceAll("-", "&#8209;");
+      inputStr.replaceAll(" ", "&nbsp;").replaceAll("-", "&#8209;");
       if (inputStr.length > 55) {
         let stringToArr = inputStr.split("&nbsp;");
         let arrStrings = [];
@@ -19947,7 +19975,7 @@
         finalOutStr = addInch.join("-");
         return finalOutStr;
       }
-      if (type === "pressure") {
+      if (type === "press") {
         finalOutStr += "&nbsp;PSI";
         return finalOutStr;
       }
@@ -19955,11 +19983,11 @@
     }
     //_________________________________________________________________________
     _resetOptions() {
-      this._labelFinalValue = "";
-      this._boreFinalValue = "";
-      this._typeFinalValue = "";
-      this._rangeFinalValue = "";
-      this._pressFinalValue = "";
+      this._finalValue.label = "";
+      this._finalValue.bore = "";
+      this._finalValue.type = "";
+      this._finalValue.range = "";
+      this._finalValue.press = "";
       this._labelInput.value = "";
       this._boreInput.value = "";
       this._typeInput.value = "";
@@ -19968,6 +19996,7 @@
       this._typeOpts.classList.add("hide");
       this._rangeOpts.classList.add("hide");
       this._secondOptsFlag = false;
+      this._rangeOpenFlag = false;
       const allOpts = [...document.querySelectorAll(".opt_div")];
       allOpts.forEach(function(el) {
         el.firstElementChild.classList.remove("selected", "held");
@@ -20011,47 +20040,73 @@
       );
     };
     //____________________________________________________________________
-    _getOptsObj = function(stateObj) {
+    _getOptsObj = function(stateObj2) {
       [
         this._allBoreOptsText,
         this._allTypeOptsText,
         this._allRangeOptsText,
         this._allPressOptsText
       ].forEach((el) => el.forEach((el2) => el2.classList.remove("held")));
-      if (this._allBoreOptsText.find((el) => el.innerHTML === stateObj.bore)) {
-        this._allBoreOptsText.find((el) => el.innerHTML === stateObj.bore).classList.add("held");
+      if (stateObj2.labelFlag) {
+        document.querySelector(".label_column").querySelector(".opt_div.custom").firstElementChild.classList.add("held");
+        document.querySelector(".label_input").value = stateObj2.label;
+        document.querySelector(".label_opt_text").innerHTML = stateObj2.label;
+      }
+      if (this._allBoreOptsText.find((el) => el.innerHTML === stateObj2.bore)) {
+        this._allBoreOptsText.find((el) => el.innerHTML === stateObj2.bore).classList.add("held");
         document.querySelector(".bore_input").placeholder = "bore";
       } else {
         document.querySelector(".modal_column.bore").querySelector(".opt_div.custom").firstElementChild.classList.add("held");
-        document.querySelector(".bore_input").placeholder = stateObj.bore;
+        document.querySelector(".bore_input").value = stateObj2.bore;
       }
-      if (this._allTypeOptsText.find((el) => el.innerHTML === stateObj.type)) {
-        this._allTypeOptsText.find((el) => el.innerHTML === stateObj.type).classList.add("held");
+      if (this._allTypeOptsText.find((el) => el.innerHTML === stateObj2.type)) {
+        this._allTypeOptsText.find((el) => el.innerHTML === stateObj2.type).classList.add("held");
         document.querySelector(".type_input").placeholder = "type";
       } else {
         document.querySelector(".modal_column.type").querySelector(".opt_div.custom").firstElementChild.classList.add("held");
-        document.querySelector(".type_input").placeholder = stateObj.type;
+        document.querySelector(".type_input").value = stateObj2.type;
       }
-      if (this._allRangeOptsText.find((el) => el.innerHTML === stateObj.range)) {
-        this._allRangeOptsText.find((el) => el.innerHTML === stateObj.range).classList.add("held");
+      if (this._allRangeOptsText.find((el) => el.innerHTML === stateObj2.range)) {
+        this._allRangeOptsText.find((el) => el.innerHTML === stateObj2.range).classList.add("held");
         document.querySelector(".range_input").placeholder = "range";
       } else {
         document.querySelector(".modal_column.range").querySelector(".opt_div.custom").firstElementChild.classList.add("held");
-        document.querySelector(".range_input").placeholder = stateObj.range;
+        document.querySelector(".range_input").value = stateObj2.range;
       }
-      if (this._allPressOptsText.find((el) => el.innerHTML === stateObj.press)) {
-        this._allPressOptsText.find((el) => el.innerHTML === stateObj.press).classList.add("held");
+      if (this._allPressOptsText.find((el) => el.innerHTML === stateObj2.press)) {
+        this._allPressOptsText.find((el) => el.innerHTML === stateObj2.press).classList.add("held");
         document.querySelector(".press_input").placeholder = "press";
       } else {
         document.querySelector(".modal_column.press").querySelector(".opt_div.custom").firstElementChild.classList.add("held");
-        document.querySelector(".press_input").placeholder = stateObj.press;
+        document.querySelector(".press_input").value = stateObj2.press;
       }
     };
     //____________________________________________________________________
-    _reviseOpts = function(stateObj) {
-      console.log("revised!");
+    _reviseOpts = function(stateObj2) {
+      const currentItem = stateObj2.find((el) => el.id === this._activeComp.id);
+      if (document.querySelector(".label_column").querySelector(".opt_div.custom").querySelector(".label_opt_text").classList.contains("held")) {
+        this._finalValue.label = this._formatInputs(currentItem.label, "label");
+        document.querySelector(".label_input").value = currentItem.label;
+        document.querySelector(".label_column").querySelector(".opt_div.custom").click();
+      }
+      this._allOptsModalText.forEach(function(el) {
+        let column = el.className.split("_")[0];
+        if (el.classList.contains("held") && !el.closest(".modal_column").classList.contains("hide") && el.innerHTML != "Custom:") {
+          el.closest(".opt_div").click();
+        }
+        if (el.classList.contains("held") && !el.closest(".modal_column").classList.contains("hide") && el.innerHTML === "Custom:") {
+          this._finalValue[column] = this._formatInputs(
+            currentItem[column],
+            `${column}`
+          );
+          document.querySelector(`.${column}_input`).value = currentItem[column];
+          el.closest(".opt_div.custom").click();
+        }
+      }, this);
     };
-    //____________________________________________________________________
+    _holdCustomValue() {
+      console.log("bore");
+    }
   };
   var optionsView_default = new OptionsView();
 
@@ -20303,6 +20358,25 @@
         allNotesOutput.push(thisCrossNote.outputStr);
       });
       this._finalCrossNotes = allNotesOutput.reverse().join("");
+    };
+    //____________________________________________________________________
+    //hide comp div imgs that are 'blank' for pdf in case needing a space to play with
+    _fadeOutEmptyDivs = function() {
+      this._retarget();
+      this._allComps.forEach(function(el) {
+        if (el.querySelector(".img").src === COMP_IMG.blank || el.querySelector(".img").src === "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s.png") {
+          el.querySelector(".img").classList.add("fade");
+        }
+      });
+    };
+    //____________________________________________________________________
+    //replace blank imgs
+    _fadeInEmptyDivs = function() {
+      this._allComps.forEach(function(el) {
+        if (el.querySelector(".img").src === COMP_IMG.blank) {
+          el.querySelector(".img").classList.remove("fade");
+        }
+      });
     };
   };
   var stackView_default = new StackView();
@@ -28654,7 +28728,7 @@
   };
 
   // src/controller.js
-  console.log("objs-to-modal2 Nov 12, 2024");
+  console.log("objs-to-modal2 Nov 29, 2024");
   var controlStackBtns = function(arrayEl) {
     stackView_default._retarget();
     let firstCompFlag = false;
@@ -28734,7 +28808,7 @@
         state.find((el) => el.id === stackView_default._activeComp.id)
       );
       optionsView_default._reviseBtn.classList.remove("hide");
-    } else if (state.find((el) => el.id === stackView_default._activeComp.id) && optionsView_default._secondOptsFlag) {
+    } else if (state.find((el) => el.id === stackView_default._activeComp.id + "B") && optionsView_default._secondOptsFlag) {
       if (state.find((el) => el.id === stackView_default._activeComp.id + "B")) {
         optionsView_default._getOptsObj(
           state.find((el) => el.id === stackView_default._activeComp.id + "B")
@@ -28768,29 +28842,33 @@
     statsView_default._liveHeightTotal();
   };
   controlLabelInput = function(labelValue) {
-    optionsView_default._labelFinalValue = optionsView_default._formatInputs(labelValue);
+    optionsView_default._finalValue.label = labelValue;
     optionsView_default._labelText.innerHTML = labelValue;
     document.querySelector(".label_column").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
+    document.querySelector(".label_column").querySelector(".opt_div.custom").click();
   };
   controlBoreInput = function(boreValue) {
-    optionsView_default._boreFinalValue = optionsView_default._formatInputs(boreValue, "bore");
+    optionsView_default._finalValue.bore = optionsView_default._formatInputs(boreValue, "bore");
     document.querySelector(".modal_column.bore").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
     document.querySelector(".modal_column.bore").querySelector(".opt_div.custom").click();
   };
   controlTypeInput = function(typeValue) {
-    optionsView_default._typeFinalValue = optionsView_default._formatInputs(typeValue, "type");
+    optionsView_default._finalValue.type = optionsView_default._formatInputs(typeValue, "type");
     document.querySelector(".modal_column.type").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
     document.querySelector(".modal_column.type").querySelector(".opt_div.custom").click();
   };
   controlRangeInput = function(rangeValue) {
-    optionsView_default._rangeFinalValue = optionsView_default._formatInputs(rangeValue, "range");
+    optionsView_default._finalValue.range = optionsView_default._formatInputs(
+      rangeValue,
+      "range"
+    );
     document.querySelector(".modal_column.range").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
     document.querySelector(".modal_column.range").querySelector(".opt_div.custom").click();
   };
   controlPressInput = function(pressValue) {
-    optionsView_default._pressFinalValue = optionsView_default._formatInputs(
+    optionsView_default._finalValue.press = optionsView_default._formatInputs(
       pressValue,
-      "pressure"
+      "press"
     );
     document.querySelector(".modal_column.press").querySelector(".opt_div.custom").firstElementChild.classList.add("selected");
     document.querySelector(".modal_column.press").querySelector(".opt_div.custom").click();
@@ -28823,10 +28901,14 @@
   };
   controlPDF = function() {
     optionsView_default.optOutput;
+    stackView_default._fadeOutEmptyDivs();
     adaptorsView_default._newHeight = adaptorsView_default._scaleStack();
     pdfView_default._convertToPDF(adaptorsView_default._newHeight);
     setTimeout(() => {
       adaptorsView_default._descaling();
+    }, 1);
+    setTimeout(() => {
+      stackView_default._fadeInEmptyDivs();
     }, 1);
   };
   controlToggleCrossMiniMenu = function() {
@@ -28860,7 +28942,7 @@
     optionsView_default._adaptMiniMenu.classList.add("hide");
   };
   controlReviseBtn = function() {
-    optionsView_default._reviseOpts;
+    optionsView_default._reviseOpts(state);
   };
   var init = function() {
     statsView_default._setDate();

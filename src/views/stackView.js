@@ -327,5 +327,28 @@ class StackView extends View {
     });
     this._finalCrossNotes = allNotesOutput.reverse().join("");
   };
+  //____________________________________________________________________
+  //hide comp div imgs that are 'blank' for pdf in case needing a space to play with
+  _fadeOutEmptyDivs = function () {
+    this._retarget();
+    this._allComps.forEach(function (el) {
+      if (
+        el.querySelector(".img").src === COMP_IMG.blank ||
+        el.querySelector(".img").src ===
+          "https://cdn.prod.website-files.com/66b00a322e7002f201e5b9e2/66b4cd1ae8a7f37543072995_border-s.png"
+      ) {
+        el.querySelector(".img").classList.add("fade");
+      }
+    });
+  };
+  //____________________________________________________________________
+  //replace blank imgs
+  _fadeInEmptyDivs = function () {
+    this._allComps.forEach(function (el) {
+      if (el.querySelector(".img").src === COMP_IMG.blank) {
+        el.querySelector(".img").classList.remove("fade");
+      }
+    });
+  };
 }
 export default new StackView();
